@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.ResponseCompression;
+using ChessGameWebApp.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddScoped<IGameService, GameService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -32,5 +32,8 @@ app.UseRouting();
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Catalog}/{action=Products}/{id?}");
 
 app.Run();

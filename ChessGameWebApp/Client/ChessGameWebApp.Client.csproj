@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ChessGame\ChessGame.csproj" />
     <ProjectReference Include="..\Shared\ChessGameWebApp.Shared.csproj" />
   </ItemGroup>
 

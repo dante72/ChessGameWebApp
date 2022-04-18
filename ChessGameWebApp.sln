@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessGameWebApp.Server", "ChessGameWebApp\Server\ChessGameWebApp.Server.csproj", "{E3C8D752-49F7-46AF-BE38-5218A8791700}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGameWebApp.Server", "ChessGameWebApp\Server\ChessGameWebApp.Server.csproj", "{E3C8D752-49F7-46AF-BE38-5218A8791700}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessGameWebApp.Client", "ChessGameWebApp\Client\ChessGameWebApp.Client.csproj", "{062FA73C-F069-4649-8A84-8E73032BC571}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGameWebApp.Client", "ChessGameWebApp\Client\ChessGameWebApp.Client.csproj", "{062FA73C-F069-4649-8A84-8E73032BC571}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessGameWebApp.Shared", "ChessGameWebApp\Shared\ChessGameWebApp.Shared.csproj", "{E77E3224-016A-480B-A010-CF2167DE1C3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGameWebApp.Shared", "ChessGameWebApp\Shared\ChessGameWebApp.Shared.csproj", "{E77E3224-016A-480B-A010-CF2167DE1C3F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGame", "ChessGame\ChessGame.csproj", "{99FD221C-4429-4808-889E-83BC8C91E932}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{E77E3224-016A-480B-A010-CF2167DE1C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E77E3224-016A-480B-A010-CF2167DE1C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E77E3224-016A-480B-A010-CF2167DE1C3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99FD221C-4429-4808-889E-83BC8C91E932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99FD221C-4429-4808-889E-83BC8C91E932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99FD221C-4429-4808-889E-83BC8C91E932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99FD221C-4429-4808-889E-83BC8C91E932}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

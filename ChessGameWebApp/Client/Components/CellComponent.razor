@@ -2,9 +2,10 @@
 
 @code {
 
+
 }
 
-<td class="@(Row % 2 == Column % 2 ? "white" : "black")">
+<td class="@(IsMarked ? "green" : (Row % 2 == Column % 2 ? "white" : "black"))" onclick="@Click">
     @if (Figure != null)
     {
         string str = $"/css/icons/Black{Figure}.png";

@@ -5,6 +5,6 @@ namespace ChessGameWebApp.Client.Components
 {
     public class GameComponentModel : ComponentBase
     {
-        public Board? board;
+        public BoardViewModel? Board { get; set; }
     }
 }

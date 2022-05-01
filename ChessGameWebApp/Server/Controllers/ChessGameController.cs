@@ -23,5 +23,10 @@ namespace ChessGameWebApp.Server.Controllers
             _logger.LogInformation("Get Board");
             return _gameService.GetBoard();
         }
+
+        public IList<Cell> PossibleMoves(int row, int column)
+        {
+            return _gameService.GetPossibleMoves(row, column);
+        }
     }
 }

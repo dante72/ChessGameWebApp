@@ -1,0 +1,13 @@
+﻿@inherits CellComponentModel
+
+@code {
+
+}
+
+<td class="@(Row % 2 == Column % 2 ? "white" : "black")">
+    @if (Figure != null)
+    {
+        string str = $"/css/icons/Black{Figure}.png";
+        <img src="@str"  alt="" />
+    }
+</td>

@@ -8,5 +8,6 @@ namespace ChessGame
 {
     public interface IBoardViewModel
     {
+        Figure? this[int row, int column] { get; set; }
     }
 }

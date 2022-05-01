@@ -17,13 +17,13 @@ namespace ChessGameWebApp.Server.Services
             return _board;
         }
 
-        /*public IList<Cell> GetPossibleMoves(int row, int column)
+        public IList<Cell> GetPossibleMoves(int row, int column)
         {
-            if (Board[row, column].Figure is not null)
-                return cell.Figure.GetAllPossibleMoves();
+            if (_board[row, column] is not null)
+                return _board[row, column].GetAllPossibleMoves();
             else
-                return new List<Cell>();
-        }*/
+               return new List<Cell>();
+        }
 
         public IList<Cell> GetPossibleMoves(Cell cell)
         {

@@ -11,7 +11,7 @@
     {
         try
         {
-            board = await Http.GetFromJsonAsync<Board>("chessgame/board");
+            Board = await Http.GetFromJsonAsync<BoardViewModel>("chessgame/board");
         }
         catch (Exception ex)
         {
@@ -34,13 +34,7 @@
         <tr>
             @for (int j = 0; j < 8; j++)
             {
-                <td class="@(i % 2 == j % 2 ? "white" : "black")">
-                    @if (board[i, j] != null)
-                    {
-                        string str = $"/css/icons/Black{board[i, j]}.png";
-                        <img src="@str"  alt="" />
-                    }
-                </td>
+                <CellComponent Row="@i" Column="@j" Figure=@Board?[i, j]></CellComponent>
             }
         </tr>
     }

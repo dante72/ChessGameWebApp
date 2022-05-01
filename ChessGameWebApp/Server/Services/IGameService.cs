@@ -6,5 +6,6 @@ namespace ChessGameWebApp.Server.Services
     {
         IBoardViewModel GetBoard();
         IList<Cell> GetPossibleMoves(Cell cell);
+        IList<Cell> GetPossibleMoves(int row, int column);
     }
 }

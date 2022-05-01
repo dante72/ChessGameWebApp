@@ -8,9 +8,9 @@ namespace ChessGame
 {
     public class Board
     {
-        private Cell[,] cells;
+        internal Cell[,] cells;
 
-        public Figure this[int row, int column]
+        public Figure? this[int row, int column]
         {
             get => cells[row, column].Figure;
             set => cells[row, column].Figure = value;

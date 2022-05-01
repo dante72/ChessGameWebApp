@@ -1,40 +1,12 @@
 ﻿@page "/game"
-@using ChessGame
-@inject HttpClient Http
+@using ChessGameWebApp.Client.Components
 
 <h3>Game</h3>
 
 @code {
-    private Board? board;
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            board = await Http.GetFromJsonAsync<Board>("chessgame/board");
-        }
-        catch (Exception ex)
-        {
-
-        }
-    }
 
 }
 
-<table class="ChessBoard">
+<GameComponent>
 
-    @for (int i = 0; i < 8; i++)
-    {
-        <tr>
-            @for (int j = 0; j < 8; j++)
-            {
-                <td class="@(i % 2 == j % 2 ? "white" : "black")">
-                    @if (board[i, j] != null)
-                    {
-                        string str = $"/css/icons/Black{board[i, j]}.png";
-                        <img src="@str"  alt="" />
-                    }
-                </td>
-            }
-        </tr>
-    }
-</table>
+</GameComponent>

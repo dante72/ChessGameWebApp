@@ -18,7 +18,7 @@ namespace ChessGameWebApp.Server.Controllers
         }
 
         [HttpGet("Board")]
-        public Board Board()
+        public IBoardViewModel Board()
         {
             _logger.LogInformation("Get Board");
             return _gameService.GetBoard();

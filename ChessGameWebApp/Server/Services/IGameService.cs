@@ -4,6 +4,7 @@ namespace ChessGameWebApp.Server.Services
 {
     public interface IGameService
     {
-        Board GetBoard();
+        IBoardViewModel GetBoard();
+        IList<Cell> GetPossibleMoves(Cell cell);
     }
 }

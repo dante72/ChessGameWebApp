@@ -2,15 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ChessGame
 {
     public class Cell
-    {
+    {        
         public int Row { get; }
         public int Column { get; }
-        public Figure? Figure { get; set; }
+        private Figure? _figure;
+        public Figure? Figure
+        {
+            get => _figure;
+            set
+            {
+                _figure = value;
+                if (_figure != null)
+                    _figure.Position = this;   
+            }
+        }
         internal Board Board { get; }
         internal Cell(int row, int column, Board board)
         {

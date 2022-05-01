@@ -8,7 +8,9 @@ namespace ChessGame
 {
     public class CellViewModel : Cell
     {
-        public bool IsMarked { get; set; } 
+        public bool IsMarked { get; set; }
+
+        public new string Figure { get; set; }
         public CellViewModel(int row, int column, Board board) : base(row, column, board)
         {
         }

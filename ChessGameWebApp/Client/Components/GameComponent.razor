@@ -19,24 +19,16 @@
         }
     }
 
-    [Parameter]
-    public EventCallback OnClickCallback { get; set; }
-
-    private void Click1()
-    {
-         StateHasChanged();
-    }
-
 }
 
-<table class="ChessBoard" id="board" onclick="@Click1">
+<table class="ChessBoard" id="board">
 
     @for (int i = 0; i < 8; i++)
     {
         <tr>
             @for (int j = 0; j < 8; j++)
             {
-                <CellComponent IsMarked = "false" Row="@i" Column="@j" Figure="@Board?[i, j]"></CellComponent>
+                <CellComponent IsMarked = "false" Row="@i" Column="@j" Figure="@Board?[i, j]" ParentComponent="@this"></CellComponent>
             }
         </tr>
     }

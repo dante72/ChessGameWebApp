@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,7 @@ namespace ChessGame
             }
         }
         internal Board Board { get; }
-        internal Cell(int row, int column, Board board)
+        public Cell(int row, int column, Board board)
         {
             Row = row;
             Column = column;

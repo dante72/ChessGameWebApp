@@ -1,4 +1,5 @@
 ﻿using ChessGame;
+using ChessWebAPI;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 
@@ -9,13 +10,19 @@ namespace ChessGameWebApp.Client.Components
         [Parameter]
         public GameComponent ParentComponent { get; set; }
         [Inject]
-        public HttpClient Http { get; set; }
+        public WebApi webApi { get; set; }
         [Inject]
-
         public ILogger<CellComponentModel> logger { get; set; }
-        public List<CellDto> PossibleMoves { get; set; }
+        public IEnumerable<Cell> PossibleMoves { get; set; }
         [Parameter]
         public bool IsMarked { get; set; } = false;
+        private bool isTarget;
+        [Parameter]
+        public bool IsTarget
+        {
+            get { isTarget = ParentComponent.Target == this; return isTarget; }
+            set { isTarget = value; }
+        }
         [Parameter]
         public int Row { get; set; }
         [Parameter]
@@ -25,10 +32,10 @@ namespace ChessGameWebApp.Client.Components
 
         public async void Click()
         {
-            //IsMarked = true;
+            ParentComponent.Target = this;
             try
             {
-                PossibleMoves = await Http.GetFromJsonAsync<List<CellDto>>($"chessgame/possible_moves?row={Row}&column={Column}");
+                PossibleMoves = await webApi.GetPossibleMovesAsync(Row, Column);
             }
             catch (Exception ex)
             {
@@ -38,13 +45,13 @@ namespace ChessGameWebApp.Client.Components
             ParentComponent.CreateMarks(PossibleMoves);
         }
 
-        public void Click11()
+        public void Marking()
         {
             IsMarked = true;
             StateHasChanged();
         }
 
-        public void Clear()
+        public void Unmarking()
         {
             IsMarked = false;
             StateHasChanged();

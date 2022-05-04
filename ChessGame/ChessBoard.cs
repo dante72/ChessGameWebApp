@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    public class BoardViewModel : Board, IBoardViewModel
+    public class ChessBoard : Board
     {
-        public BoardViewModel()
+        public ChessBoard()
         {
-            cells = new CellViewModel[8, 8];
+            cells = new ChessCell[8, 8];
             for (int i = 0; i < 8; i++)
                 for (int j = 0; j < 8; j++)
-                    cells[i, j] = new CellViewModel(i, j, this);
+                    cells[i, j] = new ChessCell(i, j);
 
             this[0, 0] = new Bishop(FigureColors.White);
         }

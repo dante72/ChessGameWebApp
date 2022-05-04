@@ -7,7 +7,7 @@
 
 }
 
-<td class="@(IsMarked ? "green" : (Row % 2 == Column % 2 ? "white" : "black"))" onclick="@Click">
+<td class="@(IsTarget ? "red" : IsMarked ? "green" : (Row % 2 == Column % 2 ? "white" : "black"))" onclick="@Click">
     @if (Figure != null)
     {
         string str = $"/css/icons/Black{Figure}.png";

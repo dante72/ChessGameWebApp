@@ -16,6 +16,12 @@ namespace ChessGame
         {
             Color = color;
         }
+
+        public virtual void MoveTo(Cell cell)
+        {
+            Position.Figure = null;
+            cell.Figure = this;
+        }
         public override string ToString()
         {
             return GetType().Name;

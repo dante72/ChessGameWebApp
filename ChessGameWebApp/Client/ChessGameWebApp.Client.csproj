@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ChessGame\ChessGame.csproj" />
+    <ProjectReference Include="..\..\ChessWebAPI\ChessWebAPI.csproj" />
     <ProjectReference Include="..\Shared\ChessGameWebApp.Shared.csproj" />
   </ItemGroup>
 

@@ -11,7 +11,7 @@
     {
         try
         {
-            Board = await Http.GetFromJsonAsync<BoardViewModel>("chessgame/board");
+            Board = await Http.GetFromJsonAsync<ChessBoard>("chessgame/board");
         }
         catch (Exception ex)
         {

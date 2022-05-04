@@ -2,6 +2,7 @@
 using ChessGameWebApp.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using System.Linq;
 
 namespace ChessGameWebApp.Server.Controllers
 {
@@ -19,16 +20,22 @@ namespace ChessGameWebApp.Server.Controllers
         }
 
         [HttpGet("Board")]
-        public IBoardViewModel Board()
+        public IChessBoard Board()
         {
             _logger.LogInformation("Get Board");
             return _gameService.GetBoard();
         }
 
         [HttpGet("possible_moves")]
-        public IEnumerable<CellDto> PossibleMoves(int row, int column)
+        public IEnumerable<ChessCellDto> PossibleMoves(int row, int column)
         {
             return _gameService.GetPossibleMoves(row, column).Select(i => i.Map());
+        }
+
+        [HttpGet("move")]
+        public ChessCellDto[,] Move(int fromRow, int fromColumn, int toRow, int toColumn)
+        {
+            return _gameService.Move(fromRow, fromColumn, toRow, toColumn);
         }
     }
 }

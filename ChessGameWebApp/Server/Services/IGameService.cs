@@ -4,7 +4,8 @@ namespace ChessGameWebApp.Server.Services
 {
     public interface IGameService
     {
-        IBoardViewModel GetBoard();
+        IChessBoard GetBoard();
         List<Cell> GetPossibleMoves(int row, int column);
+        void Move(int fromRow, int fromColumn, int toRow, int toColumn);
     }
 }

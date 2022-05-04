@@ -14,6 +14,11 @@
     align-content: center;
 }
 
+.ChessBoard .red
+{
+    background-color: firebrick;
+}
+
 .ChessBoard .green
 {
     background-color: lawngreen;

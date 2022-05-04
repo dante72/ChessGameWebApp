@@ -5,7 +5,8 @@ namespace ChessGameWebApp.Client.Components
 {
     public class GameComponentModel : ComponentBase
     {
-        public BoardViewModel? Board { get; set; }
+        public CellComponentModel Target { get; set; }
+        public ChessBoard? Board { get; set; }
         public List<CellComponent> Children { get; set; }
 
         public CellComponentModel this[int row, int column]
@@ -20,12 +21,12 @@ namespace ChessGameWebApp.Client.Components
 
         public void ClearMarks()
         {
-            Children.ForEach(i => i.Clear());
+            Children.ForEach(i => i.Unmarking());
         }
 
-        public void CreateMarks(List<CellDto> cells)
+        public void CreateMarks(IEnumerable<Cell> cells)
         {
-            cells.ForEach(cell => this[cell.Row, cell.Column].Click11());
+            cells.ToList().ForEach(cell => this[cell.Row, cell.Column].Marking());
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    public class Board
+    public class Board : IBoard
     {
         internal Cell[,] cells;
 
@@ -14,6 +14,11 @@ namespace ChessGame
         {
             get => cells[row, column].Figure;
             set => cells[row, column].Figure = value;
+        }
+
+        public Cell GetCell(int row, int column)
+        {
+            return cells[row, column];
         }
         public Board()
         {

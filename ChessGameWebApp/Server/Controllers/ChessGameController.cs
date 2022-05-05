@@ -20,22 +20,22 @@ namespace ChessGameWebApp.Server.Controllers
         }
 
         [HttpGet("Board")]
-        public IChessBoard Board()
+        public ChessBoard Board()
         {
             _logger.LogInformation("Get Board");
             return _gameService.GetBoard();
         }
 
         [HttpGet("possible_moves")]
-        public IEnumerable<ChessCellDto> PossibleMoves(int row, int column)
+        public IEnumerable<Cell> PossibleMoves(int row, int column)
         {
-            return _gameService.GetPossibleMoves(row, column).Select(i => i.Map());
+            return _gameService.GetPossibleMoves(row, column);
         }
 
         [HttpGet("move")]
-        public ChessCellDto[,] Move(int fromRow, int fromColumn, int toRow, int toColumn)
+        public void Move(int fromRow, int fromColumn, int toRow, int toColumn)
         {
-            return _gameService.Move(fromRow, fromColumn, toRow, toColumn);
+            _gameService.Move(fromRow, fromColumn, toRow, toColumn);
         }
     }
 }

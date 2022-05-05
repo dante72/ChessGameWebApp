@@ -1,5 +1,6 @@
 ﻿using ChessGame;
 using System.Net.Http.Json;
+using System.Text.Json;
 using static System.Net.WebRequestMethods;
 
 namespace ChessWebAPI
@@ -12,9 +13,20 @@ namespace ChessWebAPI
             _httpClient = httpClient ?? throw new NullReferenceException(nameof(httpClient));
         }
 
-        public async Task<IEnumerable<Cell>> GetPossibleMovesAsync(int row, int column)
+        public async Task<List<Cell>> GetPossibleMovesAsync(int row, int column)
         {
-            return (await _httpClient.GetFromJsonAsync<List<ChessCellDto>>($"chessgame/possible_moves?row={row}&column={column}")).Select(i => i.Map());
+            return (await _httpClient.GetFromJsonAsync<Cell[]>($"chessgame/possible_moves?row={row}&column={column}")).ToList();
+        }
+
+        public async Task<ChessBoard> GetBoard()
+        {
+            var b = await _httpClient.GetFromJsonAsync<ChessBoard>("chessgame/board");
+
+            using (FileStream fs = new FileStream("board2.json", FileMode.OpenOrCreate))
+            {
+                JsonSerializer.Serialize(fs, b);
+            }
+            return b;
         }
     }
 }

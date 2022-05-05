@@ -8,26 +8,16 @@ namespace ChessGame
 {
     public class ChessCell : Cell
     {
-        private Queue<Cell> changeSummary;
-        public bool IsMarked { get; set; }
+        public string? FigureName { get; set; }
 
-        private Figure? _figure;
-        public new Figure? Figure
+        public ChessCell(int row, int column, Board board) : base(row, column, board) { }
+
+        public string? GetActualFigureName()
         {
-            get => _figure;
-            set
-            {
-                _figure = value;
-                if (_figure != null)
-                    _figure.Position = this;
+            if (Figure == null)
+                return null;
 
-                changeSummary.Enqueue(this);
-            }
-        }
-
-        public ChessCell(int row, int column, Board board = null) : base(row, column, board)
-        {
-            changeSummary = new Queue<Cell>();
+            return $"{Figure.Color}{Figure.GetType()}";
         }
     }
 }

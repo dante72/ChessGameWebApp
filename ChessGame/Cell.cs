@@ -1,21 +1,22 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ChessGame
 {
     public class Cell
-    {        
+    {
         public int Row { get; }
         public int Column { get; }
-        private Figure? _figure;
+        public Figure? _figure;
         public Figure? Figure
         {
-            get => _figure;
+            get { return _figure; }
             set
             {
                 _figure = value;
@@ -82,7 +83,7 @@ namespace ChessGame
             {
                 if (Column + i * x >= 0 && Column + i * x < 8 && Row + i * y >= 0 && Row + i * y < 8)
                 {
-                    list.Add(Board.cells[Row + i * y, Column + i * x]);
+                    list.Add(Board.Cells[Row + i * y, Column + i * x]);
                     if (Board[Row + i * y, Column + i * x] != null)
                         break;
                 }

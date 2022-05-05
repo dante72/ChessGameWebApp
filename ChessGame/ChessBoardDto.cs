@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    internal interface IBoard
+    public class ChessBoardDto
     {
-        Figure? this[int row, int column] { get; set; }
-        public Cell GetCell(int row, int column);
+        public List<ChessCellDto> Cells { get; set; } = new List<ChessCellDto>();
     }
 }

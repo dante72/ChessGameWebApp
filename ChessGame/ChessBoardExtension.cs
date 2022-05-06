@@ -28,5 +28,15 @@ namespace ChessGame
                 ((ChessCell)chessBoard.Cells[cell.Row, cell.Column]).FigureName = cell.FigureName;
             }
         }
+
+        public static ChessCellDto ToDto(this Cell cell)
+        {
+            return new ChessCellDto() { Row = cell.Row, Column = cell.Column };
+        }
+
+        public static Cell ToCell(this ChessCellDto cell)
+        {
+            return new Cell(cell.Row, cell.Column, null);
+        }
     }
 }

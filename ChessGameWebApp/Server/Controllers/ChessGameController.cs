@@ -27,9 +27,9 @@ namespace ChessGameWebApp.Server.Controllers
         }
 
         [HttpGet("possible_moves")]
-        public IEnumerable<Cell> PossibleMoves(int row, int column)
+        public IEnumerable<ChessCellDto> PossibleMoves(int row, int column)
         {
-            return _gameService.GetPossibleMoves(row, column);
+            return _gameService.GetPossibleMoves(row, column).Select(i => i.ToDto());
         }
 
         [HttpGet("move")]

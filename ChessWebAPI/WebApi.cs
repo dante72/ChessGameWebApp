@@ -13,9 +13,10 @@ namespace ChessWebAPI
             _httpClient = httpClient ?? throw new NullReferenceException(nameof(httpClient));
         }
 
-        public async Task<List<Cell>> GetPossibleMovesAsync(int row, int column)
+        public async Task<IEnumerable<Cell>> GetPossibleMovesAsync(int row, int column)
         {
-            return (await _httpClient.GetFromJsonAsync<Cell[]>($"chessgame/possible_moves?row={row}&column={column}")).ToList();
+            var res = await _httpClient.GetFromJsonAsync<List<ChessCellDto>>($"chessgame/possible_moves?row={row}&column={column}");
+            return res.Select(i => i.ToCell());
         }
 
         public async Task Update(ChessBoard chessBoard)

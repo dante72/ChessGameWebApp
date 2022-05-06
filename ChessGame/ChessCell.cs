@@ -17,7 +17,7 @@ namespace ChessGame
             if (Figure == null)
                 return null;
 
-            return $"{Figure.Color}{Figure.GetType()}";
+            return $"{Figure.Color}{Figure.GetType().Name}";
         }
     }
 }

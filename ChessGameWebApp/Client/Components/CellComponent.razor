@@ -8,9 +8,9 @@
 }
 
 <td class="@(IsTarget ? "red" : IsMarked ? "green" : (Row % 2 == Column % 2 ? "white" : "black"))" onclick="@Click">
-    @if (Figure != null)
+    @if (FigureName != null)
     {
-        string str = $"/css/icons/Black{Figure}.png";
+        string str = $"/css/icons/{FigureName}.png";
         <img src="@str"  alt="" />
     }
 </td>

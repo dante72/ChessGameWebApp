@@ -8,7 +8,7 @@ namespace ChessGame
 {
     public class Board
     {
-        internal Cell[,] Cells
+        internal Cell[,] Cells;
 
         public Figure? this[int row, int column]
         {

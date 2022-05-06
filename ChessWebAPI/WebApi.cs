@@ -18,15 +18,10 @@ namespace ChessWebAPI
             return (await _httpClient.GetFromJsonAsync<Cell[]>($"chessgame/possible_moves?row={row}&column={column}")).ToList();
         }
 
-        public async Task<ChessBoard> GetBoard()
+        public async Task Update(ChessBoard chessBoard)
         {
-            var b = await _httpClient.GetFromJsonAsync<ChessBoard>("chessgame/board");
-
-            using (FileStream fs = new FileStream("board2.json", FileMode.OpenOrCreate))
-            {
-                JsonSerializer.Serialize(fs, b);
-            }
-            return b;
+            var data =  await _httpClient.GetFromJsonAsync<ChessBoardDto>("chessgame/board");
+            chessBoard.Update(data ?? throw new NullReferenceException(nameof(data)));
         }
     }
 }

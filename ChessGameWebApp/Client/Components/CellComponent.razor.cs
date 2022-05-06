@@ -29,6 +29,8 @@ namespace ChessGameWebApp.Client.Components
         public int Column { get; set; }
         [Parameter]
         public Figure? Figure { get; set; }
+        [Parameter]
+        public string? FigureName { get; set; }
 
         public async void Click()
         {

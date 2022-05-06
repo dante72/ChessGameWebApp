@@ -10,7 +10,7 @@ namespace ChessGameWebApp.Client.Components
         public WebApi webApi { get; set; }
         
         public CellComponentModel Target { get; set; }
-        public ChessBoard? Board { get; set; }
+        public ChessBoard Board { get; set; }
         public List<CellComponent> Children { get; set; }
 
         public CellComponentModel this[int row, int column]

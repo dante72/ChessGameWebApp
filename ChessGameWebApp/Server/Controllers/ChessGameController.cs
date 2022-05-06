@@ -20,10 +20,10 @@ namespace ChessGameWebApp.Server.Controllers
         }
 
         [HttpGet("Board")]
-        public ChessBoard Board()
+        public ChessBoardDto Board()
         {
             _logger.LogInformation("Get Board");
-            return _gameService.GetBoard();
+            return _gameService.GetBoard().MapChanges();
         }
 
         [HttpGet("possible_moves")]

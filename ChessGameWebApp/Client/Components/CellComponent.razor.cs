@@ -14,14 +14,15 @@ namespace ChessGameWebApp.Client.Components
         [Inject]
         public ILogger<CellComponentModel> logger { get; set; }
         public IEnumerable<Cell> PossibleMoves { get; set; }
+        private bool isMarked;
         [Parameter]
-        public bool IsMarked { get; set; } = false;
+        public bool IsMarked { get => isMarked; set { isMarked = value; StateHasChanged(); } }
         private bool isTarget;
         [Parameter]
         public bool IsTarget
         {
             get { isTarget = ParentComponent.Target == this; return isTarget; }
-            set { isTarget = value; }
+            set { isTarget = value; StateHasChanged(); }
         }
         [Parameter]
         public int Row { get; set; }
@@ -29,34 +30,56 @@ namespace ChessGameWebApp.Client.Components
         public int Column { get; set; }
         [Parameter]
         public Figure? Figure { get; set; }
+        private string? figureName;
         [Parameter]
-        public string? FigureName { get; set; }
+        public string? FigureName { get => figureName; set { figureName = value; StateHasChanged(); } }
 
         public async void Click()
         {
-            ParentComponent.Target = this;
             try
             {
-                PossibleMoves = await webApi.GetPossibleMovesAsync(Row, Column);
+                
+                if (IsMarked)
+                {
+                    var target = ParentComponent.Children.First(i => i.IsTarget);
+                    await webApi.Move(target.Row, target.Column, Row, Column, ParentComponent.Board);
+                    
+                    ParentComponent.ClearMarks();
+                    ParentComponent.Target = this;
+                    ParentComponent.Update();
+                }
+                else
+                {
+                    ParentComponent.Target = this;
+                    PossibleMoves = await webApi.GetPossibleMovesAsync(Row, Column);
+                    ParentComponent.ClearMarks();
+                    ParentComponent.CreateMarks(PossibleMoves);
+                }
+                
             }
             catch (Exception ex)
             {
                 logger.LogWarning(ex.Message);
             }
-            ParentComponent.ClearMarks();
-            ParentComponent.CreateMarks(PossibleMoves);
+
+
         }
 
-        public void Marking()
+        /*public void Marking()
         {
             IsMarked = true;
             StateHasChanged();
-        }
+        }*/
 
-        public void Unmarking()
+        /*public void Unmarking()
         {
             IsMarked = false;
             StateHasChanged();
+        }*/
+
+        public void Update()
+        {
+            FigureName = ParentComponent.Board.GetCell(Row, Column).FigureName;
         }
 
         protected override void OnInitialized()

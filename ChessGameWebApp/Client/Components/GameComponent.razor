@@ -11,7 +11,7 @@
     {
         try
         {
-            Board = new ChessBoard(true);
+            Board = new ChessBoard();
             await webApi.Update(Board);
         }
         catch (Exception ex)

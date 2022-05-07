@@ -17,7 +17,7 @@ namespace ChessGame
                 if (cell.FigureName != cell.GetActualFigureName())
                     chessBoardDto.Cells.Add(new ChessCellDto() { FigureName = cell.GetActualFigureName(), Row = cell.Row, Column = cell.Column });
             }
-
+            //chessBoard.UpdateFigureNames();
             return chessBoardDto;
         }
 

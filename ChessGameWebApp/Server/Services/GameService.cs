@@ -15,10 +15,10 @@ namespace ChessGameWebApp.Server.Services
         public ChessBoard GetBoard()
         {
             _logger.LogInformation("Get Board");
-            using (FileStream fs = new FileStream("board.json", FileMode.OpenOrCreate))
-            {
-                JsonSerializer.Serialize(fs, _board);
-            }
+            //using (FileStream fs = new FileStream("board.json", FileMode.OpenOrCreate))
+            //{
+            //    JsonSerializer.Serialize(fs, _board);
+            //}
             return _board;
         }
 
@@ -27,10 +27,10 @@ namespace ChessGameWebApp.Server.Services
             if (_board[row, column] is not null)
             {
                 var res  = _board[row, column].GetAllPossibleMoves();
-                using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
-                {
-                    JsonSerializer.Serialize(fs, res);
-                }
+                //using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
+                //{
+                //    JsonSerializer.Serialize(fs, res);
+                //}
                 return res;
             }
             else
@@ -39,9 +39,9 @@ namespace ChessGameWebApp.Server.Services
 
         public void Move(int fromRow, int fromColumn, int toRow, int toColumn)
         {
-            //var from = _board.GetCell(fromRow, fromColumn);
-            //var to = _board.GetCell(toRow, toColumn);
-            //from.Figure?.MoveTo(to);
+            var from = _board.GetCell(fromRow, fromColumn);
+            var to = _board.GetCell(toRow, toColumn);
+            from.Figure?.MoveTo(to);
         }
     }
 }

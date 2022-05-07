@@ -24,5 +24,11 @@ namespace ChessWebAPI
             var data =  await _httpClient.GetFromJsonAsync<ChessBoardDto>("chessgame/board");
             chessBoard.Update(data ?? throw new NullReferenceException(nameof(data)));
         }
+
+        public async Task Move(int fromRow, int fromColumn, int toRow, int toColumn, ChessBoard chessBoard)
+        {
+            var data = await _httpClient.GetFromJsonAsync<ChessBoardDto>($"chessgame/move?fromRow={fromRow}&fromColumn={fromColumn}&toRow={toRow}&toColumn={toColumn}");
+            chessBoard.Update(data ?? throw new NullReferenceException(nameof(data)));
+        }
     }
 }

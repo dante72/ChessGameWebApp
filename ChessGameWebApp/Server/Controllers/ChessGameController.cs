@@ -23,7 +23,10 @@ namespace ChessGameWebApp.Server.Controllers
         public ChessBoardDto Board()
         {
             _logger.LogInformation("Get Board");
-            return _gameService.GetBoard().MapChanges();
+            var b1 = _gameService.GetBoard();
+            var b = b1.MapChanges();
+            b1.UpdateFigureNames();
+            return b;
         }
 
         [HttpGet("possible_moves")]
@@ -33,9 +36,13 @@ namespace ChessGameWebApp.Server.Controllers
         }
 
         [HttpGet("move")]
-        public void Move(int fromRow, int fromColumn, int toRow, int toColumn)
+        public ChessBoardDto Move(int fromRow, int fromColumn, int toRow, int toColumn)
         {
+            var b1 = _gameService.GetBoard();
             _gameService.Move(fromRow, fromColumn, toRow, toColumn);
+            var b = b1.MapChanges();
+            b1.UpdateFigureNames();
+            return b;
         }
     }
 }

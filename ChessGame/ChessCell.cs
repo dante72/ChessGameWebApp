@@ -5,7 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ChessGame
-{
+{        
+    /// <summary>
+    /// Класс для клиет-серверного взаимодействия
+    /// </summary>
     public class ChessCell : Cell
     {
         public bool IsTarget { get; set; }

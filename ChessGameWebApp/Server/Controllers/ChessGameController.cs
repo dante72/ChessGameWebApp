@@ -25,7 +25,7 @@ namespace ChessGameWebApp.Server.Controllers
             _logger.LogInformation("Get Board");
             var b1 = _gameService.GetBoard();
             var b = b1.MapChanges();
-            b1.UpdateFigureNames();
+            //b1.UpdateFigureNames();
             return b;
         }
 
@@ -41,8 +41,13 @@ namespace ChessGameWebApp.Server.Controllers
             var b1 = _gameService.GetBoard();
             _gameService.Move(fromRow, fromColumn, toRow, toColumn);
             var b = b1.MapChanges();
-            b1.UpdateFigureNames();
+            //b1.UpdateFigureNames();
             return b;
+        }
+        [HttpGet("click")]
+        public ChessBoardDto Click(int row, int column)
+        {
+            return _gameService.Click(row, column).MapChanges();
         }
     }
 }

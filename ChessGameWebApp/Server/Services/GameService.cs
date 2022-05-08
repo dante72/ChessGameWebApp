@@ -43,5 +43,11 @@ namespace ChessGameWebApp.Server.Services
             var to = _board.GetCell(toRow, toColumn);
             from.Figure?.MoveTo(to);
         }
+
+        public ChessBoard Click(int row, int column)
+        {
+            _board.Click(row, column);
+            return _board;
+        }
     }
 }

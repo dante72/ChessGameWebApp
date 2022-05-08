@@ -15,7 +15,7 @@ namespace ChessGame
             foreach (ChessCell cell in chessBoard.Cells)
             {
                // if (cell.FigureName != cell.GetActualFigureName())
-                    chessBoardDto.Cells.Add(new ChessCellDto() { FigureName = cell.GetActualFigureName(), Row = cell.Row, Column = cell.Column });
+                    chessBoardDto.Cells.Add(new ChessCellDto() { FigureName = cell.GetActualFigureName(), Row = cell.Row, Column = cell.Column, IsMarked = cell.IsMarked, IsTarget = cell.IsTarget });
             }
             return chessBoardDto;
         }
@@ -25,6 +25,8 @@ namespace ChessGame
             foreach (var cell in data.Cells)
             {
                 ((ChessCell)chessBoard.Cells[cell.Row, cell.Column]).FigureName = cell.FigureName;
+                ((ChessCell)chessBoard.Cells[cell.Row, cell.Column]).IsMarked = cell.IsMarked;
+                ((ChessCell)chessBoard.Cells[cell.Row, cell.Column]).IsTarget = cell.IsTarget;
             }
         }
 

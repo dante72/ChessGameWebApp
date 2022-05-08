@@ -11,8 +11,8 @@
     {
         try
         {
-            Board = new ChessBoard();
             await webApi.Update(Board);
+            Update();
         }
         catch (Exception ex)
         {
@@ -29,7 +29,7 @@
         <tr>
             @for (int j = 0; j < 8; j++)
             {
-                <CellComponent IsMarked = "false" Row="@i" Column="@j" Figure="@Board?[i, j]" FigureName="@Board.GetCell(i, j).FigureName" ParentComponent="@this"></CellComponent>
+                <CellComponent Row="@i" Column="@j" ParentComponent="@this"></CellComponent>
             }
         </tr>
     }

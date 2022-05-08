@@ -17,6 +17,8 @@ namespace ChessGame
         {
             Color = color;
         }
+
+        internal Board Board { get => Position?.Board; }
         public virtual void MoveTo(Cell cell)
         {
             Position.Figure = null;

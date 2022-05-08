@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChessGame.Figures;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,7 @@ namespace ChessGame
             if (setup) Setup();
 
         }
-        public void Setup()
-        {
-            this[0, 0] = new Bishop(FigureColors.White);
-        }
+
         public ChessCell GetCell(int row, int column)
         {
             return (ChessCell)Cells[row, column];

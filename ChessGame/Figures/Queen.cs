@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ChessGame.Figures
 {
-    internal class Bishop : Figure
+    internal class Queen : Figure
     {
-        public Bishop(FigureColors color) : base(color)
+        public Queen(FigureColors color) : base(color)
         {
         }
         public override List<Cell> GetAllPossibleMoves()
@@ -20,6 +20,11 @@ namespace ChessGame.Figures
                 list.AddRange(Position.GetCellsInDirection(Directions.RightDown));
                 list.AddRange(Position.GetCellsInDirection(Directions.LeftDown));
                 list.AddRange(Position.GetCellsInDirection(Directions.RightUp));
+
+                list.AddRange(Position.GetCellsInDirection(Directions.Up));
+                list.AddRange(Position.GetCellsInDirection(Directions.Right));
+                list.AddRange(Position.GetCellsInDirection(Directions.Left));
+                list.AddRange(Position.GetCellsInDirection(Directions.Down));
             }
 
             return list;

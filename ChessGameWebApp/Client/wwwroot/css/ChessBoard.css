@@ -1,49 +1,47 @@
-﻿.ChessBoard
-{
+﻿.ChessBoard {
     width: 700px;
     height: 700px;
     align-content: center;
 }
 
-.ChessBoard td
-{
-    margin: 0;
-    padding: 0;
-    width: 12.5%;
-    height: 12.5%;
-    align-content: center;
-}
+    .ChessBoard td {
+        margin: 0;
+        padding: 0;
+        width: 12.5%;
+        height: 12.5%;
+        align-content: center;
+    }
 
-.ChessBoard .red
-{
-    background-color: firebrick;
-}
+    .ChessBoard .red {
+        background-color: firebrick;
+    }
 
-.ChessBoard .green
-{
-    background-color: lawngreen;
-}
+    .ChessBoard .green {
+        background-color: lawngreen;
+        border: solid 1px;
+        border-color: saddlebrown;
+    }
 
-.ChessBoard .white
-{
-    background-color: sandybrown;
-}
+    .ChessBoard .white {
+        background-color: sandybrown;
+        border: solid 1px;
+        border-color: saddlebrown;
+    }
 
-.ChessBoard .black
-{
-    background-color: saddlebrown;
-}
+    .ChessBoard .black {
+        background-color: saddlebrown;
+        border: solid 1px;
+        border-color: saddlebrown;
+    }
 
-.ChessBoard tr td:hover
-{
-    background-color: #1b6ec2;
-}
+    .ChessBoard tr td:hover {
+        background-color: #1b6ec2;
+    }
 
-.ChessBoard tr td img
-{
-    width: 80%;
-    height: 80%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
+    .ChessBoard tr td img {
+        width: 80%;
+        height: 80%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }

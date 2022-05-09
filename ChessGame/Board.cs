@@ -11,19 +11,19 @@ namespace ChessGame
     {
         internal Cell[,] Cells;
 
-        public Figure? this[int row, int column]
+        internal Figure? this[int row, int column]
         {
             get => Cells[row, column].Figure;
             set => Cells[row, column].Figure = value;
         }
-        public Board()
+        internal Board()
         {
             Cells = new Cell[8, 8];
             for (int i = 0; i < 8; i++)
                 for(int j = 0; j < 8; j++)
                     Cells[i, j] = new Cell(i, j, this);
         }
-        public void Setup()
+        internal void Setup()
         {
             this[0, 0] = new Rook(FigureColors.Black);
             this[0, 1] = new Knight(FigureColors.Black);

@@ -14,6 +14,8 @@
 
     .ChessBoard .red {
         background-color: firebrick;
+        border: solid 1px;
+        border-color: saddlebrown;
     }
 
     .ChessBoard .green {

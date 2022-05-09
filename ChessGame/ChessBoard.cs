@@ -8,17 +8,18 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    public class ChessBoard : Board
+    public class ChessBoard : Board, IEnumerable<ChessCell>
     {
-        internal Cell Target 
+        private ChessCell target;
+        internal ChessCell Target 
         {
-            get 
+            get => target;
+            set
             {
-                foreach (ChessCell cell in Cells)
-                    if (cell.IsTarget)
-                        return cell;
-
-                return null;
+                if (target is not null)
+                    target.IsTarget = false;
+                target = value;
+                target.IsTarget = true;
             }
         }
         public ChessBoard(bool setup = false)
@@ -42,7 +43,7 @@ namespace ChessGame
                 cell.IsMarked = false;
         }
 
-        public void ShowPossibleMoves(IEnumerable<Cell> cells)
+        private void ShowPossibleMoves(IEnumerable<Cell>? cells)
         {
             ClearPossibleMoves();
 
@@ -50,36 +51,24 @@ namespace ChessGame
             foreach (Cell cell in cells)
                 GetCell(cell.Row, cell.Column).IsMarked = true;
         }
-
-        public void TargetClear()
-        {
-            foreach (ChessCell cell in Cells)
-            {
-                if (cell.IsTarget == true)
-                {
-                    cell.IsTarget = false;
-                    break;
-                }
-            }
-        }
-
         public void Click(int row, int column)
         {
-            
-            var cell = GetCell(row, column);
+            var currentCell = (ChessCell)Cells[row, column];
 
-            if (cell.IsMarked)
+            if (currentCell.IsMarked)
             {
-                Target.Figure.MoveTo(cell);
+                Target.Figure?.MoveTo(currentCell);
                 ClearPossibleMoves();
             }
             else
             {
-                ShowPossibleMoves(cell.Figure?.GetAllPossibleMoves());
+                ShowPossibleMoves(currentCell.Figure?.GetAllPossibleMoves());
             }
-            
-            TargetClear();
-            cell.IsTarget = true;
+
+            Target = currentCell;
         }
+
+        public IEnumerator<ChessCell> GetEnumerator() => Cells.Cast<ChessCell>().GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => Cells.GetEnumerator();
     }
 }

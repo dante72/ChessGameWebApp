@@ -13,8 +13,8 @@ namespace ChessGame
     {
         public int Row { get; }
         public int Column { get; }
-        public Figure? _figure;
-        public Figure? Figure
+        private Figure? _figure;
+        internal Figure? Figure
         {
             get { return _figure; }
             set

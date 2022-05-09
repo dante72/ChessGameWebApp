@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    public abstract class Figure
+    internal abstract class Figure
     {
         internal int MovesCount { get; set; }
-        public FigureColors Color { get; private set; }
-        internal Cell? Position { get; set; }
-        public abstract List<Cell> GetAllPossibleMoves();
+        internal FigureColors Color { get; private set; }
+        internal Cell Position { get; set; }
+        public abstract IEnumerable<Cell> GetAllPossibleMoves();
         internal Figure(FigureColors color)
         {
             Color = color;
         }
-        internal Board Board { get => Position?.Board; }
-        public virtual void MoveTo(Cell cell)
+        internal Board Board { get => Position.Board; }
+        internal virtual void MoveTo(Cell cell)
         {
             Position.Figure = null;
             cell.Figure = this;

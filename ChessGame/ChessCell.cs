@@ -14,9 +14,7 @@ namespace ChessGame
         public bool IsTarget { get; set; }
         public bool IsMarked { get; set; }
         public string? FigureName { get; set; }
-
         public ChessCell(int row, int column, Board board) : base(row, column, board) { }
-
         public string? GetActualFigureName()
         {
             if (Figure == null)

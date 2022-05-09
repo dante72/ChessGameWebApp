@@ -18,8 +18,6 @@ namespace ChessGame.Figures
             {
                 var direction = Color == FigureColors.White ? Directions.Up : Directions.Down;
 
-                
-
                 if (direction == Directions.Up)
                 {
                     attackFields.AddRange(Position.GetCellsInDirection(Directions.LeftUp, 1));

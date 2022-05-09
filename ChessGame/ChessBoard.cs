@@ -17,9 +17,9 @@ namespace ChessGame
             set
             {
                 if (target is not null)
-                    target.IsTarget = false;
+                    target.IsPointer = false;
                 target = value;
-                target.IsTarget = true;
+                target.IsPointer = true;
             }
         }
         public ChessBoard(bool setup = false)

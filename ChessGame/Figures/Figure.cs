@@ -13,15 +13,23 @@ namespace ChessGame
         internal FigureColors Color { get; private set; }
         internal Cell Position { get; set; }
         public abstract IEnumerable<Cell> GetAllPossibleMoves();
-        internal Figure(FigureColors color)
+
+        public IList<Cell> PossibleMoves
+        {
+            get => GetPossibleMoves();
+        }
+        public int IsFirstMove { get; set; }
+        internal Figure(FigureColors color, int firstMove = 0)
         {
             Color = color;
+            IsFirstMove = firstMove;
         }
         internal Board Board { get => Position.Board; }
         internal virtual void MoveTo(Cell cell)
         {
             Position.Figure = null;
             cell.Figure = this;
+            IsFirstMove++;
         }
         public override string ToString()
         {

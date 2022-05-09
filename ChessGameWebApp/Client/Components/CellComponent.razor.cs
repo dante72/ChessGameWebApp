@@ -16,7 +16,7 @@ namespace ChessGameWebApp.Client.Components
         [Parameter]
         public bool IsMarked { get; set; }
         [Parameter]
-        public bool IsTarget { get; set; }
+        public bool IsPointer { get; set; }
         [Parameter]
         public int Row { get; set; }
         [Parameter]
@@ -36,15 +36,13 @@ namespace ChessGameWebApp.Client.Components
                 logger.LogWarning(ex.Message);
             }
         }
-
         public void Update()
         {
             FigureName = ParentComponent.Board.GetCell(Row, Column).FigureName;
             IsMarked = ParentComponent.Board.GetCell(Row, Column).IsMarked;
-            IsTarget = ParentComponent.Board.GetCell(Row, Column).IsTarget;
+            IsPointer = ParentComponent.Board.GetCell(Row, Column).IsPointer;
             StateHasChanged();
         }
-
         protected override void OnInitialized()
         {
             ParentComponent.Children.Add((CellComponent)this);

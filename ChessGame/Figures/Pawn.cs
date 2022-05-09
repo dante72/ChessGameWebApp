@@ -13,7 +13,8 @@ namespace ChessGame.Figures
         }
         public override List<Cell> GetAllPossibleMoves()
         {
-            List<Cell> attackFields = new List<Cell>();
+            var attackFields = new List<Cell>();
+
             if (Position is not null)
             {
                 var direction = Color == FigureColors.White ? Directions.Up : Directions.Down;
@@ -28,8 +29,12 @@ namespace ChessGame.Figures
                     attackFields.AddRange(Position.GetCellsInDirection(Directions.LeftDown, 1));
                     attackFields.AddRange(Position.GetCellsInDirection(Directions.RightDown, 1));
                 }
+                
+                attackFields = attackFields.Where(cell => cell.Figure != null && cell.Figure.Color != Color).ToList();
+                int range = IsFirstMove == 0 && (Position.Row == 1 || Position.Row == 6) ? 2 : 1;
+                attackFields.AddRange(Position.GetCellsInDirection(direction, range).Where(i => i.Figure == null));
+            }
 
-            } 
             return attackFields;
         }
     }

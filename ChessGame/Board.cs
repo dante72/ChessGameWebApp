@@ -9,8 +9,8 @@ namespace ChessGame
 {
     public class Board
     {
+        internal int Index { get; set; } = 0;
         internal Cell[,] Cells;
-
         internal Figure? this[int row, int column]
         {
             get => Cells[row, column].Figure;

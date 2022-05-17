@@ -12,9 +12,8 @@ namespace ChessGame
         internal int MovesCount { get; set; }
         internal FigureColors Color { get; private set; }
         internal Cell Position { get; set; }
-        public abstract IEnumerable<Cell> GetAllPossibleMoves();
-
-        public IList<Cell> PossibleMoves
+        protected abstract IEnumerable<Cell> GetAllPossibleMoves();
+        public IEnumerable<Cell> PossibleMoves
         {
             get => GetPossibleMoves();
         }
@@ -30,6 +29,20 @@ namespace ChessGame
             Position.Figure = null;
             cell.Figure = this;
             IsFirstMove++;
+            Position.Board.Index++;
+        }
+        public bool IsMove()
+        {
+            return Color == FigureColors.Black && Board.Index % 2 != 0 || Color == FigureColors.White && Board.Index % 2 == 0;
+        }
+        protected virtual IEnumerable<Cell> GetPossibleMoves()
+        {
+            if (IsMove())
+                return new List<Cell>();
+
+            var moves = GetAllPossibleMoves().Where(i => i.Figure?.Color != Color).ToList();
+
+            return moves;
         }
         public override string ToString()
         {

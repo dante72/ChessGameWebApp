@@ -11,7 +11,7 @@ namespace ChessGame.Figures
         public Pawn(FigureColors color) : base(color)
         {
         }
-        public override List<Cell> GetAllPossibleMoves()
+        protected override List<Cell> GetAllPossibleMoves()
         {
             var attackFields = new List<Cell>();
 

@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton(b => new ChessBoard(true));
-builder.Services.AddScoped<IGameService, GameService>();
+builder.Services.AddScoped<IServerGameService, ServerGameService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 

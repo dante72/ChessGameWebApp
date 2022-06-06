@@ -2,7 +2,7 @@
 
 namespace ChessGameWebApp.Server.Services
 {
-    public interface IGameService
+    public interface IServerGameService
     {
         ChessBoard GetBoard();
         ChessBoard Click(int row, int column);

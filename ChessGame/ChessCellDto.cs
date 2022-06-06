@@ -10,8 +10,8 @@ namespace ChessGame
     {
         public int Row { get; set; }
         public int Column { get; set; }
-        public string? FigureName { get; set; }
         public bool IsTarget { get; set; }
         public bool IsMarked { get; set; }
+        public FigureDto? Figure { get; set; }
     }
 }

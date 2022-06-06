@@ -1,4 +1,5 @@
 ﻿using ChessGame;
+using ChessGameWebApp.Client.Services;
 using ChessWebAPI;
 using Microsoft.AspNetCore.Components;
 
@@ -7,9 +8,10 @@ namespace ChessGameWebApp.Client.Components
     public class GameComponentModel : ComponentBase
     {
         [Inject]
-        public WebApi webApi { get; set; }
+        public IClientGameService ClientGameService { get; set; }
         public CellComponentModel Target { get; set; }
-        public ChessBoard Board { get; set; } = new ChessBoard();
+        [Inject]
+        public ChessBoard Board { get; set; }
         public List<CellComponent> Children { get; set; }
         public GameComponentModel()
         {
@@ -18,6 +20,17 @@ namespace ChessGameWebApp.Client.Components
         public void Update()
         {
             Children.ForEach(i => i.Update());
+        }
+        protected override async Task OnInitializedAsync()
+        {
+            await ClientGameService.GetBoard();
+            //await base.OnInitializedAwait();
+
+        }
+        protected override void OnAfterRender(bool firstRender)
+        {
+            Update();
+            base.OnAfterRender(firstRender);
         }
     }
 }

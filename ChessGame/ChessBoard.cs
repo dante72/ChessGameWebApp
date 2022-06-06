@@ -33,6 +33,7 @@ namespace ChessGame
 
             if (setup)
                 Setup();
+            Update();
         }
 
         public ChessCell GetCell(int row, int column)
@@ -72,11 +73,21 @@ namespace ChessGame
             }
 
             Target = currentCell;
+
+            Update();
         }
 
         public void SetCheckMethod(CheckMove checkMove)
         {
             CheckFigureMove = checkMove;
+        }
+
+        public void Update()
+        {
+            foreach(ChessCell cell in Cells)
+            {
+                cell.FigureName = cell.GetActualFigureName();
+            }
         }
 
         public IEnumerator<ChessCell> GetEnumerator() => Cells.Cast<ChessCell>().GetEnumerator();

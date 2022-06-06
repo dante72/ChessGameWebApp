@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    internal abstract class Figure
+    public abstract class Figure
     {
         internal int MovesCount { get; set; }
         internal FigureColors Color { get; private set; }

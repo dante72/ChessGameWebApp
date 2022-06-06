@@ -10,8 +10,6 @@ namespace ChessGameWebApp.Client.Components
         [Parameter]
         public GameComponent ParentComponent { get; set; }
         [Inject]
-        public WebApi webApi { get; set; }
-        [Inject]
         public ILogger<CellComponentModel> logger { get; set; }
         [Parameter]
         public bool IsMarked { get; set; }
@@ -28,7 +26,7 @@ namespace ChessGameWebApp.Client.Components
         {
             try
             {
-                await webApi.Click(Row, Column, ParentComponent.Board);
+                Board.Click(Row, Column);
                 ParentComponent.Update();
             }
             catch (Exception ex)

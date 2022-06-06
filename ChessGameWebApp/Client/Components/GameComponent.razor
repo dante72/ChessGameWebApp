@@ -1,5 +1,5 @@
 ﻿@using ChessGame
-@inject HttpClient Http
+@using ChessGameWebApp.Client.Services
 @inherits GameComponentModel
 
 <h3>GameComponent</h3>
@@ -7,18 +7,8 @@
 
 @code {
 
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            await webApi.Update(Board);
-            Update();
-        }
-        catch (Exception ex)
-        {
 
-        }
-    }
+
 
 }
 
@@ -34,3 +24,9 @@
         </tr>
     }
 </table>
+
+@code
+{
+
+    
+}

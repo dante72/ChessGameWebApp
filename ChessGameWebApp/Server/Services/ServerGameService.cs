@@ -3,11 +3,11 @@ using System.Text.Json;
 
 namespace ChessGameWebApp.Server.Services
 {
-    internal class GameService : IGameService
+    internal class ServerGameService : IServerGameService
     {
-        private readonly ILogger<GameService> _logger;
+        private readonly ILogger<ServerGameService> _logger;
         private readonly ChessBoard _board;
-        public GameService(ILogger<GameService> logger, ChessBoard board)
+        public ServerGameService(ILogger<ServerGameService> logger, ChessBoard board)
         {
             _logger = logger;
             _board = board;

@@ -21,10 +21,13 @@ namespace ChessWebAPI
 
         public async Task<ChessCellDto?> GetCell()
         {
-            var ddd =  await _httpClient.GetFromJsonAsync<ChessCellDto>("chessgame/Cell");
-            return  ddd;
+            return await _httpClient.GetFromJsonAsync<ChessCellDto>("chessgame/Cell");
         }
 
+        public async Task<bool> TryMove(Cell from, Cell to)
+        {
+            return await _httpClient.GetFromJsonAsync<bool>($"chessgame/move?fromRow={from.Row}&fromColumn={from.Column}&toRow={to.Row}&toColumn={to.Column}");
+        }
         public async Task<FigureDto> GetFigure()
         {
             var ddd = await _httpClient.GetFromJsonAsync<FigureDto?>("chessgame/Figure");

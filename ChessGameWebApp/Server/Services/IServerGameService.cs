@@ -5,6 +5,6 @@ namespace ChessGameWebApp.Server.Services
     public interface IServerGameService
     {
         ChessBoard GetBoard();
-        ChessBoard Click(int row, int column);
+        bool TryMove(int fromRow, int fromColumn, int toRow, int toColumn);
     }
 }

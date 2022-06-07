@@ -10,7 +10,7 @@ namespace ChessGame
 {
     public class ChessBoard : Board, IEnumerable<ChessCell>
     {
-        public delegate Task<bool> CheckMove();
+        public delegate Task<bool> CheckMove(Cell from, Cell to);
         private CheckMove CheckFigureMove { get; set; } = delegate { return Task.FromResult(true); };
         private ChessCell target;
         internal ChessCell Target 
@@ -54,13 +54,13 @@ namespace ChessGame
             foreach (Cell cell in cells)
                 GetCell(cell.Row, cell.Column).IsMarked = true;
         }
-        public async void Click(int row, int column)
+        public async Task Click(int row, int column)
         {
             var currentCell = (ChessCell)Cells[row, column];
 
             if (currentCell.IsMarked)
             {
-                if (await CheckFigureMove())
+                if (await CheckFigureMove(target, currentCell))
                 {
                     Target.Figure?.MoveTo(currentCell);
                 }

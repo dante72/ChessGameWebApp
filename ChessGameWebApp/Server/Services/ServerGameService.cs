@@ -17,10 +17,23 @@ namespace ChessGameWebApp.Server.Services
             _logger.LogInformation("Get Board");
             return _board;
         }
-        public ChessBoard Click(int row, int column)
+
+        public bool TryMove(int fromRow, int fromColumn, int toRow, int toColumn)
         {
-            _board.Click(row, column);
-            return _board;
+            try
+            {
+                var from = _board.GetCell(fromRow, fromColumn);
+                var to = _board.GetCell(toRow, toColumn);
+                from.Figure.TryMoveTo(to);
+
+                return true;
+            }
+
+            catch
+            {
+                return false;
+            }
+
         }
     }
 }

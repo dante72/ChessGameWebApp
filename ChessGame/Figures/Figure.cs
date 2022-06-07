@@ -24,6 +24,14 @@ namespace ChessGame
             IsFirstMove = firstMove;
         }
         internal Board Board { get => Position.Board; }
+
+        public void TryMoveTo(Cell cell)
+        {
+            if (!GetPossibleMoves().Contains(cell))
+                throw new InvalidOperationException("Error! Such step is impossible");
+
+            MoveTo(cell);
+        }
         internal virtual void MoveTo(Cell cell)
         {
             Position.Figure = null;

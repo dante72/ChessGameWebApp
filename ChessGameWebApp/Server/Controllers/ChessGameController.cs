@@ -42,6 +42,12 @@ namespace ChessGameWebApp.Server.Controllers
             return new Cell(1, 1, null);
         }
 
+        [HttpGet("Move")]
+        public bool TryMove(int fromRow, int fromColumn, int toRow, int toColumn)
+        {
+            return _gameService.TryMove(fromRow, fromColumn, toRow, toColumn);
+        }
+
         [HttpGet("Figure")]
         public async Task<FigureDto?> Figure()
         {
@@ -50,10 +56,10 @@ namespace ChessGameWebApp.Server.Controllers
             return tt;
         }
 
-        [HttpGet("click")]
-        public ChessBoardDto Click(int row, int column)
-        {
-            return _gameService.Click(row, column).ToDto();
-        }
+        //[HttpGet("click")]
+        //public ChessBoardDto Click(int row, int column)
+        //{
+        //    return _gameService.Click(row, column).ToDto();
+        //}
     }
 }

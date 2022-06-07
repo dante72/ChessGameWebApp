@@ -24,13 +24,11 @@ namespace ChessGameWebApp.Client.Components
         protected override async Task OnInitializedAsync()
         {
             await ClientGameService.GetBoard();
-            //await base.OnInitializedAwait();
-
         }
         protected override void OnAfterRender(bool firstRender)
         {
             Update();
-            base.OnAfterRender(firstRender);
+            base.OnAfterRender(firstRender);  
         }
     }
 }

@@ -26,7 +26,7 @@ namespace ChessGameWebApp.Client.Components
         {
             try
             {
-                Board.Click(Row, Column);
+                await Board.Click(Row, Column);
                 ParentComponent.Update();
             }
             catch (Exception ex)

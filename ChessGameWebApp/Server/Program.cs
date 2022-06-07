@@ -1,5 +1,7 @@
 using ChessGame;
+using ChessGameWebApp.Server;
 using ChessGameWebApp.Server.Services;
+using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,12 @@ builder.Services.AddSingleton(b => new ChessBoard(true));
 builder.Services.AddScoped<IServerGameService, ServerGameService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/octet-stream" });
+});
 
 var app = builder.Build();
 
@@ -26,6 +34,7 @@ else
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
+app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -37,5 +46,7 @@ app.MapFallbackToFile("index.html");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Catalog}/{action=Products}/{id?}");
+
+app.MapHub<BroadcastHub>("/chathub");
 
 app.Run();

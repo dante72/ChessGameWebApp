@@ -2,6 +2,7 @@
 using ChessGameWebApp.Client.Services;
 using ChessWebAPI;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace ChessGameWebApp.Client.Components
 {
@@ -21,14 +22,16 @@ namespace ChessGameWebApp.Client.Components
         {
             Children.ForEach(i => i.Update());
         }
-        protected override async Task OnInitializedAsync()
-        {
-            await ClientGameService.GetBoard();
-        }
+
         protected override void OnAfterRender(bool firstRender)
         {
             Update();
             base.OnAfterRender(firstRender);  
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await ClientGameService.GetBoard();
         }
     }
 }

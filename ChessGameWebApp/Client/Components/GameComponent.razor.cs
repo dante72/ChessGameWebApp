@@ -21,16 +21,6 @@ namespace ChessGameWebApp.Client.Components
         {
             Children = new List<CellComponent>();
         }
-        public void Update()
-        {
-            Children.ForEach(i => i.Update());
-        }
-
-        protected override void OnAfterRender(bool firstRender)
-        {
-            Update();
-            base.OnAfterRender(firstRender);  
-        }
 
         protected override async Task OnInitializedAsync()
         {

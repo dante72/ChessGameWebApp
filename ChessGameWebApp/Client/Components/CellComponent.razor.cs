@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 
 namespace ChessGameWebApp.Client.Components
 {
-    public class CellComponentModel : ComponentBase
+    public class CellComponentModel : ComponentBase, IChessCellObserver
     {
         [Parameter]
         public GameComponent ParentComponent { get; set; }
@@ -20,6 +20,17 @@ namespace ChessGameWebApp.Client.Components
         public int Row { get; set; }
         [Parameter]
         public int Column { get; set; }
+        
+        private ChessCell _chessCell;
+        [Parameter]
+        public ChessCell ChessCell { 
+            get => _chessCell;
+            set
+            {
+                _chessCell = value;
+                _chessCell.Subscribe(this);
+            } 
+        }
         [Parameter]
         public string? FigureName { get; set; }
         public ChessBoard Board { get => ParentComponent.Board; }
@@ -30,7 +41,6 @@ namespace ChessGameWebApp.Client.Components
                 if (ParentComponent._GameHubService.IsConnected)
                 {
                     await Board.Click(Row, Column);
-                    ParentComponent.Update();
                 }
             }
             catch (Exception ex)
@@ -40,9 +50,9 @@ namespace ChessGameWebApp.Client.Components
         }
         public void Update()
         {
-            FigureName = ParentComponent.Board.GetCell(Row, Column).FigureName;
-            IsMarked = ParentComponent.Board.GetCell(Row, Column).IsMarked;
-            IsPointer = ParentComponent.Board.GetCell(Row, Column).IsPointer;
+            FigureName = ChessCell.FigureName;
+            IsMarked = ChessCell.IsMarked;
+            IsPointer = ChessCell.IsPointer;
             StateHasChanged();
         }
         protected override void OnInitialized()

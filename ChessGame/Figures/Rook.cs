@@ -11,7 +11,7 @@ namespace ChessGame.Figures
         public Rook(FigureColors color) : base(color)
         {
         }
-        public override List<Cell> GetAllPossibleMoves()
+        protected override List<Cell> GetAllPossibleMoves()
         {
             var list = new List<Cell>();
             if (Position is not null)

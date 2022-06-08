@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    public class ChessBoardDto
+    public interface IChessCellObservable
     {
-        public int Index { get; set; }
-        public List<ChessCellDto> Cells { get; set; } = new List<ChessCellDto>();
+        public void Subscribe(IChessCellObserver observer)
+        {
+            observer.Update();
+        }
     }
 }

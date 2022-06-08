@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ChessGame.Figures
 {
-    internal class Bishop : Figure
+    public class Bishop : Figure
     {
         public Bishop(FigureColors color) : base(color)
         {
         }
-        public override List<Cell> GetAllPossibleMoves()
+        protected override List<Cell> GetAllPossibleMoves()
         {
             var list = new List<Cell>();
             if (Position is not null)

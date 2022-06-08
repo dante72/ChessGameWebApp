@@ -1,23 +1,30 @@
 ﻿using ChessGame;
+using ChessGameWebApp.Client.Services;
 using ChessWebAPI;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace ChessGameWebApp.Client.Components
 {
     public class GameComponentModel : ComponentBase
     {
         [Inject]
-        public WebApi webApi { get; set; }
+        public IClientGameService _ClientGameService { get; set; }
+
+        [Inject]
+        public IGameHubService _GameHubService { get; set; }
         public CellComponentModel Target { get; set; }
-        public ChessBoard Board { get; set; } = new ChessBoard();
+        [Inject]
+        public ChessBoard Board { get; set; }
         public List<CellComponent> Children { get; set; }
         public GameComponentModel()
         {
             Children = new List<CellComponent>();
         }
-        public void Update()
+
+        protected override async Task OnInitializedAsync()
         {
-            Children.ForEach(i => i.Update());
+            await _ClientGameService.GetBoard();
         }
     }
 }

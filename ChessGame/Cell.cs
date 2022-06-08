@@ -14,7 +14,7 @@ namespace ChessGame
         public int Row { get; }
         public int Column { get; }
         private Figure? _figure;
-        internal Figure? Figure
+        public virtual Figure? Figure
         {
             get { return _figure; }
             set
@@ -25,6 +25,7 @@ namespace ChessGame
             }
         }
         internal Board Board { get; }
+        public Cell() { }
         public Cell(int row, int column, Board board)
         {
             Row = row;

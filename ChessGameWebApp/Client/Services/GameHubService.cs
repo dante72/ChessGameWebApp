@@ -29,26 +29,24 @@ namespace ChessGameWebApp.Client.Services
 
             hubConnection.On<ChessCellDto, ChessCellDto>("ReceiveTryMove", (from, to) =>
             {
-
-                    var f = _board.GetCell(from.Row, from.Column);
-                    var t = _board.GetCell(to.Row, to.Column);
-
-                    f.Figure?.TryMoveTo(t);
+                var fromCell = _board.GetCell(from.Row, from.Column);
+                var toCell = _board.GetCell(to.Row, to.Column);
+                
+                fromCell.Figure?.TryMoveTo(toCell);
             });
-
-            Task.Run(async () => { await hubConnection.StartAsync(); });
         }
 
         public async Task GetBoard()
         {
-            if (IsConnected)
-            {
-                await hubConnection.SendAsync("SendBoard");
-            }
+            if (!IsConnected)
+                await hubConnection.StartAsync();
+            await hubConnection.SendAsync("SendBoard");
         }
 
         public async Task SendTryMove(Cell from, Cell to)
         {
+            if (!IsConnected)
+                await hubConnection.StartAsync();
             await hubConnection.SendAsync("SendTryMove", from, to);
         }
 
@@ -59,6 +57,7 @@ namespace ChessGameWebApp.Client.Services
         {
             if (hubConnection is not null)
             {
+                await hubConnection.StopAsync();
                 await hubConnection.DisposeAsync();
             }
         }

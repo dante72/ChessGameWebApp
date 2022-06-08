@@ -24,7 +24,7 @@ namespace ChessGameWebApp.Client.Components
 
         protected override async Task OnInitializedAsync()
         {
-            await _ClientGameService.GetBoard();
+            await _GameHubService.GetBoard();
         }
     }
 }

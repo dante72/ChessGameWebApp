@@ -11,8 +11,6 @@ namespace ChessGame
     public class ChessBoard : Board, IEnumerable<ChessCell>
     {
         public delegate Task<bool> CheckMove(Cell from, Cell to);
-
-        private CheckMove checkFigureMove = delegate { return Task.FromResult(true); };
         private CheckMove CheckFigureMove { get; set; } = delegate { return Task.FromResult(true); };
         private ChessCell target;
         internal ChessCell Target 

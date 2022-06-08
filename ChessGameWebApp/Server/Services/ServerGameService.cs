@@ -24,7 +24,7 @@ namespace ChessGameWebApp.Server.Services
             {
                 var from = _board.GetCell(fromRow, fromColumn);
                 var to = _board.GetCell(toRow, toColumn);
-                from.Figure.TryMoveTo(to);
+                from.Figure?.TryMoveTo(to);
 
                 return true;
             }

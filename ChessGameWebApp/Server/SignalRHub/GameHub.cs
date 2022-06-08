@@ -23,8 +23,20 @@ namespace ChessGameWebApp.Server.SignalRHub
 
         public async Task SendTryMove(ChessCellDto from, ChessCellDto to)
         {
-            _serverGameService.TryMove(from.Row, from.Column, to.Row, to.Column);
-            await Clients.All.SendAsync("ReceiveTryMove", from, to);
+            try
+            {
+                _serverGameService.TryMove(from.Row, from.Column, to.Row, to.Column);
+            }
+            catch(InvalidOperationException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                from = null;
+                to = null;
+            }
+            finally
+            {
+                await Clients.All.SendAsync("ReceiveTryMove", from, to);
+            }
         }
     }
 }

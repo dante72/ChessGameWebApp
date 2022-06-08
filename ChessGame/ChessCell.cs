@@ -13,13 +13,15 @@ namespace ChessGame
     {
         private IChessCellObserver? observer;
         private bool _isPointer;
-        public bool IsPointer { get => _isPointer; set { _isPointer = value; observer?.Update(); } }
         private bool _isMarked;
-        public bool IsMarked { get => _isMarked; set { _isMarked = value; observer?.Update(); } }
-
         private string? _figureName;
+
+        public bool IsPointer { get => _isPointer; set { _isPointer = value; observer?.Update(); } }
+        public bool IsMarked { get => _isMarked; set { _isMarked = value; observer?.Update(); } }
         public string? FigureName { get => _figureName; set { _figureName = value; observer?.Update(); } }
+
         public ChessCell(int row, int column, Board board) : base(row, column, board) { }
+
         private string? GetActualFigureName()
         {
             if (Figure == null)
@@ -27,7 +29,6 @@ namespace ChessGame
 
             return $"{Figure.Color}{Figure.GetType().Name}";
         }
-
         public void Subscribe(IChessCellObserver observer)
         {
             this.observer = observer ?? throw new ArgumentNullException(nameof(observer));  

@@ -27,8 +27,6 @@ namespace ChessGameWebApp.Client.Services
                 updateFromServer = false;
                 await _web.GetBoard(_board);
             }
-                
-            _board.Update();
         }
 
         public async Task<bool> TryMove(Cell from, Cell to)

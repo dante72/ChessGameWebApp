@@ -9,7 +9,10 @@ namespace ChessGameWebApp.Client.Components
     public class GameComponentModel : ComponentBase
     {
         [Inject]
-        public IClientGameService ClientGameService { get; set; }
+        public IClientGameService _ClientGameService { get; set; }
+
+        [Inject]
+        public IGameHubService _GameHubService { get; set; }
         public CellComponentModel Target { get; set; }
         [Inject]
         public ChessBoard Board { get; set; }
@@ -31,7 +34,7 @@ namespace ChessGameWebApp.Client.Components
 
         protected override async Task OnInitializedAsync()
         {
-            await ClientGameService.GetBoard();
+            await _ClientGameService.GetBoard();
         }
     }
 }

@@ -27,8 +27,11 @@ namespace ChessGameWebApp.Client.Components
         {
             try
             {
-                await Board.Click(Row, Column);
-                ParentComponent.Update();
+                if (ParentComponent._GameHubService.IsConnected)
+                {
+                    await Board.Click(Row, Column);
+                    ParentComponent.Update();
+                }
             }
             catch (Exception ex)
             {

@@ -45,7 +45,6 @@ namespace ChessWebAPI
         {
             //var data = await _httpClient.GetFromJsonAsync<ChessBoardDto>($"chessgame/click?row={row}&column={column}");
             chessBoard.Click(row, column);
-            chessBoard.Update();
             //chessBoard.Update(data ?? throw new NullReferenceException(nameof(data)));
         }
     }

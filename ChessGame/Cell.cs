@@ -14,7 +14,7 @@ namespace ChessGame
         public int Row { get; }
         public int Column { get; }
         private Figure? _figure;
-        public Figure? Figure
+        public virtual Figure? Figure
         {
             get { return _figure; }
             set

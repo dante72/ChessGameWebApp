@@ -15,12 +15,19 @@ namespace ChessGame
         public bool IsMarked { get; set; }
         public string? FigureName { get; set; }
         public ChessCell(int row, int column, Board board) : base(row, column, board) { }
-        public string? GetActualFigureName()
+        private string? GetActualFigureName()
         {
             if (Figure == null)
                 return null;
 
             return $"{Figure.Color}{Figure.GetType().Name}";
+        }
+
+        public override Figure? Figure
+        {
+            get { return base.Figure; }
+
+            set { base.Figure = value; FigureName = GetActualFigureName(); }
         }
     }
 }

@@ -13,5 +13,6 @@ builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(build
 builder.Services.AddSingleton(sp => new ServerWebApi(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) }));
 builder.Services.AddSingleton(b => new ChessBoard());
 builder.Services.AddSingleton<IClientGameService, ClientGameService>();
+builder.Services.AddSingleton<IGameHubService, GameHubService>();
 
 await builder.Build().RunAsync();

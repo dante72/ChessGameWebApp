@@ -25,6 +25,7 @@ namespace ChessGame
             }
         }
         internal Board Board { get; }
+        public Cell() { }
         public Cell(int row, int column, Board board)
         {
             Row = row;

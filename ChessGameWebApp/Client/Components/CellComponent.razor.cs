@@ -1,4 +1,5 @@
 ﻿using ChessGame;
+using ChessGameWebApp.Client.Services;
 using ChessWebAPI;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;

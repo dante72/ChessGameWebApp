@@ -75,6 +75,7 @@ namespace ChessGame
             Target = currentCell;
 
             Update();
+
         }
 
         public void SetCheckMethod(CheckMove checkMove)

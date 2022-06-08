@@ -1,6 +1,6 @@
 using ChessGame;
-using ChessGameWebApp.Server;
 using ChessGameWebApp.Server.Services;
+using ChessGameWebApp.Server.SignalRHub;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,5 +48,6 @@ app.MapControllerRoute(
     pattern: "{controller=Catalog}/{action=Products}/{id?}");
 
 app.MapHub<BroadcastHub>("/chathub");
+app.MapHub<GameHub>("/gamehub");
 
 app.Run();

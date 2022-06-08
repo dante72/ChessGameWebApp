@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace ChessGameWebApp.Server
+namespace ChessGameWebApp.Server.SignalRHub
 {
     public class BroadcastHub : Hub
     {

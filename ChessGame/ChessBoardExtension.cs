@@ -23,6 +23,8 @@ namespace ChessGame
                 });
             }
 
+            chessBoardDto.Index = chessBoard.Index;
+
             return chessBoardDto;
         }
 
@@ -34,6 +36,9 @@ namespace ChessGame
             {
                 chessBoard[cell.Row, cell.Column] = data.Cells[cell.Row * 8 + cell.Column].Figure?.FromDto();
             }
+            chessBoard.Index = data.Index;
+
+            chessBoard.Update();
         }
 
         public static ChessBoard FromDto(this ChessBoardDto data)

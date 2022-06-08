@@ -9,13 +9,15 @@ namespace ChessGameWebApp.Client.Services
         private readonly ChessBoard _board;
         private readonly ServerWebApi _web;
         private bool updateFromServer = true;
+        IGameHubService _gameHubService;
 
         public ChessCell[] CurrentMove { get; set; } = new ChessCell[0];
-        public ClientGameService(ILogger<ClientGameService> logger, ChessBoard board, ServerWebApi webApi)
+        public ClientGameService(ILogger<ClientGameService> logger, ChessBoard board, ServerWebApi webApi, IGameHubService gameHubService)
         {
             _logger = logger;
             _board = board;
             _web = webApi;
+            _gameHubService = gameHubService;
             _board.SetCheckMethod(TryMove);
         }
         public async Task GetBoard()
@@ -29,9 +31,10 @@ namespace ChessGameWebApp.Client.Services
             _board.Update();
         }
 
-        public Task<bool> TryMove(Cell from, Cell to)
+        public async Task<bool> TryMove(Cell from, Cell to)
         {
-            return _web.TryMove(from, to);
+            await _gameHubService.SendTryMove(from, to);
+            return true;//_web.TryMove(from, to);
         }
 
         public void BoardUpdateFromServer()

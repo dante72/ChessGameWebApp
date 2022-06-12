@@ -14,14 +14,19 @@
     <h2>Login</h2>
     <form name="form">
         <table>
-            <tr>
-                <td><label for="username">Username</label></td>
-                <td><input type="text" name="username" /></td>
-            </tr>
+            
             @if (isRegistration)
             {
                 <tr>
-                    <td><label for="password">Create a password</label></td>
+                    <td><label for="login">Login</label></td>
+                    <td><input type="text" name="login" /></td>
+                </tr>
+                <tr>
+                    <td><label for="username">Username</label></td>
+                    <td><input type="text" name="username" /></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Create password</label></td>
                     <td><input type="password" name="repeat" /></td>
                 </tr>
                 <tr>
@@ -30,19 +35,34 @@
                 </tr>
             }
             else
-            {   
+            {
+                <tr>
+                    <td><label for="login">Login</label></td>
+                    <td><input type="text" name="login" /></td>
+                </tr>
                 <tr>
                     <td><label for="password">Password</label></td>
                     <td><input type="password" name="password" /></td>
                 </tr>
             }
-           
-            <tr>
-                <td>
-                    <input class="btn btn-primary" type="submit" value="Login" />
-                    <input class="btn btn-secondary" type="button" @onclick="ToRegistration" value="Register"/>
-                </td>
-            </tr>
+            @if (isRegistration)
+            {
+                <tr>
+                    <td>
+                        <input class="btn btn-secondary" type="submit" value="Login" @onclick="ToLogin"/>
+                        <input class="btn btn-primary" type="button"  value="Register"/>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        <input class="btn btn-primary" type="submit" value="Login" />
+                        <input class="btn btn-secondary" type="button" @onclick="ToRegistration" value="Register"/>
+                    </td>
+                </tr>
+            }
         </table>
     </form>
 </div>

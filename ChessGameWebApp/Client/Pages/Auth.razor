@@ -1,56 +1,96 @@
-﻿@page "/auth"
-<h3>Auth</h3>
+﻿@using ChessGameWebApp.Shared
+@page "/auth"
 
 @code {
     private bool isRegistration = false;
 
     private void ToRegistration() => isRegistration = true;
     private void ToLogin() => isRegistration = false;
+    AuthModel authModel = new();
+    private ValidationMessageStore messageStore;
 
+    private void HandleValidSubmit()
+    {
+        
+    }
+
+    
+  string LastSubmitResult;
+  void FormSubmitted(EditContext editContext)
+  {
+      bool formIsValid = editContext.Validate();
+      LastSubmitResult = formIsValid ? "Success - form was valid" : "Failure - form was invalid";
+  }
 
 }
 
+@if (LastSubmitResult != null)
+{
+  <h2>
+    Last submit status: @LastSubmitResult
+  </h2>
+}
+
 <div>
-    <h2>Login</h2>
-    <form name="form">
+    @if (isRegistration)
+    {
+        <h2>Registration</h2>
+    }
+    else
+    {
+        <h2>Login</h2>
+    }
+    <EditForm Model="@authModel" OnSubmit="@FormSubmitted">
+        <DataAnnotationsValidator/>
         <table>
             
             @if (isRegistration)
             {
                 <tr>
                     <td><label for="login">Login</label></td>
-                    <td><input type="text" name="login" /></td>
+                    <td><input type="text" name="login" @bind-value="authModel.Login"/></td>
+                    <ValidationMessage For=@(() => authModel.Login) />
                 </tr>
                 <tr>
                     <td><label for="username">Username</label></td>
-                    <td><input type="text" name="username" /></td>
+                    <td><input type="text" name="username" @bind-value="authModel.Username"/></td>
+                    <ValidationMessage For=@(() => authModel.Username) />
                 </tr>
                 <tr>
-                    <td><label for="password">Create password</label></td>
-                    <td><input type="password" name="repeat" /></td>
+                    <td><label for="email">E-mail</label></td>
+                    <td><input type="text" name="email" @bind-value="authModel.Email"/></td>
+                    <ValidationMessage For=@(() => authModel.Email) />
                 </tr>
                 <tr>
-                    <td><label for="repeat">Repeat password</label></td>
-                    <td><input type="password" name="repeat" /></td>
+                    <td><label for="password">Password</label></td>
+                    <td><input type="password" name="password" @bind-value="authModel.Password"/></td>
+                    <ValidationMessage For=@(() => authModel.Password) />
+                </tr>
+                <tr>
+                    <td><label for="confirm">Confirm</label></td>
+                    <td><input type="password" name="confirm" @bind-value="authModel.Confirm"/></td>
+                    <ValidationMessage For=@(() => authModel.Confirm) />
                 </tr>
             }
             else
             {
                 <tr>
                     <td><label for="login">Login</label></td>
-                    <td><input type="text" name="login" /></td>
+                    <td><input type="text" name="login" @bind-value="authModel.Login"/></td>
+                    <ValidationMessage For=@(() => authModel.Login) />
                 </tr>
                 <tr>
                     <td><label for="password">Password</label></td>
-                    <td><input type="password" name="password" /></td>
+                    <td><input type="password" name="password" @bind-value="authModel.Password"/></td>
+                    <ValidationMessage For=@(() => authModel.Password) />
                 </tr>
             }
             @if (isRegistration)
             {
                 <tr>
                     <td>
-                        <input class="btn btn-secondary" type="submit" value="Login" @onclick="ToLogin"/>
-                        <input class="btn btn-primary" type="button"  value="Register"/>
+                        <input class="btn btn-secondary" type="button" value="Login" @onclick="ToLogin"/>
+                        <input class="btn btn-primary" type="submit" value="Register" actio/>
                     </td>
                 </tr>
             }
@@ -64,5 +104,5 @@
                 </tr>
             }
         </table>
-    </form>
+    </EditForm>
 </div>

@@ -1,12 +1,37 @@
 using ChessGame;
+using ChessGameWebApp.Server.Auth;
 using ChessGameWebApp.Server.Services;
 using ChessGameWebApp.Server.SignalRHub;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+// добавление сервисов аутентификации
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            // указывает, будет ли валидироваться издатель при валидации токена
+            ValidateIssuer = true,
+            // строка, представляющая издателя
+            ValidIssuer = AuthOptions.ISSUER,
+            // будет ли валидироваться потребитель токена
+            ValidateAudience = true,
+            // установка потребителя токена
+            ValidAudience = AuthOptions.AUDIENCE,
+            // будет ли валидироваться время существования
+            ValidateLifetime = true,
+            // установка ключа безопасности
+            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+            // валидация ключа безопасности
+            ValidateIssuerSigningKey = true
+        };
+    });
 
-// Add services to the container.
-builder.Services.AddSingleton(b => new ChessBoard(true));
+
+        // Add services to the container.
+        builder.Services.AddSingleton(b => new ChessBoard(true));
 builder.Services.AddScoped<IServerGameService, ServerGameService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -18,6 +43,8 @@ builder.Services.AddResponseCompression(opts =>
 });
 
 var app = builder.Build();
+
+app.UseAuthentication();   // добавление middleware аутентификации
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

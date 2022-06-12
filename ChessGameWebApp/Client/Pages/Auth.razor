@@ -1,0 +1,48 @@
+﻿@page "/auth"
+<h3>Auth</h3>
+
+@code {
+    private bool isRegistration = false;
+
+    private void ToRegistration() => isRegistration = true;
+    private void ToLogin() => isRegistration = false;
+
+
+}
+
+<div>
+    <h2>Login</h2>
+    <form name="form">
+        <table>
+            <tr>
+                <td><label for="username">Username</label></td>
+                <td><input type="text" name="username" /></td>
+            </tr>
+            @if (isRegistration)
+            {
+                <tr>
+                    <td><label for="password">Create a password</label></td>
+                    <td><input type="password" name="repeat" /></td>
+                </tr>
+                <tr>
+                    <td><label for="repeat">Repeat password</label></td>
+                    <td><input type="password" name="repeat" /></td>
+                </tr>
+            }
+            else
+            {   
+                <tr>
+                    <td><label for="password">Password</label></td>
+                    <td><input type="password" name="password" /></td>
+                </tr>
+            }
+           
+            <tr>
+                <td>
+                    <input class="btn btn-primary" type="submit" value="Login" />
+                    <input class="btn btn-secondary" type="button" @onclick="ToRegistration" value="Register"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

@@ -1,4 +1,5 @@
 ﻿@using ChessGameWebApp.Shared
+@inject ChessWebAPI.ServerWebApi webApi
 @page "/auth"
 
 @code {
@@ -11,24 +12,26 @@
 
     private void HandleValidSubmit()
     {
-        
+
     }
 
-    
-  string LastSubmitResult;
-  void FormSubmitted(EditContext editContext)
-  {
-      bool formIsValid = editContext.Validate();
-      LastSubmitResult = formIsValid ? "Success - form was valid" : "Failure - form was invalid";
-  }
 
-}
+    string LastSubmitResult;
+    async void FormSubmitted(EditContext editContext)
+    {
+        bool formIsValid = editContext.Validate();
+        if (formIsValid)
+        {
+            await webApi.Registration(new ChessWebAPI.AccountRequestModel()
+                {
+                    Username = authModel.Username,
+                    Login = authModel.Login,
+                    Password = authModel.Password,
+                    Email = authModel.Email
+                });
+        }
+    }
 
-@if (LastSubmitResult != null)
-{
-  <h2>
-    Last submit status: @LastSubmitResult
-  </h2>
 }
 
 <div>
@@ -40,7 +43,7 @@
     {
         <h2>Login</h2>
     }
-    <EditForm Model="@authModel" OnSubmit="@FormSubmitted" Method="Post">
+    <EditForm Model="@authModel" OnSubmit="@FormSubmitted" Method="Put">
         <DataAnnotationsValidator/>
         <table>
             

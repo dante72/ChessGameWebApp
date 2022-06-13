@@ -26,6 +26,8 @@ namespace Models
 
         public string Email { get; set; }
 
+        public string Username { get; set; }
+
         public string Login { get; set; }
 
         public string HashPassword { get; set; }

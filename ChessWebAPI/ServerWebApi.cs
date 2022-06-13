@@ -1,4 +1,5 @@
 ﻿using ChessGame;
+using ChessGameWebApp.Shared;
 using System.Net.Http.Json;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
@@ -13,9 +14,9 @@ namespace ChessWebAPI
             _httpClient = httpClient ?? throw new NullReferenceException(nameof(httpClient));
         }
 
-        public Task Registration(AccountRequestModel account)
+        public async Task Registration(AccountRequestModel account)
         {
-            return _httpClient.PostAsJsonAsync($"/Registration/Registration", account);
+            await _httpClient.PutAsJsonAsync("Authentication/Registration", account);
         }
     }
 }

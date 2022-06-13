@@ -16,6 +16,8 @@ namespace ChessWebAPI
 
         public string Username { get; set; }
 
+        public AccountRequestModel() { }
+
         public AccountRequestModel(string login, string password, string email, string username)
         {
             Login = login;

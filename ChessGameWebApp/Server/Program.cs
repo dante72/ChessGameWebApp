@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ChessGameWebApp.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,13 +41,17 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 builder.Services.AddDbContext<AppDbContext>(
-    options => options.UseSqlite($"Data Source={builder.Configuration.GetSection("DbPath")}"));
-
+    options => options.UseSqlite($"Data Source={builder.Configuration.GetSection("DbPath").Value}"));
+builder.Services.AddControllersWithViews();
 
 // Add services to the container.
 builder.Services.AddSingleton(b => new ChessBoard(true));
 builder.Services.AddScoped<IServerGameService, ServerGameService>();
-builder.Services.AddControllersWithViews();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+builder.Services.AddScoped<IPasswordHasher<Account>, PasswordHasher<Account>>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWorkEf>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 builder.Services.AddResponseCompression(opts =>
@@ -56,7 +62,8 @@ builder.Services.AddResponseCompression(opts =>
 
 var app = builder.Build();
 
-app.UseAuthentication();   // добавление middleware аутентификации
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -77,14 +84,10 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.MapControllers();
 
 app.MapRazorPages();
-app.MapControllers();
-app.MapFallbackToFile("index.html");
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Catalog}/{action=Products}/{id?}");
+//app.MapFallbackToFile("index.html");
 
 app.MapHub<BroadcastHub>("/chathub");
 app.MapHub<GameHub>("/gamehub");

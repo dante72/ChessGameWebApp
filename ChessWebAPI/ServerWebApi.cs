@@ -1,5 +1,6 @@
 ﻿using ChessGame;
 using ChessGameWebApp.Shared;
+using Models;
 using System.Net.Http.Json;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
@@ -17,6 +18,11 @@ namespace ChessWebAPI
         public async Task Registration(AccountRequestModel account)
         {
             await _httpClient.PutAsJsonAsync("Authentication/Registration", account);
+        }
+
+        public Task<Account[]?> GetAccounts()
+        {
+            return _httpClient.GetFromJsonAsync<Account[]>("Authentication/Accounts");
         }
     }
 }

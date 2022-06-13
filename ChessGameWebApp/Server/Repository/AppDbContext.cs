@@ -8,9 +8,7 @@ namespace ChessGameWebApp.Server.Repository
         private DbSet<Account> Accounts => Set<Account>();
         public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
         {
-            //Database.EnsureDeleted();
             Database.EnsureCreated();
-            //CreateDB();
         }
     }
 }

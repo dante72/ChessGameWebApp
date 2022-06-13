@@ -30,10 +30,17 @@ namespace ChessGameWebApp.Server.Controllers
             await _registrationService.AddAccount(Hash(account));
         }
 
+        [HttpGet("Accounts")]
+        public Task<IReadOnlyList<Account>> Accounts()
+        {
+            return _registrationService.GetAccounts();
+        }
+
         private Account Hash(AccountRequestModel account)
         {
             var acc = new Account();
 
+            acc.Id = 0;
             acc.Username = account.Username;
             acc.Login = account.Login;
             acc.Email = account.Email;

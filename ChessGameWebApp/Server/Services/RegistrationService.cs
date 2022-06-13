@@ -32,7 +32,11 @@ public class RegistrationService : IRegistrationService
             await _uow.SaveChangesAsync();
 
     }
-    
+
+    public Task<IReadOnlyList<Account>> GetAccounts()
+    {
+        return _uow.AccountRepository.GetAll();
+    }
     public Task GetAccountById(int id)
     {
         return _uow.AccountRepository.GetById(id);

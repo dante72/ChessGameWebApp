@@ -20,7 +20,7 @@
     async void FormSubmitted(EditContext editContext)
     {
         bool formIsValid = editContext.Validate();
-        if (formIsValid)
+        //if (formIsValid)
         {
             await webApi.Registration(new ChessWebAPI.AccountRequestModel()
                 {
@@ -29,6 +29,8 @@
                     Password = authModel.Password,
                     Email = authModel.Email
                 });
+
+            var accounts = await webApi.GetAccounts();
         }
     }
 
@@ -43,7 +45,7 @@
     {
         <h2>Login</h2>
     }
-    <EditForm Model="@authModel" OnSubmit="@FormSubmitted" Method="Put">
+    <EditForm Model="@authModel" OnSubmit="@FormSubmitted" Method="Post">
         <DataAnnotationsValidator/>
         <table>
             

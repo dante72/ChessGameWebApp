@@ -12,5 +12,10 @@ namespace ChessWebAPI
         {
             _httpClient = httpClient ?? throw new NullReferenceException(nameof(httpClient));
         }
+
+        public Task Registration(AccountRequestModel account)
+        {
+            return _httpClient.PostAsJsonAsync($"/Registration/Registration", account);
+        }
     }
 }

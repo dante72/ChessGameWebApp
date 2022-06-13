@@ -20,6 +20,8 @@
   {
       bool formIsValid = editContext.Validate();
       LastSubmitResult = formIsValid ? "Success - form was valid" : "Failure - form was invalid";
+
+      if ()
   }
 
 }
@@ -40,7 +42,7 @@
     {
         <h2>Login</h2>
     }
-    <EditForm Model="@authModel" OnSubmit="@FormSubmitted">
+    <EditForm Model="@authModel" OnSubmit="@FormSubmitted" Method="Post">
         <DataAnnotationsValidator/>
         <table>
             

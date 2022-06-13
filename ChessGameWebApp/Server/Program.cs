@@ -1,37 +1,49 @@
 using ChessGame;
-using ChessGameWebApp.Server.Auth;
+using ChessGameWebApp.Server.Repository;
 using ChessGameWebApp.Server.Services;
 using ChessGameWebApp.Server.SignalRHub;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using ChessGameWebApp.Shared;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
-// добавление сервисов аутентификации
-builder.Services.AddAuthentication("Bearer")
+
+JwtConfig jwtConfig = builder.Configuration
+    .GetSection("JwtConfig")
+    .Get<JwtConfig>();
+builder.Services.AddScoped<ITokenService>(_ => new TokenService(jwtConfig));
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            // указывает, будет ли валидироваться издатель при валидации токена
-            ValidateIssuer = true,
-            // строка, представляющая издателя
-            ValidIssuer = AuthOptions.ISSUER,
-            // будет ли валидироваться потребитель токена
-            ValidateAudience = true,
-            // установка потребителя токена
-            ValidAudience = AuthOptions.AUDIENCE,
-            // будет ли валидироваться время существования
+            IssuerSigningKey = new SymmetricSecurityKey(jwtConfig.SigningKeyBytes),
+            ValidateIssuerSigningKey = true,
             ValidateLifetime = true,
-            // установка ключа безопасности
-            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-            // валидация ключа безопасности
-            ValidateIssuerSigningKey = true
+            RequireExpirationTime = true,
+            RequireSignedTokens = true,
+
+            ValidateAudience = true,
+            ValidateIssuer = true,
+            ValidAudiences = new[] { jwtConfig.Audience },
+            ValidIssuer = jwtConfig.Issuer
         };
     });
+builder.Services.AddAuthorization();
+
+builder.Services.AddDbContext<AppDbContext>(
+    options => options.UseSqlite($"Data Source={builder.Configuration.GetSection("DbPath")}"));
 
 
-        // Add services to the container.
-        builder.Services.AddSingleton(b => new ChessBoard(true));
+// Add services to the container.
+builder.Services.AddSingleton(b => new ChessBoard(true));
 builder.Services.AddScoped<IServerGameService, ServerGameService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

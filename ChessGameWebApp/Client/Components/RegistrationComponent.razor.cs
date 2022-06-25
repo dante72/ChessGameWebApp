@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Components;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ChessGameWebApp.Shared
+namespace ChessGameWebApp.Client.Components
 {
-    public class AuthModel
+    public class RegistrationComponentModel : ComponentBase
     {
         [Required]
         [StringLength(20, MinimumLength = 4, ErrorMessage = "4 - 20 character")]

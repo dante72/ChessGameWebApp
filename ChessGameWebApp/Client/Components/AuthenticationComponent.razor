@@ -1,0 +1,44 @@
+﻿@page "/authentication"
+@using ChessWebAPI
+@inherits AuthenticationComponentModel
+@inject ServerWebApi webApi
+<h3>Authentication</h3>
+
+
+@code {
+    
+    async void FormSubmitted(EditContext editContext)
+    {
+        bool formIsValid = editContext.Validate();
+        {
+            await webApi.Registration(new AccountRequestModel()
+            {
+                Login = Login,
+                Password = Password
+            });
+        }
+    }
+
+}
+
+<EditForm Model="@this" OnSubmit="@FormSubmitted" Method="Post">
+    <DataAnnotationsValidator/>
+    <table>
+        <tr>
+            <td><label for="login">Login</label></td>
+            <td><input type="text" name="login" @bind-value="Login"/></td>
+            <ValidationMessage For=@(() => Login) />
+            </tr>
+            <tr>
+                <td><label for="password">Password</label></td>
+                <td><input type="password" name="password" @bind-value="Password"/></td>
+                <ValidationMessage For=@(() => Password) />
+            </tr>
+            <tr>
+                <td>
+                    <input class="btn btn-primary" type="submit" value="Login" />
+                    <NavLink class="btn btn-secondary" href="registration">Register</NavLink>
+                </td>
+            </tr>
+      </table>
+</EditForm>

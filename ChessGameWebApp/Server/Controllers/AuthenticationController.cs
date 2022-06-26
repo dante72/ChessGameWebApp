@@ -36,6 +36,14 @@ namespace ChessGameWebApp.Server.Controllers
             return _registrationService.GetAccounts();
         }
 
+        [HttpPost("Autor")]
+        public async Task<ActionResult<AccountResponseModel>> Autorization([FromBody] AccountRequestModel account)
+        {
+            _logger.Log(LogLevel.Information, $"Autorization {account.Login}");
+            return await _registrationService.Autorization(account);
+
+        }
+
         private Account Hash(AccountRequestModel account)
         {
             var acc = new Account();

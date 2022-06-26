@@ -30,7 +30,6 @@ public class RegistrationService : IRegistrationService
     { 
             await _uow.AccountRepository.Add(account);
             await _uow.SaveChangesAsync();
-
     }
 
     public Task<IReadOnlyList<Account>> GetAccounts()
@@ -57,5 +56,25 @@ public class RegistrationService : IRegistrationService
     public Task<Account> GetAccountByLogin(string login)
     {
         return _uow.AccountRepository.GetByLogin(login);
+    }
+
+    public async Task<ActionResult<AccountResponseModel>> Autorization(AccountRequestModel account)
+    {
+        var acc = await GetAccountByLogin(account.Login);
+
+        var isCorrectPassword = _passwordHasher.VerifyHashedPassword(acc, acc.HashPassword, account.Password) !=
+                PasswordVerificationResult.Failed;
+
+
+        if (acc != null && isCorrectPassword)
+        {
+            var token = _tokenService.GenerateToken(acc);
+            return new AccountResponseModel(acc, token);
+        }
+
+        return new ContentResult()
+        {
+            StatusCode = 404
+        };
     }
 }

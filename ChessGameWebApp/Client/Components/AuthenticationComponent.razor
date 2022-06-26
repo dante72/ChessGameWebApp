@@ -2,27 +2,26 @@
 @using ChessWebAPI
 @inherits AuthenticationComponentModel
 @inject ServerWebApi webApi
+@inject IJSRuntime JsRuntime
 <h3>Authentication</h3>
 
 
 @code {
-    
+
     async void FormSubmitted(EditContext editContext)
     {
-        bool formIsValid = editContext.Validate();
+        var result = await webApi.Autorization(new AccountRequestModel()
         {
-            await webApi.Registration(new AccountRequestModel()
-            {
                 Login = Login,
                 Password = Password
-            });
-        }
-    }
+        });
 
+         await JsRuntime.InvokeVoidAsync("alert", $"Hello, {result.Account.Username}");
+    }
 }
 
-<EditForm Model="@this" OnSubmit="@FormSubmitted" Method="Post">
-    <DataAnnotationsValidator/>
+<EditForm Model="@this" OnValidSubmit="@FormSubmitted">
+    <DataAnnotationsValidator />
     <table>
         <tr>
             <td><label for="login">Login</label></td>

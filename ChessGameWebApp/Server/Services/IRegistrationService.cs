@@ -10,4 +10,5 @@ public interface IRegistrationService
     Task<Account> GetAccountByEmail(string email);
     Task BanAccount(Account account);
     Task<IReadOnlyList<Account>> GetAccounts();
+    Task<ActionResult<AccountResponseModel>> Autorization(AccountRequestModel account);
 }

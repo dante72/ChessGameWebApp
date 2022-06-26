@@ -7,23 +7,18 @@
 @code {
     async void FormSubmitted(EditContext editContext)
     {
-        bool formIsValid = editContext.Validate();
+        await webApi.Registration(new AccountRequestModel()
         {
-            await webApi.Registration(new AccountRequestModel()
-            {
-                Username = Username,
-                Login = Login,
-                Password = Password,
-                Email = Email
-            });
-            
-            //var accounts = await webApi.GetAccounts();
-        }
+            Username = Username,
+            Login = Login,
+            Password = Password,
+            Email = Email
+        });
     }
 }
 
-<EditForm Model="@this" OnSubmit="@FormSubmitted" Method="Post">
-    <DataAnnotationsValidator/>
+<EditForm Model="@this" OnValidSubmit="@FormSubmitted">
+    <DataAnnotationsValidator />
     <table>
         <tr>
             <td><label for="login">Login</label></td>

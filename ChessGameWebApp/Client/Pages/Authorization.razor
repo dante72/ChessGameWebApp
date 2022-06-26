@@ -1,5 +1,16 @@
 ﻿@page "/authorization"
+@using ChessGameWebApp.Client.Components
+@inherits AuthorizationModel
 
 @code {
 
+}
+
+@if (IsShowRegistration)
+{
+    <RegistrationComponent Parent=@this></RegistrationComponent>
+}
+else
+{
+    <AuthenticationComponent Parent=@this></AuthenticationComponent>
 }

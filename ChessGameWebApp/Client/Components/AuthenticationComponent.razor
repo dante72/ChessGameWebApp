@@ -1,5 +1,4 @@
-﻿@page "/authentication"
-@using ChessWebAPI
+﻿@using ChessWebAPI
 @inherits AuthenticationComponentModel
 @inject ServerWebApi webApi
 @inject IJSRuntime JsRuntime
@@ -18,6 +17,7 @@
 
          await JsRuntime.InvokeVoidAsync("alert", $"Hello, {result.Account.Username}");
     }
+
 }
 
 <EditForm Model="@this" OnValidSubmit="@FormSubmitted">
@@ -35,8 +35,8 @@
             </tr>
             <tr>
                 <td>
-                    <input class="btn btn-primary" type="submit" value="Login" />
-                    <NavLink class="btn btn-secondary" href="registration">Register</NavLink>
+                    <input class="btn btn-primary" type="submit" value="Register" />
+                    <input class="btn btn-secondary" type="button" value="Login" onclick="@Parent.MenuSwitch"/>
                 </td>
             </tr>
       </table>

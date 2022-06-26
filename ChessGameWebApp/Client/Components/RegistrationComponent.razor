@@ -1,5 +1,4 @@
-﻿@page "/registration"
-@using ChessWebAPI
+﻿@using ChessWebAPI
 @inherits RegistrationComponentModel
 @inject ServerWebApi webApi
 <h3>Registration</h3>
@@ -50,7 +49,7 @@
             </tr>
             <tr>
                 <td>
-                    <NavLink class="btn btn-secondary" href="authentication">Login</NavLink>
+                    <input class="btn btn-secondary" type="button" value="Login" onclick="@Parent.MenuSwitch"/>
                     <input class="btn btn-primary" type="submit" value="Register" />
                 </td>
             </tr>

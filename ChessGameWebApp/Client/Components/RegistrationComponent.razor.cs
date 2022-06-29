@@ -6,8 +6,6 @@ namespace ChessGameWebApp.Client.Components
 {
     public class RegistrationComponentModel : ComponentBase
     {
-        [Parameter]
-        public AuthorizationModel Parent { get; set; }
         [Required]
         [StringLength(20, MinimumLength = 4, ErrorMessage = "4 - 20 character")]
         public string Username { get; set; }

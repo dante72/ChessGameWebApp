@@ -1,7 +1,9 @@
 ﻿@using ChessWebAPI
+@using Models
 @inherits AuthenticationComponentModel
 @inject ServerWebApi webApi
 @inject IJSRuntime JsRuntime
+@inject SiteUserInfo User
 <h3>Authentication</h3>
 
 
@@ -15,7 +17,13 @@
                 Password = Password
         });
 
-         await JsRuntime.InvokeVoidAsync("alert", $"Hello, {result.Account.Username}");
+        if (result != null)
+        {
+            User.UserName = result.Account.Username;
+            User.AccountId = result.Account.Id;
+
+            await JsRuntime.InvokeVoidAsync("alert", $"Hello, {result.Account.Username}");
+        }
     }
 
 }
@@ -35,8 +43,8 @@
             </tr>
             <tr>
                 <td>
-                    <input class="btn btn-primary" type="submit" value="Register" />
-                    <input class="btn btn-secondary" type="button" value="Login" onclick="@Parent.MenuSwitch"/>
+                    <input class="btn btn-primary" type="submit" value="Login" />
+                    <NavLink class="btn btn-secondary" type="button" href="authorization/reg">Register</NavLink>
                 </td>
             </tr>
       </table>

@@ -4,6 +4,7 @@ using ChessGameWebApp.Client.Services;
 using ChessWebAPI;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Models;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -14,5 +15,6 @@ builder.Services.AddScoped(sp => new ServerWebApi(new HttpClient { BaseAddress =
 builder.Services.AddSingleton(b => new ChessBoard());
 builder.Services.AddSingleton<IClientGameService, ClientGameService>();
 builder.Services.AddSingleton<IGameHubService, GameHubService>();
+builder.Services.AddSingleton(user => new SiteUserInfo());
 
 await builder.Build().RunAsync();

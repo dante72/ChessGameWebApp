@@ -4,10 +4,12 @@ namespace ChessGameWebApp.Client.Pages
 {
     public class AuthorizationModel : ComponentBase
     {
-        public bool IsShowRegistration { get; private set; }
-        public void MenuSwitch()
+        [Parameter]
+        public string Type { get; set; }
+
+        protected override void OnInitialized()
         {
-            IsShowRegistration = !IsShowRegistration;
+            Type = Type ?? "auth";
         }
     }
 }

@@ -21,9 +21,10 @@ namespace Repository
         public virtual async Task<IReadOnlyList<TEntity>> GetAll()
             => await _entities.ToListAsync();
 
-        public virtual async Task Add(TEntity entity)
+        public virtual Task Add(TEntity entity)
         {
-            await _entities.AddAsync(entity);
+            _entities.Add(entity);
+            return Task.CompletedTask;
         }
 
         public virtual Task Update(TEntity TEntity)

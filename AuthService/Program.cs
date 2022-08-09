@@ -1,5 +1,7 @@
+using AuthService.Services;
 using DbContextDao;
 using Microsoft.EntityFrameworkCore;
+using Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,10 @@ builder.Services.AddDbContext<AuthContext>(
                    database={dbConfig["Database"]};",
                  new MySqlServerVersion(dbConfig["Version"]))
     );
+
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWorkEF>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,3 +1,6 @@
+using DbContextDao;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +10,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var dbConfig = builder.Configuration.GetSection("MySqlConfig");
+
+builder.Services.AddDbContext<AuthContext>(
+    options => options.UseMySql(
+                 $@"server={dbConfig["Server"]};
+                   port={dbConfig["Port"]};
+                   user={dbConfig["User"]};
+                   password={dbConfig["Password"]};
+                   database={dbConfig["Database"]};",
+                 new MySqlServerVersion(dbConfig["Version"]))
+    );
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

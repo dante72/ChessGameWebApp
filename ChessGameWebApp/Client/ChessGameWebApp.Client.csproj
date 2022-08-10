@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ChessGame\ChessGame.csproj" />
-    <ProjectReference Include="..\..\ChessWebAPI\ChessWebAPI.csproj" />
+    <ProjectReference Include="..\..\ChessWebAPI\AuthWebAPI.csproj" />
     <ProjectReference Include="..\Shared\ChessGameWebApp.Shared.csproj" />
   </ItemGroup>
 

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGameWebApp.Shared", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGame", "ChessGame\ChessGame.csproj", "{99FD221C-4429-4808-889E-83BC8C91E932}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessWebAPI", "ChessWebAPI\ChessWebAPI.csproj", "{50FFF098-3AE5-4F6A-A708-BE78D803D12C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthWebAPI", "ChessWebAPI\AuthWebAPI.csproj", "{50FFF098-3AE5-4F6A-A708-BE78D803D12C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48E7240B-C9AE-4393-BFCD-CC3CE11B5393}"
 	ProjectSection(SolutionItems) = preProject

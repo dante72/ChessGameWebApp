@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ChessWebAPI\AuthWebAPI.csproj" />
     <ProjectReference Include="..\DbContextDao\DbContextDao.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>

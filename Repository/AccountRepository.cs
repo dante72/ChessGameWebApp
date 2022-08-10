@@ -10,10 +10,16 @@ namespace Repository
         {
         }
 
-        public Task<Account?> GetByEmail(string email)
-            => _entities.FirstOrDefaultAsync(it => it.Email == email);
+        public Task<Account?> FindByEmail(string email)
+        {
+            var result = _entities.FirstOrDefault(it => it.Email == email);
+            return Task.FromResult(result);
+        }
 
-        public Task<Account?> GetByLogin(string login)
-            => _entities.FirstOrDefaultAsync(it => it.Login == login);
+        public Task<Account?> FindByLogin(string login)
+        {
+            var result = _entities.FirstOrDefault(it => it.Login == login);
+            return Task.FromResult(result);
+        }
     }
 }

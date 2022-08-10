@@ -1,7 +1,11 @@
 ﻿using AuthService.Services;
+using ChessWebAPI;
 using DbContextDao;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 using Repository;
+using System.Net;
 
 namespace AuthService.Controllers
 {
@@ -10,17 +14,36 @@ namespace AuthService.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IRegistrationService _registrationService;
-        public AuthController(IRegistrationService registrationService)
+        private readonly IPasswordHasher<Account> _passwordHasher;
+        public AuthController(IRegistrationService registrationService, IPasswordHasher<Account> passwordHasher)
         {
-            _registrationService = registrationService;
+            _registrationService = registrationService ?? throw new ArgumentNullException(nameof(registrationService));
+            _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
         }
         [HttpPost(Name = "Registaration")]
-        public void Registration()
+        public async Task<IActionResult> Registration([FromBody]AccountRequestModel account)
         {
-            //_dbContext.Users.Add(new Models.Account() { Email = "test2", Login = "hello", Username = "test", HashPassword="ttttt", IsBanned = false, Id = 0 });
-            //_dbContext.SaveChanges();
-            //_accountRepository.Add(new Models.Account() { Email = "test3", Login = "hello", Username = "test", HashPassword = "ttttt", IsBanned = false, Id = 0 });
-            _registrationService.AddAccount(new Models.Account() { Email = "test5", Login = "hello", Username = "test", HashPassword = "ttttt", IsBanned = false, Id = 0 });
+            try
+            {
+                await _registrationService.AddAccount(Map(account));
+                return Ok("Registration is successful!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        private Account Map(AccountRequestModel account)
+        {
+            var acc = new Account();
+
+            acc.Username = account.Username;
+            acc.Login = account.Login;
+            acc.Email = account.Email;
+            acc.HashPassword = _passwordHasher.HashPassword(acc, account.Password);
+
+            return acc;
         }
     }
 }

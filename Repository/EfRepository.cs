@@ -15,11 +15,17 @@ namespace Repository
 
         protected DbSet<TEntity> _entities => _dbContext.Set<TEntity>();
 
-        public virtual Task<TEntity> GetById(int Id)
-            => _entities.FirstAsync(it => it.Id == Id);
+        public virtual Task<TEntity> GetById(int id)
+        {
+            var result = _entities.First(it => it.Id == id);
+            return Task.FromResult(result);
+        }
 
-        public virtual async Task<IReadOnlyList<TEntity>> GetAll()
-            => await _entities.ToListAsync();
+        public virtual Task<IReadOnlyList<TEntity>> GetAll()
+        {
+            IReadOnlyList<TEntity> result = _entities.ToList();
+            return Task.FromResult(result);
+        }
 
         public virtual Task Add(TEntity entity)
         {
@@ -37,6 +43,12 @@ namespace Repository
         {
             _entities.Remove(entity);
             return Task.CompletedTask;
+        }
+
+        public Task<TEntity?> FindById(int id)
+        {
+            var result = _entities.FirstOrDefault(it => it.Id == id);
+            return Task.FromResult(result);
         }
     }
 }

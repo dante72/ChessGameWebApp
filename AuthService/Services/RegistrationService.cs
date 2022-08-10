@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Models;
 
 namespace AuthService.Services
 {
@@ -12,16 +13,29 @@ namespace AuthService.Services
             IUnitOfWork uow
             )
         {
-            _logger = logger;
-            _uow = uow;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _uow = uow ?? throw new ArgumentNullException(nameof(uow));
 
         }
 
         public async Task AddAccount(Account account)
         {
-            await _uow.AccountRepository.Add(account);
-            await _uow.SaveChangesAsync();
-            _logger.LogDebug($"Create account {account.Login}");
+            try
+            {
+                await _uow.AccountRepository.Add(account);
+                await _uow.SaveChangesAsync();
+                _logger.LogInformation($"Account {account.Email} has been created!");
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogWarning(ex.Message);
+                throw new Exception("Login or e-mail already exists!");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
+                throw new Exception("Unknown error!");
+            }
         }
 
         public Task<IReadOnlyList<Account>> GetAccounts()
@@ -40,14 +54,14 @@ namespace AuthService.Services
             await _uow.SaveChangesAsync();
         }
 
-        public Task<Account> GetAccountByEmail(string email)
+        public Task<Account?> GetAccountByEmail(string email)
         {
-            return _uow.AccountRepository.GetByEmail(email);
+            return _uow.AccountRepository.FindByEmail(email);
         }
 
-        public Task<Account> GetAccountByLogin(string login)
+        public Task<Account?> GetAccountByLogin(string login)
         {
-            return _uow.AccountRepository.GetByLogin(login);
+            return _uow.AccountRepository.FindByLogin(login);
         }
     }
 }

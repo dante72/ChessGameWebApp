@@ -10,23 +10,9 @@ namespace Models
     [Index(nameof(Email), IsUnique = true)]
     public class Account : IEntity
     {
-        public Account(int id, string login, string email, string hashPassword)
-        {
-            Id = id;
-            Login = login;
-            Email = email;
-            HashPassword = hashPassword;
-            IsBanned = false;
-        }
-
-        public Account()
-        {
-            Id = 0;
-        }
-
         [Column("id")]
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int Id { get; set; } = 0;
 
         [Column("email")]
         [MaxLength(255)]
@@ -47,6 +33,5 @@ namespace Models
         [DefaultValue("false")]
         [Column("banned")]
         public bool IsBanned { get; set; }
-
     }
 }

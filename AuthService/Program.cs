@@ -1,6 +1,8 @@
 using AuthService.Services;
 using DbContextDao;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Models;
 using Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +29,7 @@ builder.Services.AddDbContext<AuthContext>(
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWorkEF>();
+builder.Services.AddScoped<IPasswordHasher<Account>, PasswordHasher<Account>>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

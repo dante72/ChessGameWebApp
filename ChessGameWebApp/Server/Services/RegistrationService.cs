@@ -62,7 +62,7 @@ public class RegistrationService : IRegistrationService
     {
         var acc = await GetAccountByLogin(account.Login);
 
-        var isCorrectPassword = _passwordHasher.VerifyHashedPassword(acc, acc.HashPassword, account.Password) !=
+        var isCorrectPassword = _passwordHasher.VerifyHashedPassword(acc, acc.Password, account.Password) !=
                 PasswordVerificationResult.Failed;
 
 

@@ -1,11 +1,7 @@
 ﻿using AuthService.Services;
 using ChessWebAPI;
-using DbContextDao;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using Repository;
-using System.Net;
 
 namespace AuthService.Controllers
 {
@@ -14,11 +10,9 @@ namespace AuthService.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IRegistrationService _registrationService;
-        private readonly IPasswordHasher<Account> _passwordHasher;
-        public AuthController(IRegistrationService registrationService, IPasswordHasher<Account> passwordHasher)
+        public AuthController(IRegistrationService registrationService)
         {
             _registrationService = registrationService ?? throw new ArgumentNullException(nameof(registrationService));
-            _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
         }
         [HttpPost(Name = "Registaration")]
         public async Task<IActionResult> Registration([FromBody]AccountRequestModel account)
@@ -41,7 +35,7 @@ namespace AuthService.Controllers
             acc.Username = account.Username;
             acc.Login = account.Login;
             acc.Email = account.Email;
-            acc.HashPassword = _passwordHasher.HashPassword(acc, account.Password);
+            acc.Password = account.Password;
 
             return acc;
         }

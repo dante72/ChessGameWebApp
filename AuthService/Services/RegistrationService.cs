@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace AuthService.Services
@@ -7,14 +8,17 @@ namespace AuthService.Services
     {
         private readonly ILogger<RegistrationService> _logger;
         private readonly IUnitOfWork _uow;
+        private readonly IPasswordHasher<Account> _passwordHasher;
 
         public RegistrationService(
             ILogger<RegistrationService> logger,
-            IUnitOfWork uow
+            IUnitOfWork uow,
+            IPasswordHasher<Account> passwordHasher
             )
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _uow = uow ?? throw new ArgumentNullException(nameof(uow));
+            _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
 
         }
 
@@ -22,6 +26,7 @@ namespace AuthService.Services
         {
             try
             {
+                account.Password = _passwordHasher.HashPassword(account, account.Password);
                 await _uow.AccountRepository.Add(account);
                 await _uow.SaveChangesAsync();
                 _logger.LogInformation($"Account {account.Email} has been created!");

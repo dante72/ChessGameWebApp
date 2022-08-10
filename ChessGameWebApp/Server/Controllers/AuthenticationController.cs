@@ -54,7 +54,7 @@ namespace ChessGameWebApp.Server.Controllers
             acc.Email = account.Email;
             string hashedPassword = _passwordHasher.HashPassword(acc, account.Password);
 
-            acc.HashPassword = hashedPassword;
+            acc.Password = hashedPassword;
 
             return acc;
         }

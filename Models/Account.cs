@@ -28,7 +28,7 @@ namespace Models
 
         [Column("password")]
         [MaxLength(255)]
-        public string HashPassword { get; set; }
+        public string Password { get; set; }
 
         [DefaultValue("false")]
         [Column("banned")]

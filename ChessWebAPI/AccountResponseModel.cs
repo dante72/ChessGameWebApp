@@ -1,7 +1,7 @@
 using Models;
 using System.Text.Json.Serialization;
 
-namespace ChessWebAPI;
+namespace AuthWebAPI;
 
 [Serializable]
 public class AccountResponseModel

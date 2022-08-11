@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
 
-namespace ChessWebAPI
+namespace AuthWebAPI
 {
     public class ServerWebApi
     {

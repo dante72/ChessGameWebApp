@@ -2,7 +2,7 @@
 using Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Repository
+namespace Repositories
 {
     public class AccountRepository : EfRepository<Account>, IAccountRepository
     {

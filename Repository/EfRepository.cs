@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Models;
 
-namespace Repository
+namespace Repositories
 {
     public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {

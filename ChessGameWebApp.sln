@@ -22,9 +22,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\AuthService.csproj", "{D557BECA-DD59-4ACB-8B15-09BFEF58227D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbContextDao", "DbContextDao\DbContextDao.csproj", "{7586A5E8-F765-4B97-B3B4-05218FCCF2E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbContextDao", "DbContextDao\DbContextDao.csproj", "{7586A5E8-F765-4B97-B3B4-05218FCCF2E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{971D8AF2-8761-47CA-9254-8514515E9623}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repository\Repositories.csproj", "{971D8AF2-8761-47CA-9254-8514515E9623}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

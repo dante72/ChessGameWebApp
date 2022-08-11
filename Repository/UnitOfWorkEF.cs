@@ -1,7 +1,7 @@
 ﻿using DbContextDao;
-using Repository;
+using Repositories;
 
-namespace Repository
+namespace Repositories
 {
     public class UnitOfWorkEF : IUnitOfWork, IAsyncDisposable
     {

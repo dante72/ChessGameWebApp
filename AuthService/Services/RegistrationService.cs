@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using Repository;
 using System.Security.Authentication;
 
 namespace AuthService.Services

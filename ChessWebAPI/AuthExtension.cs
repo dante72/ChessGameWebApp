@@ -11,12 +11,13 @@ namespace AuthWebAPI
     {
         public static Account Map(this AccountRequestModel account)
         {
-            var acc = new Account();
-
-            acc.Username = account.Username;
-            acc.Login = account.Login;
-            acc.Email = account.Email;
-            acc.Password = account.Password;
+            var acc = new Account
+            {
+                Username = account.Username,
+                Login = account.Login,
+                Email = account.Email,
+                Password = account.Password
+            };
 
             return acc;
         }

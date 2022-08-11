@@ -1,6 +1,5 @@
 ﻿using ChessGame;
 using ChessGameWebApp.Client.Services;
-using ChessWebAPI;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 

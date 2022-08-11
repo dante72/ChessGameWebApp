@@ -1,6 +1,6 @@
 ﻿using Repository;
 
-namespace AuthService.Services
+namespace Repository
 {
     public interface IUnitOfWork : IDisposable
     {

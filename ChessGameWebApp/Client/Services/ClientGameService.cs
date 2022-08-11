@@ -1,5 +1,4 @@
 ﻿using ChessGame;
-using ChessWebAPI;
 
 namespace ChessGameWebApp.Client.Services
 {

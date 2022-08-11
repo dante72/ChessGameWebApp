@@ -1,7 +1,7 @@
 ﻿using DbContextDao;
 using Repository;
 
-namespace AuthService.Services
+namespace Repository
 {
     public class UnitOfWorkEF : IUnitOfWork, IAsyncDisposable
     {

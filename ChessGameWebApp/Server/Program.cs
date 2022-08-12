@@ -12,46 +12,13 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-JwtConfig jwtConfig = builder.Configuration
-    .GetSection("JwtConfig")
-    .Get<JwtConfig>();
-builder.Services.AddScoped<ITokenService>(_ => new TokenService(jwtConfig));
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            IssuerSigningKey = new SymmetricSecurityKey(jwtConfig.SigningKeyBytes),
-            ValidateIssuerSigningKey = true,
-            ValidateLifetime = true,
-            RequireExpirationTime = true,
-            RequireSignedTokens = true,
-
-            ValidateAudience = true,
-            ValidateIssuer = true,
-            ValidAudiences = new[] { jwtConfig.Audience },
-            ValidIssuer = jwtConfig.Issuer
-        };
-    });
 builder.Services.AddAuthorization();
 
-builder.Services.AddDbContext<AppDbContext>(
-    options => options.UseSqlite($"Data Source={builder.Configuration.GetSection("DbPath").Value}"));
 builder.Services.AddControllersWithViews();
 
 // Add services to the container.
 builder.Services.AddSingleton(b => new ChessBoard(true));
 builder.Services.AddScoped<IServerGameService, ServerGameService>();
-builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-builder.Services.AddScoped<IRegistrationService, RegistrationService>();
-builder.Services.AddScoped<IPasswordHasher<Account>, PasswordHasher<Account>>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWorkEf>();
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 builder.Services.AddResponseCompression(opts =>
@@ -60,9 +27,12 @@ builder.Services.AddResponseCompression(opts =>
         new[] { "application/octet-stream" });
 });
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
-app.UseAuthentication();
+app.UseCors(builder => builder.AllowAnyOrigin());
+
 app.UseAuthorization();
 
 // Configure the HTTP request pipeline.

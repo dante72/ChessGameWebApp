@@ -1,7 +1,7 @@
-﻿@using ChessWebAPI
+﻿@using AuthWebAPI
 @using Models
 @inherits AuthenticationComponentModel
-@inject ServerWebApi webApi
+@inject AuthWebApi webApi
 @inject IJSRuntime JsRuntime
 @inject SiteUserInfo User
 <h3>Authentication</h3>
@@ -19,10 +19,10 @@
 
         if (result != null)
         {
-            User.UserName = result.Account.Username;
-            User.AccountId = result.Account.Id;
+            //User.UserName = result.Account.Username;
+           // User.AccountId = result.Account.Id;
 
-            await JsRuntime.InvokeVoidAsync("alert", $"Hello, {result.Account.Username}");
+           await JsRuntime.InvokeVoidAsync("alert", $"Hello, {result.AccessToken}");
         }
     }
 

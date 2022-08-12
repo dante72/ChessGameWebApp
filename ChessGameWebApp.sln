@@ -26,6 +26,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbContextDao", "DbContextDa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repository\Repositories.csproj", "{971D8AF2-8761-47CA-9254-8514515E9623}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessGameWebAPI", "ChessGameWebAPI\ChessGameWebAPI.csproj", "{324CEA6E-3693-4F69-9F96-3633A746E8B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{971D8AF2-8761-47CA-9254-8514515E9623}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{971D8AF2-8761-47CA-9254-8514515E9623}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{971D8AF2-8761-47CA-9254-8514515E9623}.Release|Any CPU.Build.0 = Release|Any CPU
+		{324CEA6E-3693-4F69-9F96-3633A746E8B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{324CEA6E-3693-4F69-9F96-3633A746E8B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{324CEA6E-3693-4F69-9F96-3633A746E8B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{324CEA6E-3693-4F69-9F96-3633A746E8B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

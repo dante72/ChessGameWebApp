@@ -12,9 +12,9 @@ namespace ChessGameWebApp.Server.SignalRHub
         private readonly IServerGameService _serverGameService;
         public GameHub(ILogger<GameHub> logger, ChessBoard board, IServerGameService serverGameService)
         {
-            _logger = logger;
-            _board = board;
-            _serverGameService = serverGameService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _board = board ?? throw new ArgumentNullException(nameof(board));
+            _serverGameService = serverGameService ?? throw new ArgumentNullException(nameof(serverGameService));
         }
         public async Task SendBoard()
         {

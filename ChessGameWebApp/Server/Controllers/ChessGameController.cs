@@ -12,12 +12,11 @@ namespace ChessGameWebApp.Server.Controllers
     public class ChessGameController : ControllerBase
     {
         private readonly ILogger<ChessGameController> _logger;
-        private readonly IServerGameService _gameService;
 
-        public ChessGameController(ILogger<ChessGameController> logger, IServerGameService gameService)
+        public ChessGameController(ILogger<ChessGameController> logger)
         {
-            _logger = logger;
-            _gameService = gameService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
     }
 }

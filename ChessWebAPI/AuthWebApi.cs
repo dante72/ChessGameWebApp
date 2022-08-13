@@ -1,18 +1,15 @@
-﻿using ChessGame;
-using ChessGameWebApp.Shared;
+﻿using ChessGameWebApp.Shared;
 using Models;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text.Json;
-using static System.Net.WebRequestMethods;
 
 namespace AuthWebAPI
 {
-    public class AuthWebApi
+    public class AuthWebApi : IAuthWebApi
     {
-        private readonly HttpClient _auth;
-        private readonly HttpClient _gameServer;
-        public AuthWebApi(HttpClient auth, HttpClient gameServer)
+        public readonly AuthHttpClient _auth;
+        public readonly HttpClient _gameServer;
+        public AuthWebApi(AuthHttpClient auth, HttpClient gameServer)
         {
             _auth = auth ?? throw new NullReferenceException(nameof(auth));
             _gameServer = gameServer ?? throw new NullReferenceException(nameof(gameServer));
@@ -50,7 +47,7 @@ namespace AuthWebAPI
 
         public async Task<WeatherForecast[]> Weather()
         {
-            var result = await _auth.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+            var result = await _gameServer.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
 
             return result;
         }

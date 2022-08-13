@@ -12,7 +12,36 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAuthorization();
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+
+JwtConfig jwtConfig = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            IssuerSigningKey = new SymmetricSecurityKey(jwtConfig.SigningKeyBytes),
+            ValidateIssuerSigningKey = true,
+            ValidateLifetime = true,
+            RequireExpirationTime = true,
+            RequireSignedTokens = true,
+
+            ValidateAudience = true,
+            ValidateIssuer = true,
+            ValidAudiences = new[] { jwtConfig.Audience },
+            ValidIssuer = jwtConfig.Issuer
+        };
+    });
+//builder.Services.AddAuthorization();
+
 
 builder.Services.AddControllersWithViews();
 
@@ -21,19 +50,13 @@ builder.Services.AddSingleton(b => new ChessBoard(true));
 builder.Services.AddScoped<IServerGameService, ServerGameService>();
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
-builder.Services.AddResponseCompression(opts =>
-{
-    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-        new[] { "application/octet-stream" });
-});
 
-builder.Services.AddCors();
+
 
 var app = builder.Build();
 
-app.UseCors(builder => builder.AllowAnyOrigin());
+//app.UseAuthorization();
 
-app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -61,5 +84,8 @@ app.MapRazorPages();
 
 app.MapHub<BroadcastHub>("/chathub");
 app.MapHub<GameHub>("/gamehub");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

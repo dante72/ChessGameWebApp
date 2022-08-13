@@ -19,6 +19,8 @@ namespace ChessGameWebApp.Server.Controllers
         {
             _logger = logger;
         }
+
+        [Authorize]
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {

@@ -1,7 +1,7 @@
 ﻿@using AuthWebAPI
 @using Models
 @inherits AuthenticationComponentModel
-@inject AuthWebApi webApi
+@inject IAuthWebApi webApi
 @inject IJSRuntime JsRuntime
 @inject SiteUserInfo User
 <h3>Authentication</h3>
@@ -22,7 +22,7 @@
             //User.UserName = result.Account.Username;
            // User.AccountId = result.Account.Id;
 
-           await JsRuntime.InvokeVoidAsync("alert", $"Hello, {result.AccessToken}");
+           await JsRuntime.InvokeVoidAsync("alert", $"Token: {result.AccessToken}");
         }
     }
 

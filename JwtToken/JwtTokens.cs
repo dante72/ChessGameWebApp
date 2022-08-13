@@ -1,4 +1,4 @@
-﻿namespace AuthService
+﻿namespace JwtToken
 {
     public class JwtTokens
     {

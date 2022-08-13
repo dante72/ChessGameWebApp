@@ -1,14 +1,9 @@
 using ChessGame;
-using ChessGameWebApp.Server.Repository;
 using ChessGameWebApp.Server.Services;
 using ChessGameWebApp.Server.SignalRHub;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using ChessGameWebApp.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Models;
-using Microsoft.AspNetCore.Identity;
+using JwtToken;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Models;
 using Microsoft.IdentityModel.Tokens;
+using JwtToken;
 
 namespace AuthService.Services;
 public class TokenService : ITokenService

@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "AuthService": {
+    "Run (dev)": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

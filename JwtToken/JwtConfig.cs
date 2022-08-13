@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace ChessGameWebApp.Shared;
+namespace JwtToken;
 
 public class JwtConfig
 {

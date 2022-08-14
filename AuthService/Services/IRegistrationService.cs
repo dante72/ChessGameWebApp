@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using JwtToken;
+using Models;
 
 namespace AuthService.Services
 {

@@ -1,5 +1,5 @@
 ﻿using ChessGameWebApp.Shared;
-using Models;
+using JwtToken;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 

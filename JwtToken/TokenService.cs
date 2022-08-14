@@ -32,5 +32,21 @@ public class TokenService : ITokenService
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
- 
+
+    public ClaimsPrincipal ValidateToken(string jwtToken)
+    {
+        SecurityToken validatedToken;
+        TokenValidationParameters validationParameters = new TokenValidationParameters();
+
+        validationParameters.ValidateLifetime = true;
+
+        validationParameters.ValidAudience = _jwtConfig.Audience;
+        validationParameters.ValidIssuer = _jwtConfig.Issuer;
+        validationParameters.IssuerSigningKey = new SymmetricSecurityKey(_jwtConfig.SigningKeyBytes);
+
+        ClaimsPrincipal principal = new JwtSecurityTokenHandler().ValidateToken(jwtToken, validationParameters, out validatedToken);
+
+        return principal;
+    }
+
 }

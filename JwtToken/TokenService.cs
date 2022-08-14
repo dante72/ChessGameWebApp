@@ -2,9 +2,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Models;
 using Microsoft.IdentityModel.Tokens;
-using JwtToken;
 
-namespace AuthService.Services;
+namespace JwtToken;
 public class TokenService : ITokenService
 {
     private readonly JwtConfig _jwtConfig;

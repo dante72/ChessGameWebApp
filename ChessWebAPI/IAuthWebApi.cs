@@ -14,5 +14,6 @@ namespace AuthWebAPI
         Task Registration(AccountRequestModel account);
         Task<JwtTokens?> Autorization(AccountRequestModel account);
         Task<WeatherForecast[]> Weather();
+        Task<UserInfo> GetUserInfo();
     }
 }

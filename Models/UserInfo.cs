@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class SiteUserInfo
+    public class UserInfo
     {
         public int AccountId { get; set; }
         public string UserName { get; set; }

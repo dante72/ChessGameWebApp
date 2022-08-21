@@ -1,0 +1,19 @@
+﻿@page "/logout"
+
+@using AuthWebAPI
+@inject NavigationManager navigationManager
+@inject IAuthWebApi webApi
+@inject SiteUserInfo userInfo
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        webApi.SingOut();
+        userInfo.UserName = string.Empty;
+        navigationManager.NavigateTo("/", true);
+    }
+}
+
+
+<div></div>

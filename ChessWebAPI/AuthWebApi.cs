@@ -22,10 +22,9 @@ namespace AuthWebAPI
             {
                 var res = await _auth.PostAsJsonAsync($"Auth", account);
             }
-            catch (Exception ex)
+            catch
             {
-                var str = ex.Message;
-                int i = 10;
+                throw;
             }
         }
 
@@ -40,10 +39,19 @@ namespace AuthWebAPI
                     = new AuthenticationHeaderValue("Bearer", result?.AccessToken);
                 return result;
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }
+        }
+
+        public Task SingOut()
+        {
+            _auth.DefaultRequestHeaders.Authorization = null;
+            _gameServer.DefaultRequestHeaders.Authorization = null;
+
+
+            return Task.CompletedTask;
         }
 
         public async Task<WeatherForecast[]> Weather()

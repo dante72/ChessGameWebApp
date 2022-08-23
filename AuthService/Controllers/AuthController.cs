@@ -17,7 +17,7 @@ namespace AuthService.Controllers
             _registrationService = registrationService ?? throw new ArgumentNullException(nameof(registrationService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-        [HttpPost(Name = "Registaration")]
+        [HttpPost("Registaration")]
         public async Task<IActionResult> Registration([FromBody]AccountRequestModel account)
         {
             try
@@ -31,7 +31,7 @@ namespace AuthService.Controllers
             }
         }
 
-        [HttpGet(Name = "Authentication")]
+        [HttpGet("Authentication")]
         public async Task<IActionResult> Authentication(string login, string password)
         {
             try

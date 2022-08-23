@@ -20,7 +20,7 @@ namespace AuthWebAPI
         {
             try
             {
-                var res = await _auth.PostAsJsonAsync($"Auth", account);
+                var res = await _auth.PostAsJsonAsync($"Auth/Registaration", account);
             }
             catch
             {
@@ -32,7 +32,7 @@ namespace AuthWebAPI
         {
             try
             {
-                var result = await _auth.GetFromJsonAsync<JwtTokens>($"Auth?login={account.Login}&password={account.Password}");
+                var result = await _auth.GetFromJsonAsync<JwtTokens>($"Auth/Authentication?login={account.Login}&password={account.Password}");
                 _auth.DefaultRequestHeaders.Authorization
                     = new AuthenticationHeaderValue("Bearer", result?.AccessToken);
                 _gameServer.DefaultRequestHeaders.Authorization
@@ -61,9 +61,10 @@ namespace AuthWebAPI
             return result;
         }
 
-        public async Task<UserInfo> GetUserInfo()
+        public async Task<UserInfo?> GetUserInfo()
         {
-            return await _gameServer.GetFromJsonAsync<UserInfo>("ChessGame");
+            return await _gameServer.GetFromJsonAsync<UserInfo?>("ChessGame/GetUser");
+
         }
     }
 }

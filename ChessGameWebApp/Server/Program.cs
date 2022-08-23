@@ -4,10 +4,15 @@ using ChessGameWebApp.Server.SignalRHub;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using JwtToken;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
@@ -43,6 +48,7 @@ builder.Services.AddControllersWithViews();
 // Add services to the container.
 builder.Services.AddSingleton(b => new ChessBoard(true));
 builder.Services.AddScoped<IServerGameService, ServerGameService>();
+builder.Services.AddSingleton<IQueueService, QueueService>();
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 
@@ -82,5 +88,11 @@ app.MapHub<GameHub>("/gamehub");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+});
 
 app.Run();

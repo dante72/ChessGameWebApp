@@ -9,8 +9,8 @@
 
     <main>
         <div class="top-row px-4">
-            <NavLink>@(User.UserName ?? "Guest")</NavLink>
-            @if (User.UserName == null)
+            <NavLink>@(User.Name ?? "Guest")</NavLink>
+            @if (User.Name == null)
             {
                 <NavLink class="btn btn-primary" href="authorization/auth">Sign In</NavLink>
                 <NavLink class="btn btn-primary" href="authorization/reg">Sign Up</NavLink>

@@ -2,6 +2,7 @@
 {
     public class SiteUserInfo
     {
-        public string UserName { get; set; }
+        public string Name { get; set; }
+        public int Id { get; set; }
     }
 }

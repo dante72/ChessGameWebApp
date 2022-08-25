@@ -36,16 +36,18 @@ namespace ChessGameWebApp.Server.Controllers
         }
 
         
-        [HttpGet (Name ="AddPlayer")]
+        [HttpGet ("AddPlayer")]
         [Authorize]
-        public async Task AddPlayer(int id)
+        public async Task AddPlayer()
         {
+            var claims = User.Identity as ClaimsIdentity;
+            int id = int.Parse(claims.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             Player player = new Player() { Id = id };
             await _queueService.Add(player);
         }
 
         
-        [HttpGet(Name = "PlayerCount")]
+        [HttpGet("PlayerCount")]
         [Authorize]
         public async Task<int> PlayerCount()
         {

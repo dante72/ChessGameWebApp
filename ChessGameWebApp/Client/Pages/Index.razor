@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.SignalR.Client;
+@using ChessGameWebApp.Client.Components
 @inject NavigationManager NavigationManager
 @implements IAsyncDisposable
 
@@ -26,7 +27,11 @@
     }
 </ul>
 
+<GoGameComponent></GoGameComponent>
+
+
 @code {
+
     private HubConnection hubConnection;
     private List<string> messages = new List<string>();
     private string userInput;

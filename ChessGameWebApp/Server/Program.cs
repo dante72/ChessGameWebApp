@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using JwtToken;
 using Microsoft.OpenApi.Models;
+using ChessGameWebApp.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,7 +49,9 @@ builder.Services.AddControllersWithViews();
 // Add services to the container.
 builder.Services.AddSingleton(b => new ChessBoard(true));
 builder.Services.AddScoped<IServerGameService, ServerGameService>();
-builder.Services.AddSingleton<IQueueService, QueueService>();
+builder.Services.AddScoped<IQueueService, QueueService>();
+builder.Services.AddScoped<IGameHubService, GameHubService>();
+builder.Services.AddSingleton(players => new List<Player>());
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 

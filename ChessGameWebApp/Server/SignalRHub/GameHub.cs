@@ -38,5 +38,10 @@ namespace ChessGameWebApp.Server.SignalRHub
                 await Clients.All.SendAsync("ReceiveTryMove", from, to);
             }
         }
+
+        public async Task StartGame()
+        {
+            await Clients.Caller.SendAsync("StartGame", true);
+        }
     }
 }

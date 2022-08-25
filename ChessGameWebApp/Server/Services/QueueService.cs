@@ -1,18 +1,26 @@
-﻿using ChessGameWebApp.Shared;
+﻿using ChessGameWebApp.Server.SignalRHub;
+using ChessGameWebApp.Shared;
 
 namespace ChessGameWebApp.Server.Services
 {
     public class QueueService : IQueueService
     {
-        private readonly List<Player> _players = new List<Player>();
+        private readonly List<Player> _players;
+        private readonly IGameHubService _gameHub;
 
-        public Task Add(Player player)
+        public QueueService(IGameHubService gameHub, List<Player> players)
+        {
+            _gameHub = gameHub ?? throw new ArgumentNullException(nameof(gameHub));
+            _players = players ?? throw new ArgumentNullException(nameof(players));
+        }
+
+        public async Task Add(Player player)
         {
             lock (_players)
             {
                 _players.Add(player);
             }
-            return Task.CompletedTask;
+            await _gameHub.StartGame();
         }
 
         public Task Remove(Player player)

@@ -34,6 +34,12 @@ namespace ChessGameWebApp.Client.Services
                 
                 fromCell.Figure?.TryMoveTo(toCell);
             });
+
+            hubConnection.On<bool>("StartGame", (start) => 
+            {
+                if (start)
+                    navigationManager.NavigateTo("/Game");
+            });
         }
 
         public async Task GetBoard()

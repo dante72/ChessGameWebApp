@@ -16,5 +16,7 @@ namespace AuthWebAPI
         Task<WeatherForecast[]> Weather();
         Task<UserInfo?> GetUserInfo();
         Task SingOut();
+        Task AddPlayer();
+        Task<int> PlayerCount();
     }
 }

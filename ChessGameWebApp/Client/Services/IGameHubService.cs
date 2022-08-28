@@ -7,5 +7,6 @@ namespace ChessGameWebApp.Client.Services
         Task GetBoard();
         bool IsConnected { get; }
         Task SendTryMove(Cell from, Cell to);
+        Task StartGame();
     }
 }

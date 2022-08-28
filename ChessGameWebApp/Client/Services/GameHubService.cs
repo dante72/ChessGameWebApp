@@ -12,14 +12,17 @@ namespace ChessGameWebApp.Client.Services
         private HubConnection hubConnection;
 
         public ChessCell[] CurrentMove { get; set; } = new ChessCell[0];
-        public GameHubService(ILogger<GameHubService> logger, ChessBoard board, NavigationManager navigationManager)
+        public GameHubService(ILogger<GameHubService> logger, ChessBoard board, NavigationManager navigationManager, HttpClient httpClient)
         {
             _logger = logger;
             _board = board;
             _navigationManager = navigationManager;
-
             hubConnection = new HubConnectionBuilder()
-                .WithUrl(_navigationManager.ToAbsoluteUri("/gamehub"))
+                .WithUrl(_navigationManager.ToAbsoluteUri("/gamehub"), options =>
+                 {
+                     options.AccessTokenProvider = () => Task.FromResult(httpClient.DefaultRequestHeaders.Authorization.Parameter);
+                 })
+                .WithAutomaticReconnect()
                 .Build();
 
             hubConnection.On<ChessBoardDto>("ReceiveBoard", (board) =>
@@ -54,6 +57,13 @@ namespace ChessGameWebApp.Client.Services
             if (!IsConnected)
                 await hubConnection.StartAsync();
             await hubConnection.SendAsync("SendTryMove", from, to);
+        }
+
+        public async Task StartGame()
+        {
+            if (!IsConnected)
+                await hubConnection.StartAsync();
+            await hubConnection.SendAsync("StartGame", false);
         }
 
         public bool IsConnected

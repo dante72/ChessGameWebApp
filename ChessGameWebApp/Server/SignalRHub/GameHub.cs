@@ -1,9 +1,12 @@
 ﻿using ChessGame;
 using ChessGameWebApp.Server.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ChessGameWebApp.Server.SignalRHub
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GameHub : Hub
     {
 
@@ -39,9 +42,10 @@ namespace ChessGameWebApp.Server.SignalRHub
             }
         }
 
+        [AllowAnonymous]
         public async Task StartGame()
         {
-            await Clients.Caller.SendAsync("StartGame", true);
+            await Clients.Caller.SendAsync("StartGame", false);
         }
     }
 }

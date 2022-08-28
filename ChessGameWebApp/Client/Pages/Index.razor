@@ -1,8 +1,10 @@
 ﻿@page "/"
+@using ChessGameWebApp.Client.Services
 @using Microsoft.AspNetCore.SignalR.Client;
 @using ChessGameWebApp.Client.Components
 @inject NavigationManager NavigationManager
 @implements IAsyncDisposable
+@inject IGameHubService gameHub
 
 <div class="form-group">
     <label>
@@ -39,6 +41,10 @@
 
     protected override async Task OnInitializedAsync()
     {
+        //устанавливает первое подключение для корректной работы первого подключения с сервера
+        if (!gameHub.IsConnected)
+            gameHub.StartGame();
+
         hubConnection = new HubConnectionBuilder()
             .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
             .Build();

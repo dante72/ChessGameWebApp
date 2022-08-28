@@ -15,5 +15,6 @@ namespace ChessGameWebApp.Server.Services
         {
             await _hubContext.Clients.All.SendAsync("StartGame", true);
         }
+
     }
 }

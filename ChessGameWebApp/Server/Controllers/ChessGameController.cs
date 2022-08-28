@@ -1,13 +1,9 @@
-﻿using ChessGame;
-using ChessGameWebApp.Server.Services;
+﻿using ChessGameWebApp.Server.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
-using System.Linq;
-using ChessGame.Figures;
 using Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using ChessGameWebApp.Shared;
+using ChessGameWebApp.Server.Models;
 
 namespace ChessGameWebApp.Server.Controllers
 {
@@ -16,9 +12,9 @@ namespace ChessGameWebApp.Server.Controllers
     public class ChessGameController : Controller
     {
         private readonly ILogger<ChessGameController> _logger;
-        private readonly IQueueService _queueService;
+        private readonly IPlayerService _queueService;
 
-        public ChessGameController(ILogger<ChessGameController> logger, IQueueService queueService)
+        public ChessGameController(ILogger<ChessGameController> logger, IPlayerService queueService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _queueService = queueService ?? throw new ArgumentNullException(nameof(queueService));

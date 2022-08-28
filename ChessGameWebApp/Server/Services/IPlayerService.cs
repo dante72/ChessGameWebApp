@@ -1,8 +1,8 @@
-﻿using ChessGameWebApp.Shared;
+﻿using ChessGameWebApp.Server.Models;
 
 namespace ChessGameWebApp.Server.Services
 {
-    public interface IQueueService
+    public interface IPlayerService
     {
         Task Add(Player player);
         Task Remove(Player player);

@@ -1,14 +1,13 @@
-﻿using ChessGameWebApp.Server.SignalRHub;
-using ChessGameWebApp.Shared;
+﻿using ChessGameWebApp.Server.Models;
 
 namespace ChessGameWebApp.Server.Services
 {
-    public class QueueService : IQueueService
+    public class PlayerService : IPlayerService
     {
         private readonly List<Player> _players;
         private readonly IGameHubService _gameHub;
 
-        public QueueService(IGameHubService gameHub, List<Player> players)
+        public PlayerService(IGameHubService gameHub, List<Player> players)
         {
             _gameHub = gameHub ?? throw new ArgumentNullException(nameof(gameHub));
             _players = players ?? throw new ArgumentNullException(nameof(players));

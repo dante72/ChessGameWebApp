@@ -5,21 +5,20 @@ namespace ChessGameWebApp.Server.Services
     public class PlayerService : IPlayerService
     {
         private readonly List<Player> _players;
-        private readonly IGameHubService _gameHub;
 
-        public PlayerService(IGameHubService gameHub, List<Player> players)
+        public PlayerService(List<Player> players)
         {
-            _gameHub = gameHub ?? throw new ArgumentNullException(nameof(gameHub));
             _players = players ?? throw new ArgumentNullException(nameof(players));
         }
 
-        public async Task Add(Player player)
+        public Task Add(Player player)
         {
             lock (_players)
             {
                 _players.Add(player);
             }
-            await _gameHub.StartGame();
+
+            return Task.CompletedTask;
         }
 
         public Task Remove(Player player)

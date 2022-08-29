@@ -50,17 +50,17 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton(b => new ChessBoard(true));
 builder.Services.AddScoped<IServerGameService, ServerGameService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
-builder.Services.AddScoped<IGameHubService, GameHubService>();
+builder.Services.AddSingleton<IGameHubService, GameHubService>();
+builder.Services.AddSingleton<IHostedService, GameSessionService>();
 builder.Services.AddSingleton(players => new List<Player>());
+builder.Services.AddSingleton(sessions => new List<GameSession>());
+
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
-
-
 
 var app = builder.Build();
 
 //app.UseAuthorization();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

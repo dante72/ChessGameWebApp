@@ -15,7 +15,8 @@ namespace ChessGameWebApp.Server.Services
         {
             lock (_players)
             {
-                _players.Add(player);
+                if (!_players.Any(p => p.Id == player.Id))
+                    _players.Add(player);
             }
 
             return Task.CompletedTask;

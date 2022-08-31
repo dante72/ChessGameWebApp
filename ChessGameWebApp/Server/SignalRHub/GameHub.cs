@@ -42,7 +42,6 @@ namespace ChessGameWebApp.Server.SignalRHub
             }
         }
 
-        [AllowAnonymous]
         public async Task StartGame()
         {
             await Clients.Caller.SendAsync("StartGame", false);

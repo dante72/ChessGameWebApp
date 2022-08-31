@@ -16,7 +16,6 @@ namespace ChessGameWebApp.Server.Services
             _players = players ?? throw new ArgumentNullException(nameof(players));
             _gameHub = gameHub ?? throw new ArgumentNullException(nameof(gameHub));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
         }
 
 

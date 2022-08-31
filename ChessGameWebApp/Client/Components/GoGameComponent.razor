@@ -6,11 +6,9 @@
 @inject IGameHubService gameHub
 
 
-@if (userInfo.Id > 0)
-{
-    <input class="btn btn-primary" type="button" value="GO" @onclick="goGame"/>
-    <p>Players: @count</p>
-}
+<input class="btn btn-primary" type="button" value="GO" @onclick="goGame"/>
+<p>Players: @count</p>
+
 
 @code {
 
@@ -24,11 +22,18 @@
 
     protected override async Task OnInitializedAsync()
     {
+        //устанавливает первое подключение для корректной работы первого подключения с сервера
+        if (!gameHub.IsConnected)
+            await gameHub.StartGame();
+
         try
         {
             count = await webApi.PlayerCount();
         }
-        catch{}
+        catch
+        {
+            
+        }
     }
 
 }

@@ -4,7 +4,7 @@
 @using ChessGameWebApp.Client.Components
 @inject NavigationManager NavigationManager
 @implements IAsyncDisposable
-@inject IGameHubService gameHub
+@inject SiteUserInfo userInfo
 
 <div class="form-group">
     <label>
@@ -29,7 +29,10 @@
     }
 </ul>
 
-<GoGameComponent></GoGameComponent>
+@if (userInfo.Id > 0)
+{
+    <GoGameComponent></GoGameComponent>
+}
 
 
 @code {
@@ -41,9 +44,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //устанавливает первое подключение для корректной работы первого подключения с сервера
-        if (!gameHub.IsConnected)
-            gameHub.StartGame();
 
         hubConnection = new HubConnectionBuilder()
             .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))

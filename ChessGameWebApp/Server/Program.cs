@@ -47,13 +47,14 @@ builder.Services
 builder.Services.AddControllersWithViews();
 
 // Add services to the container.
-builder.Services.AddSingleton(b => new ChessBoard(true));
-builder.Services.AddScoped<IServerGameService, ServerGameService>();
+builder.Services.AddScoped<IGameSessionService, GameSessionService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddSingleton<IGameHubService, GameHubService>();
-builder.Services.AddSingleton<IHostedService, GameSessionService>();
+builder.Services.AddSingleton<IHostedService, SessionBackgroundService>();
 builder.Services.AddSingleton(players => new List<Player>());
 builder.Services.AddSingleton(sessions => new List<GameSession>());
+builder.Services.AddSingleton(connections => new List<Connection>());
+builder.Services.AddSingleton<IConnectionService, ConnectionService>();
 
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();

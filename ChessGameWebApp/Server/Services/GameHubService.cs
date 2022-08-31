@@ -1,19 +1,23 @@
-﻿using ChessGameWebApp.Server.SignalRHub;
+﻿using ChessGameWebApp.Server.Models;
+using ChessGameWebApp.Server.SignalRHub;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ChessGameWebApp.Server.Services
 {
     public class GameHubService : IGameHubService
     {
-        IHubContext<GameHub> _hubContext;
-        public GameHubService(IHubContext<GameHub> hubContext)
+        private readonly IHubContext<GameHub> _hubContext;
+        private readonly IConnectionService _connectionService;
+        public GameHubService(IHubContext<GameHub> hubContext, IConnectionService connectionService)
         {
             _hubContext = hubContext ?? throw new ArgumentNullException(nameof(hubContext));
+            _connectionService = connectionService ?? throw new ArgumentNullException(nameof(connectionService));
         }
 
-        public async Task StartGame()
+        public async Task StartGame(IList<Player> players)
         {
-            await _hubContext.Clients.All.SendAsync("StartGame", true);
+            var connectionIds = await _connectionService.GetConnections(players.Select(p => p.Id).ToArray()); 
+            await _hubContext.Clients.Clients(connectionIds).SendAsync("StartGame", true);
         }
 
     }

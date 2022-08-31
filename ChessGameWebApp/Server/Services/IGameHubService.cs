@@ -1,7 +1,9 @@
-﻿namespace ChessGameWebApp.Server.Services
+﻿using ChessGameWebApp.Server.Models;
+
+namespace ChessGameWebApp.Server.Services
 {
     public interface IGameHubService
     {
-        Task StartGame();
+        Task StartGame(IList<Player> players);
     }
 }

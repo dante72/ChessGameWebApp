@@ -13,6 +13,7 @@ namespace Models
         [Column("id")]
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; } = 0;
+        public Connection Connection { get; set; }
 
         [Column("email")]
         [MaxLength(255)]

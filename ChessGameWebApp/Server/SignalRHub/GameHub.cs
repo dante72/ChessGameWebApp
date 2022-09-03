@@ -48,6 +48,16 @@ namespace ChessGameWebApp.Server.SignalRHub
             }
         }
 
+        public async Task MoveBack()
+        {
+            int accountId = GetCurrentAccountId(Context);
+            var session = await _serverGameService.GetSession(accountId);
+            session.Board.MoveBack();
+
+            var connections = await _connectionService.GetConnections(session.Players.Select(p => p.Id).ToArray());
+            await Clients.Clients(connections).SendAsync("ReceiveMoveBack", true);
+        }
+
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
             await _connectionService.Remove(Context.ConnectionId);

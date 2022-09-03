@@ -9,6 +9,7 @@ namespace ChessGame
 {
     public class Board
     {
+        internal Stack<Figure> MovedFigures { set; get; } = new Stack<Figure>();
         internal int Index { get; set; } = 0;
         internal Cell[,] Cells;
         internal Figure? this[int row, int column]
@@ -45,6 +46,34 @@ namespace ChessGame
             this[7, 4] = new King(FigureColors.White);
             this[7, 5] = new Bishop(FigureColors.White);
             this[7, 6] = new Knight(FigureColors.White);
+            this[7, 7] = new Rook(FigureColors.White);
+        }
+
+        public void MoveBack()
+        {
+            if (MovedFigures.Count == 0)
+                return;
+
+            var last = MovedFigures.Pop();
+            int index = last.CheckBoardIndex();
+
+            last.MoveBack();
+            
+            if (MovedFigures.Count > 0 && index == MovedFigures.Peek().CheckBoardIndex())
+                MovedFigures.Pop().MoveBack();
+
+            Index--;
+        }
+
+        internal void Setup1()
+        {
+            this[0, 0] = new Rook(FigureColors.Black);
+            this[0, 4] = new King(FigureColors.Black);
+            this[0, 7] = new Rook(FigureColors.Black);
+
+            this[7, 0] = new Rook(FigureColors.White);
+
+            this[7, 4] = new King(FigureColors.White);
             this[7, 7] = new Rook(FigureColors.White);
         }
     }

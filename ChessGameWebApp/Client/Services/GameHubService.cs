@@ -43,6 +43,21 @@ namespace ChessGameWebApp.Client.Services
                 if (start)
                     navigationManager.NavigateTo("/Game/start");
             });
+
+            {
+                hubConnection.On<bool>("ReceiveMoveBack", (ok) =>
+                {
+                    if (ok)
+                        _board.MoveBack();
+                });
+            }
+        }
+
+        public async Task MoveBack()
+        {
+            if (!IsConnected)
+                await hubConnection.StartAsync();
+            await hubConnection.SendAsync("MoveBack");
         }
 
         public async Task GetBoard()

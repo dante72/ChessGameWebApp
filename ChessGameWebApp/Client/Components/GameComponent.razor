@@ -1,13 +1,19 @@
 ﻿@using ChessGame
 @using ChessGameWebApp.Client.Services;
 @inherits GameComponentModel
+@inject IGameHubService gameHub
 
 <h3>GameComponent</h3>
 
 
 @code {
+    private async void moveBack()
+    {
+        await gameHub.MoveBack();
+    }
 
 }
+<input class="btn btn-primary" type="button" value="MoveBack" @onclick="moveBack"/>
 
 <table class="ChessBoard" id="board">
 

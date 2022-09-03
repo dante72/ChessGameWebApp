@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    internal class Move
+    internal class SavedMove
     {
+        public Cell Move { get; set; }
+        public int BoardIndex { get; set; }
     }
 }

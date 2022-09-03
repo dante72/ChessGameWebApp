@@ -9,6 +9,7 @@ namespace ChessGame
 {
     public abstract class Figure
     {
+        internal Stack<SavedMove> SavedMoves { set; get; } = new Stack<SavedMove>();
         internal int MovesCount { get; set; }
         internal FigureColors Color { get; private set; }
         internal Cell Position { get; set; }
@@ -34,12 +35,37 @@ namespace ChessGame
         }
         internal virtual void MoveTo(Cell cell, bool doubleMove = false)
         {
+            cell.Figure?.SaveMoves(cell);
+            SaveMoves(Position);
+
             Position.Figure = null;
             cell.Figure = this;
             
             IsFirstMove++;
             if (!doubleMove)
-                Position.Board.Index++;
+                Board.Index++;
+        }
+        internal int CheckBoardIndex()
+        {
+            return SavedMoves.Peek().BoardIndex;
+        }
+
+        internal void MoveBack()
+        {
+            var savedMove = SavedMoves.Pop();
+            Position.Figure = null;
+            savedMove.Move.Figure = this;
+            IsFirstMove--;
+        }
+
+        private void SaveMoves(Cell lastMove)
+        {
+            Board.MovedFigures.Push(this);
+            SavedMoves.Push(new SavedMove()
+            {
+                Move = lastMove,
+                BoardIndex = Board.Index
+            });
         }
         public bool IsMove()
         {

@@ -32,12 +32,14 @@ namespace ChessGame
 
             MoveTo(cell);
         }
-        internal virtual void MoveTo(Cell cell)
+        internal virtual void MoveTo(Cell cell, bool doubleMove = false)
         {
             Position.Figure = null;
             cell.Figure = this;
+            
             IsFirstMove++;
-            Position.Board.Index++;
+            if (!doubleMove)
+                Position.Board.Index++;
         }
         public bool IsMove()
         {

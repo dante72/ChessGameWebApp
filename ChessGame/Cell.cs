@@ -50,27 +50,27 @@ namespace ChessGame
                     y = 1;
                     break;
                 case Directions.Left:
-                    x = 1;
+                    x = -1;
                     y = 0;
                     break;
                 case Directions.Right:
-                    x = -1;
+                    x = 1;
                     y = 0;
                     break;
                 case Directions.LeftUp:
-                    x = 1;
+                    x = -1;
                     y = -1;
                     break;
                 case Directions.RightDown:
-                    x = -1;
-                    y = 1;
-                    break;
-                case Directions.LeftDown:
                     x = 1;
                     y = 1;
                     break;
-                case Directions.RightUp:
+                case Directions.LeftDown:
                     x = -1;
+                    y = 1;
+                    break;
+                case Directions.RightUp:
+                    x = 1;
                     y = -1;
                     break;
 

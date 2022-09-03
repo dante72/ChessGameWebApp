@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    public interface IChessCellObserver
+    public interface IChessObservable
     {
-        void Update();
+        public void Subscribe(IChessObserver observer)
+        {
+            observer.Update();
+        }
     }
 }

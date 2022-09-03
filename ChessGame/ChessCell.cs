@@ -9,9 +9,9 @@ namespace ChessGame
     /// <summary>
     /// Класс для клиет-серверного взаимодействия
     /// </summary>
-    public class ChessCell : Cell, IChessCellObservable
+    public class ChessCell : Cell, IChessObservable
     {
-        private IChessCellObserver? observer;
+        private IChessObserver? observer;
         private bool _isPointer;
         private bool _isMarked;
         private string? _figureName;
@@ -29,7 +29,7 @@ namespace ChessGame
 
             return $"{Figure.Color}{Figure.GetType().Name}";
         }
-        public void Subscribe(IChessCellObserver observer)
+        public void Subscribe(IChessObserver observer)
         {
             this.observer = observer ?? throw new ArgumentNullException(nameof(observer));  
         }

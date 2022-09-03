@@ -5,7 +5,7 @@ using System.Net.Http.Json;
 
 namespace ChessGameWebApp.Client.Components
 {
-    public class CellComponentModel : ComponentBase, IChessCellObserver
+    public class CellComponentModel : ComponentBase, IChessObserver
     {
         [Parameter]
         public GameComponent ParentComponent { get; set; }

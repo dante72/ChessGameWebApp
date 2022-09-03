@@ -13,7 +13,7 @@ namespace ChessGame
         internal int MovesCount { get; set; }
         internal FigureColors Color { get; private set; }
         internal Cell Position { get; set; }
-        protected abstract IEnumerable<Cell> GetAllPossibleMoves();
+        internal abstract IEnumerable<Cell> GetAllPossibleMoves();
         public IEnumerable<Cell> PossibleMoves
         {
             get => GetPossibleMoves();
@@ -76,10 +76,18 @@ namespace ChessGame
             if (IsMove())
                 return new List<Cell>();
 
-            var moves = GetAllPossibleMoves().Where(i => i.Figure?.Color != Color).ToList();
+            var moves = GetPossibleMovesAreNotAnderAttack()
+                .Where(i => i.Figure?.Color != Color)
+                .ToList();
 
             return moves;
         }
+
+        protected virtual IEnumerable<Cell> GetPossibleMovesAreNotAnderAttack()
+        {
+            return GetAllPossibleMoves();
+        }
+
         public override string ToString()
         {
             return GetType().Name;

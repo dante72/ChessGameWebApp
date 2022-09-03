@@ -1,5 +1,6 @@
 ﻿using ChessGame.Figures;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    public class Board
+    public class Board : IEnumerable<Cell>
     {
         internal Stack<Figure> MovedFigures { set; get; } = new Stack<Figure>();
         internal int Index { get; set; } = 0;
@@ -76,5 +77,18 @@ namespace ChessGame
             this[7, 4] = new King(FigureColors.White);
             this[7, 7] = new Rook(FigureColors.White);
         }
+
+        internal bool IsUnderAttack(Cell cell, FigureColors color)
+        {
+            return this
+                .Where(cell => cell.Figure != null)
+                .Select(cell => cell.Figure)
+                .Where(figure => figure.Color == color)
+                .SelectMany(figure => figure.GetAllPossibleMoves())
+                .Any(move => move == cell);
+        }
+
+        public IEnumerator<Cell> GetEnumerator() => Cells.Cast<Cell>().GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => Cells.GetEnumerator();
     }
 }

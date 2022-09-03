@@ -11,7 +11,7 @@ namespace ChessGame.Figures
         public Knight(FigureColors color) : base(color)
         {
         }
-        protected override List<Cell> GetAllPossibleMoves()
+        internal override List<Cell> GetAllPossibleMoves()
         {
             var list = new List<Cell>();
             if (Position is not null)

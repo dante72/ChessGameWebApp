@@ -80,7 +80,7 @@ namespace ChessGame
             CheckFigureMove = checkMove;
         }
 
-        public IEnumerator<ChessCell> GetEnumerator() => Cells.Cast<ChessCell>().GetEnumerator();
+        public new IEnumerator<ChessCell> GetEnumerator() => Cells.Cast<ChessCell>().GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => Cells.GetEnumerator();
     }
 }

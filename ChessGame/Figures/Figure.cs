@@ -41,22 +41,26 @@ namespace ChessGame
 
             Position.Figure = null;
             cell.Figure = this;
-            
-            IsFirstMove++;
+
             if (!doubleMove)
+            {
+                IsFirstMove++;
                 Board.Index++;
+            }
         }
         internal int CheckBoardIndex()
         {
             return SavedMoves.Peek().BoardIndex;
         }
 
-        internal void MoveBack()
+        internal void MoveBack(bool doubleMove = false)
         {
             var savedMove = SavedMoves.Pop();
             Position.Figure = null;
             savedMove.Move.Figure = this;
-            IsFirstMove--;
+
+            if (!doubleMove)
+                IsFirstMove--;
         }
 
         private void SaveMoves(Cell lastMove)

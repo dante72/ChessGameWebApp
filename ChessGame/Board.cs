@@ -86,7 +86,7 @@ namespace ChessGame
             last.MoveBack();
             
             if (MovedFigures.Count > 0 && index == MovedFigures.Peek().CheckBoardIndex())
-                MovedFigures.Pop().MoveBack();
+                MovedFigures.Pop().MoveBack(true);
 
             Index--;
         }

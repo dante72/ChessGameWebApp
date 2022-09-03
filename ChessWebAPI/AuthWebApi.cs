@@ -75,5 +75,10 @@ namespace AuthWebAPI
         {
             return await _gameServer.GetFromJsonAsync<int>("ChessGame/PlayerCount");
         }
+
+        public async Task<bool> SessionExists()
+        {
+            return await _gameServer.GetFromJsonAsync<bool>("ChessGame/SessionExists");
+        }
     }
 }

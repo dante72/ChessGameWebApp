@@ -4,6 +4,7 @@
 @using ChessGameWebApp.Client.Services
 @inject IAuthWebApi webApi
 @inject IGameHubService gameHub
+@inject NavigationManager navigationManager
 
 
 <input class="btn btn-primary" type="button" value="GO" @onclick="goGame"/>
@@ -15,8 +16,15 @@
     private int count = 0;
     private async void goGame()
     {
-        await webApi.AddPlayer();
-        count = await webApi.PlayerCount();
+        if (await webApi.SessionExists())
+        {
+            navigationManager.NavigateTo("/game/start");
+        }
+        else
+        {
+            await webApi.AddPlayer();
+            count = await webApi.PlayerCount();
+        }
         StateHasChanged();
     }
 

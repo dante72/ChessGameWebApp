@@ -41,7 +41,7 @@ namespace ChessGameWebApp.Client.Services
             hubConnection.On<bool>("StartGame", (start) => 
             {
                 if (start)
-                    navigationManager.NavigateTo("/Game");
+                    navigationManager.NavigateTo("/Game/start");
             });
         }
 

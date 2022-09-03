@@ -18,7 +18,6 @@ namespace ChessGameWebApp.Server.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             if (_task == null)

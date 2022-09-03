@@ -21,5 +21,14 @@ namespace ChessGameWebApp.Server.Services
             _logger.LogInformation($"Get session by {accountId}");
             return Task.FromResult(session);
         }
+
+        public Task<GameSession?> FindSession(int accountId)
+        {
+            GameSession? session;
+            lock (_sessions)
+                session = _sessions.FirstOrDefault(s => s.Players.Any(p => p.Id == accountId));
+            _logger.LogInformation($"Get session by {accountId}");
+            return Task.FromResult(session);
+        }
     }
 }

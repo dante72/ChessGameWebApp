@@ -18,5 +18,6 @@ namespace AuthWebAPI
         Task SingOut();
         Task AddPlayer();
         Task<int> PlayerCount();
+        Task<bool> SessionExists();
     }
 }

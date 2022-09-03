@@ -12,12 +12,14 @@ namespace ChessGameWebApp.Server.Controllers
     public class ChessGameController : Controller
     {
         private readonly ILogger<ChessGameController> _logger;
-        private readonly IPlayerService _queueService;
+        private readonly IPlayerService _playerService;
+        private readonly IGameSessionService _gameSessionService;
 
-        public ChessGameController(ILogger<ChessGameController> logger, IPlayerService queueService)
+        public ChessGameController(ILogger<ChessGameController> logger, IPlayerService playerService, IGameSessionService gameSessionService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _queueService = queueService ?? throw new ArgumentNullException(nameof(queueService));
+            _playerService = playerService ?? throw new ArgumentNullException(nameof(playerService));
+            _gameSessionService = gameSessionService ?? throw new ArgumentNullException(nameof(gameSessionService));
         }
         [HttpGet("GetUser")]
         [Authorize]
@@ -36,10 +38,9 @@ namespace ChessGameWebApp.Server.Controllers
         [Authorize]
         public async Task AddPlayer()
         {
-            var claims = User.Identity as ClaimsIdentity;
-            int id = int.Parse(claims.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            int id = GetUserId(User);
             Player player = new Player() { Id = id };
-            await _queueService.Add(player);
+            await _playerService.Add(player);
         }
 
         
@@ -47,7 +48,22 @@ namespace ChessGameWebApp.Server.Controllers
         [Authorize]
         public async Task<int> PlayerCount()
         {
-            return await _queueService.Count();
+            return await _playerService.Count();
+        }
+
+        [HttpGet("SessionExists")]
+        [Authorize]
+        public async Task<bool> SessionExists()
+        {
+            int accountId = GetUserId(User);
+            var result = await _gameSessionService.FindSession(accountId);
+            return result == null ? false : true;
+        }
+
+        private int GetUserId(ClaimsPrincipal user)
+        {
+            var claims = User.Identity as ClaimsIdentity;
+            return int.Parse(claims.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         }
     }
 }

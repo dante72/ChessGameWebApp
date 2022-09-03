@@ -28,6 +28,25 @@ namespace ChessGame
             return chessBoardDto;
         }
 
+        public static ChessBoardDto ToDto(this Board chessBoard)
+        {
+            var chessBoardDto = new ChessBoardDto();
+
+            foreach (Cell cell in chessBoard.Cells)
+            {
+                chessBoardDto.Cells.Add(new ChessCellDto()
+                {
+                    Row = cell.Row,
+                    Column = cell.Column,
+                    Figure = cell.Figure?.ToDto()
+                });
+            }
+
+            chessBoardDto.Index = chessBoard.Index;
+
+            return chessBoardDto;
+        }
+
         public static void Update(this ChessBoard chessBoard, ChessBoardDto? data)
         {
             if (data == null)

@@ -35,7 +35,7 @@ namespace ChessGame
                 Setup();
         }
 
-        public ChessCell GetCell(int row, int column)
+        public new ChessCell GetCell(int row, int column)
         {
             return (ChessCell)Cells[row, column];
         }

@@ -65,7 +65,7 @@ namespace ChessGameWebApp.Server.Services
                         var sesion = new GameSession()
                         {
                             Players = players.ToList(),
-                            Board = new ChessBoard(true)
+                            Board = new Board(true)
                         };
 
                         lock (_sessions)

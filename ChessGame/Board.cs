@@ -18,12 +18,15 @@ namespace ChessGame
             get => Cells[row, column].Figure;
             set => Cells[row, column].Figure = value;
         }
-        internal Board()
+        public Board(bool setup = false)
         {
             Cells = new Cell[8, 8];
             for (int i = 0; i < 8; i++)
                 for(int j = 0; j < 8; j++)
                     Cells[i, j] = new Cell(i, j, this);
+
+            if (setup)
+                Setup();
         }
         internal Board(Board copy)
         {
@@ -41,6 +44,11 @@ namespace ChessGame
                     
                     Cells[i, j] = cell;
                 }
+        }
+
+        public Cell GetCell(int row, int column)
+        {
+            return Cells[row, column];
         }
         internal void Setup()
         {

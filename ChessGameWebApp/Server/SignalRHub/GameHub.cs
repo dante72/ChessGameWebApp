@@ -84,7 +84,7 @@ namespace ChessGameWebApp.Server.SignalRHub
             return int.Parse(claims.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         }
 
-        private bool TryMove(ChessBoard board, int fromRow, int fromColumn, int toRow, int toColumn)
+        private bool TryMove(Board board, int fromRow, int fromColumn, int toRow, int toColumn)
         {
             try
             {

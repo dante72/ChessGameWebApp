@@ -29,5 +29,6 @@ namespace ChessGame.Figures
 
             return list;
         }
+        internal override Figure Clone() => new Queen(Color);
     }
 }

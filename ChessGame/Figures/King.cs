@@ -81,6 +81,6 @@ namespace ChessGame.Figures
                     .MoveTo(Board.Cells[Position.Row, Position.Column - 1], true);
             }
         }
-
+        internal override Figure Clone() => new King(Color);
     }
 }

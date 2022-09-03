@@ -26,6 +26,7 @@ namespace ChessGame
         }
         internal Board Board { get => Position.Board; }
 
+        internal abstract Figure Clone();
         public void TryMoveTo(Cell cell)
         {
             if (!GetPossibleMoves().Contains(cell))
@@ -77,10 +78,28 @@ namespace ChessGame
                 return new List<Cell>();
 
             var moves = GetPossibleMovesAreNotAnderAttack()
-                .Where(i => i.Figure?.Color != Color)
-                .ToList();
+                .Where(i => i.Figure?.Color != Color);
 
-            return moves;
+            return GetPossibleMovesWithoutCheckToKing(moves);
+        }
+
+        private IEnumerable<Cell> GetPossibleMovesWithoutCheckToKing(IEnumerable<Cell> moves)
+        {
+            var testBoard = new Board(Board);
+            var figure = testBoard[Position.Row, Position.Column];
+            var correctCells = new List<Cell>();
+
+            foreach (var move in moves)
+            {
+                var to = testBoard.Cells[move.Row, move.Column];
+                figure.MoveTo(to);
+                if (!testBoard.IsCheckToKing(figure.Color))
+                    correctCells.Add(move);
+
+                testBoard.MoveBack();
+            }
+
+            return correctCells;
         }
 
         protected virtual IEnumerable<Cell> GetPossibleMovesAreNotAnderAttack()

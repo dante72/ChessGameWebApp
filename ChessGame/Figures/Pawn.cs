@@ -37,5 +37,6 @@ namespace ChessGame.Figures
 
             return attackFields;
         }
+        internal override Figure Clone() => new Pawn(Color);
     }
 }

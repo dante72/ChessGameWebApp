@@ -25,6 +25,23 @@ namespace ChessGame
                 for(int j = 0; j < 8; j++)
                     Cells[i, j] = new Cell(i, j, this);
         }
+        internal Board(Board copy)
+        {
+            Index = copy.Index;
+            Cells = Cells = new Cell[8, 8];
+
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
+                {
+                    var cell = new Cell(i, j, this);
+                    var figure = copy[i, j]?.Clone();
+
+                    if (figure != null)
+                        cell.Figure = figure;
+                    
+                    Cells[i, j] = cell;
+                }
+        }
         internal void Setup()
         {
             this[0, 0] = new Rook(FigureColors.Black);
@@ -76,6 +93,13 @@ namespace ChessGame
 
             this[7, 4] = new King(FigureColors.White);
             this[7, 7] = new Rook(FigureColors.White);
+        }
+
+        internal bool IsCheckToKing(FigureColors color)
+        {
+            var cell = this.First(cell => cell.Figure is King king && king.Color == color);
+
+            return IsUnderAttack(cell, color == FigureColors.White ? FigureColors.Black : FigureColors.White);
         }
 
         internal bool IsUnderAttack(Cell cell, FigureColors color)

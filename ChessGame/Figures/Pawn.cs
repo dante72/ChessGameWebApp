@@ -8,9 +8,30 @@ namespace ChessGame.Figures
 {
     internal class Pawn : Figure
     {
+        private int passentIndex = 0;
         public Pawn(FigureColors color) : base(color)
         {
         }
+        internal override void MoveTo(Cell cell, bool doubleMove = false)
+        {
+
+            if (cell.Row > 0 && Board[cell.Row - 1, cell.Column] is Pawn pawn && pawn.IsFirstMove == 1 && pawn.Color == FigureColors.White && pawn.passentIndex == Board.Index)
+            {
+                pawn.SaveMoves(pawn.Position);
+                pawn.Position.Figure = null;
+            }
+            if (cell.Row < 7 && Board[cell.Row + 1, cell.Column] is Pawn p && p.IsFirstMove == 1 && p.Color == FigureColors.Black && p.passentIndex == Board.Index)
+            {
+                p.SaveMoves(p.Position);
+                p.Position.Figure = null;
+            }
+
+            base.MoveTo(cell, doubleMove);
+            
+            if (IsFirstMove == 1 && (Position.Row == 3 || Position.Row == 4))
+                passentIndex = Board.Index;
+        }
+
         internal override List<Cell> GetAllPossibleMoves()
         {
             var moves = new List<Cell>();
@@ -21,6 +42,7 @@ namespace ChessGame.Figures
 
                 moves.AddRange(AddAttackFields(direction));
                 moves.AddRange(AddForwardFields(direction));
+                moves.AddRange(Passent(direction));
             }
 
             return moves;
@@ -48,6 +70,43 @@ namespace ChessGame.Figures
             var moves = new List<Cell>();
             int range = IsFirstMove == 0 && (Position.Row == 1 || Position.Row == 6) ? 2 : 1;
             moves.AddRange(Position.GetCellsInDirection(direction, range).Where(i => i.Figure == null));
+
+            return moves;
+        }
+
+        private List<Cell> Passent(Directions direction)
+        {
+            var moves = new List<Cell>();
+            if (Position.Row == 3 || Position.Row == 4)
+            {
+                if (Position.Column > 0 && Board[Position.Row, Position.Column - 1] is Pawn pawn && pawn.IsFirstMove == 1 && pawn.Color != Color && pawn.passentIndex == Board.Index)
+                {
+                    if (direction == Directions.Up)
+                    {
+                        if (Board[Position.Row - 1, Position.Column - 1] == null)
+                            moves.Add(Board.Cells[Position.Row - 1, Position.Column - 1]);
+                    }
+                    else
+                    {
+                        if (Board[Position.Row + 1, Position.Column - 1] == null)
+                            moves.Add(Board.Cells[Position.Row + 1, Position.Column - 1]);
+                    }
+                }
+
+                if (Position.Column < 7 && Board[Position.Row, Position.Column + 1] is Pawn p && p.IsFirstMove == 1 && p.Color != Color && p.passentIndex == Board.Index)
+                {
+                    if (direction == Directions.Up)
+                    {
+                        if (Board[Position.Row - 1, Position.Column + 1] == null)
+                            moves.Add(Board.Cells[Position.Row - 1, Position.Column + 1]);
+                    }
+                    else
+                    {
+                        if (Board[Position.Row + 1, Position.Column + 1] == null)
+                            moves.Add(Board.Cells[Position.Row + 1, Position.Column + 1]);
+                    }
+                }
+            }
 
             return moves;
         }

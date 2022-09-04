@@ -57,7 +57,7 @@ namespace ChessGame
                 IsFirstMove--;
         }
 
-        private void SaveMoves(Cell lastMove)
+        protected void SaveMoves(Cell lastMove)
         {
             Board.MovedFigures.Push(this);
             SavedMoves.Push(new SavedMove()

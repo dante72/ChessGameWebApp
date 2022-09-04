@@ -30,6 +30,9 @@ namespace ChessGame.Figures
             
             if (IsFirstMove == 1 && (Position.Row == 3 || Position.Row == 4))
                 passentIndex = Board.Index;
+
+            if (Position.Row == 0 || Position.Row == 7)
+                Transformation(new Queen(Color));
         }
 
         internal override List<Cell> GetAllPossibleMoves()
@@ -109,6 +112,11 @@ namespace ChessGame.Figures
             }
 
             return moves;
+        }
+
+        private void Transformation(Figure figure)
+        {
+            Position.Figure = figure;
         }
         internal override Figure Clone() => new Pawn(Color);
     }

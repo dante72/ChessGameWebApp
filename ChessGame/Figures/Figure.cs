@@ -27,14 +27,7 @@ namespace ChessGame
         internal Board Board { get => Position.Board; }
 
         internal abstract Figure Clone();
-        public void TryMoveTo(Cell cell)
-        {
-            if (!GetPossibleMoves().Contains(cell))
-                throw new InvalidOperationException("Error! Such step is impossible");
 
-            MoveTo(cell);
-            Board.GameStatus = Board.GetGameStatus();
-        }
         internal virtual void MoveTo(Cell cell, bool doubleMove = false)
         {
             cell.Figure?.SaveMoves(cell);

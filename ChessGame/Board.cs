@@ -92,6 +92,15 @@ namespace ChessGame
             Index--;
         }
 
+        public void TryMove(Cell from, Cell to)
+        {
+            if (from.Figure?.PossibleMoves.Contains(to) != true)
+                throw new InvalidOperationException("Error! Such step is impossible");
+
+            from.Figure.MoveTo(to);
+            GameStatus = GetGameStatus();
+        }
+
         internal void Setup1()
         {
             this[0, 0] = new Rook(FigureColors.Black);

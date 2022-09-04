@@ -90,7 +90,7 @@ namespace ChessGameWebApp.Server.SignalRHub
             {
                 var from = board.GetCell(fromRow, fromColumn);
                 var to = board.GetCell(toRow, toColumn);
-                from.Figure?.TryMoveTo(to);
+                board.TryMove(from, to);
 
                 return true;
             }

@@ -35,7 +35,7 @@ namespace ChessGameWebApp.Client.Services
                 var fromCell = _board.GetCell(from.Row, from.Column);
                 var toCell = _board.GetCell(to.Row, to.Column);
                 
-                fromCell.Figure?.TryMoveTo(toCell);
+                _board.TryMove(fromCell, toCell);
             });
 
             hubConnection.On<bool>("StartGame", (start) => 

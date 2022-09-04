@@ -18,6 +18,7 @@ namespace ChessGame
             get => Cells[row, column].Figure;
             set => Cells[row, column].Figure = value;
         }
+        public virtual GameStatus GameStatus { get; set; }
         public Board(bool setup = false)
         {
             Cells = new Cell[8, 8];
@@ -110,6 +111,16 @@ namespace ChessGame
             return IsUnderAttack(cell, color == FigureColors.White ? FigureColors.Black : FigureColors.White);
         }
 
+        internal bool IsLastMove(FigureColors color)
+        {
+            return !this
+                .Where(cell => cell.Figure != null)
+                .Select(cell => cell.Figure)
+                .Where(figure => figure.Color == color)
+                .SelectMany(figure => figure.PossibleMoves)
+                .Any();
+        }
+
         internal bool IsUnderAttack(Cell cell, FigureColors color)
         {
             return this
@@ -120,6 +131,25 @@ namespace ChessGame
                 .Any(move => move == cell);
         }
 
+        public GameStatus GetGameStatus()
+        {
+            FigureColors player = GetPlayer();
+
+            bool lastMove = IsLastMove(player);
+            bool check = IsCheckToKing(player);
+
+            if (check && lastMove)
+                return GameStatus.Checkmate;
+
+            if (lastMove)
+                return GameStatus.Stalemate;
+
+            if (check)
+                return GameStatus.Check;
+
+            return GameStatus.Normal;
+        }
+        public FigureColors GetPlayer() => Index % 2 == 0 ? FigureColors.Black : FigureColors.White;
         public IEnumerator<Cell> GetEnumerator() => Cells.Cast<Cell>().GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => Cells.GetEnumerator();
     }

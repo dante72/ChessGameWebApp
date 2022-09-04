@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    public class ChessBoard : Board, IEnumerable<ChessCell>
+    public class ChessBoard : Board, IEnumerable<ChessCell>, IChessObservable
     {
         public delegate Task<bool> CheckMove(Cell from, Cell to);
         private CheckMove CheckFigureMove { get; set; } = delegate { return Task.FromResult(true); };
@@ -24,6 +24,20 @@ namespace ChessGame
                 target.IsPointer = true;
             }
         }
+        private GameStatus gameStatus;
+        public override GameStatus GameStatus
+        {
+            get
+            {
+                return gameStatus;
+            }
+            set
+            {
+                gameStatus = value;
+                observer?.Update();
+            }
+        }
+        private IChessObserver? observer;
         public ChessBoard(bool setup = false)
         {
             Cells = new ChessCell[8, 8];
@@ -72,12 +86,15 @@ namespace ChessGame
             }
 
             Target = currentCell;
-
         }
 
         public void SetCheckMethod(CheckMove checkMove)
         {
             CheckFigureMove = checkMove;
+        }
+        public void Subscribe(IChessObserver observer)
+        {
+            this.observer = observer ?? throw new ArgumentNullException(nameof(observer));
         }
 
         public new IEnumerator<ChessCell> GetEnumerator() => Cells.Cast<ChessCell>().GetEnumerator();

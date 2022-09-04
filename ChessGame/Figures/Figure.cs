@@ -33,6 +33,7 @@ namespace ChessGame
                 throw new InvalidOperationException("Error! Such step is impossible");
 
             MoveTo(cell);
+            Board.GameStatus = Board.GetGameStatus();
         }
         internal virtual void MoveTo(Cell cell, bool doubleMove = false)
         {

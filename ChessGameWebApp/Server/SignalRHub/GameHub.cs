@@ -52,7 +52,7 @@ namespace ChessGameWebApp.Server.SignalRHub
         {
             int accountId = GetCurrentAccountId(Context);
             var session = await _serverGameService.GetSession(accountId);
-            session.Board.MoveBack();
+            session.Board.TryMoveBack();
 
             var connections = await _connectionService.GetConnections(session.Players.Select(p => p.Id).ToArray());
             await Clients.Clients(connections).SendAsync("ReceiveMoveBack", true);

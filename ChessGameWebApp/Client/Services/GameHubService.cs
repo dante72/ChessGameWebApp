@@ -48,7 +48,7 @@ namespace ChessGameWebApp.Client.Services
                 hubConnection.On<bool>("ReceiveMoveBack", (ok) =>
                 {
                     if (ok)
-                        _board.MoveBack();
+                        _board.TryMoveBack();
                 });
             }
         }

@@ -76,7 +76,13 @@ namespace ChessGame
             this[7, 7] = new Rook(FigureColors.White);
         }
 
-        public void MoveBack()
+        public void TryMoveBack()
+        {
+            MoveBack();
+            GameStatus = GetGameStatus();
+        }
+
+        internal void MoveBack()
         {
             if (MovedFigures.Count == 0)
                 return;

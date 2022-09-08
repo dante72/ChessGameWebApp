@@ -7,5 +7,6 @@ namespace ChessGameWebApp.Server.Services
     {
         Task<GameSession> GetSession(int accountId);
         Task<GameSession?> FindSession(int accountId);
+        Task<bool> CloseSession(int accountId);
     }
 }

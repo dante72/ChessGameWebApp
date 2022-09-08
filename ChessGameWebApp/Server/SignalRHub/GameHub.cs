@@ -31,9 +31,13 @@ namespace ChessGameWebApp.Server.SignalRHub
         {
             int accountId = GetCurrentAccountId(Context);
             var session = await _serverGameService.GetSession(accountId);
+
             try
             {
                 TryMove(session.Board, from.Row, from.Column, to.Row, to.Column);
+                
+                if (session.Board.GameStatus == GameStatus.Checkmate)
+                    await _serverGameService.CloseSession(accountId);
             }
             catch(InvalidOperationException ex)
             {

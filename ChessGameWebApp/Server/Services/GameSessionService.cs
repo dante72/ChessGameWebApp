@@ -30,5 +30,19 @@ namespace ChessGameWebApp.Server.Services
             _logger.LogInformation($"Get session by {accountId}");
             return Task.FromResult(session);
         }
+
+        public Task<bool> CloseSession(int accountId)
+        {
+            GameSession? session;
+            lock (_sessions)
+            {
+                session = _sessions.FirstOrDefault(s => s.Players.Any(p => p.Id == accountId));
+                if (session != null)
+                    _sessions.Remove(session);
+            }
+            _logger.LogInformation($"Remove session by {accountId}");
+
+            return Task.FromResult(true);
+        }
     }
 }

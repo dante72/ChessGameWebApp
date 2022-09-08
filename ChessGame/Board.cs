@@ -11,7 +11,7 @@ namespace ChessGame
     public class Board : IEnumerable<Cell>
     {
         internal Stack<Figure> MovedFigures { set; get; } = new Stack<Figure>();
-        internal int Index { get; set; } = 1;
+        internal int Index { get; set; } = 0;
         internal Cell[,] Cells;
         internal Figure? this[int row, int column]
         {

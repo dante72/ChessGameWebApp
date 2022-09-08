@@ -68,11 +68,11 @@ namespace ChessGame
         }
         public bool IsMove()
         {
-            return Color == FigureColors.Black && Board.Index % 2 != 0 || Color == FigureColors.White && Board.Index % 2 == 0;
+            return Color == FigureColors.White && Board.Index % 2 == 0 || Color == FigureColors.Black && Board.Index % 2 == 1;
         }
         protected virtual IEnumerable<Cell> GetPossibleMoves()
         {
-            if (IsMove())
+            if (!IsMove())
                 return new List<Cell>();
 
             var moves = GetPossibleMovesAreNotAnderAttack()

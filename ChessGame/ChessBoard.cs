@@ -10,6 +10,7 @@ namespace ChessGame
 {
     public class ChessBoard : Board, IEnumerable<ChessCell>, IChessObservable
     {
+        public FigureColors? PlayerColor { get; set; }
         public delegate Task<bool> CheckMove(Cell from, Cell to);
         private CheckMove CheckFigureMove { get; set; } = delegate { return Task.FromResult(true); };
         private ChessCell target;
@@ -48,7 +49,6 @@ namespace ChessGame
             if (setup)
                 Setup();
         }
-
         public new ChessCell GetCell(int row, int column)
         {
             return (ChessCell)Cells[row, column];
@@ -75,7 +75,8 @@ namespace ChessGame
             {
                 if (await CheckFigureMove(target, currentCell))
                 {
-                    Target.Figure?.MoveTo(currentCell);
+                    if (PlayerColor == null || PlayerColor == IsAllowedMove)
+                        TryMove(Target, currentCell);
                 }
                 
                 ClearPossibleMoves();

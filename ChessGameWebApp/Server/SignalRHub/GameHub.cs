@@ -24,7 +24,8 @@ namespace ChessGameWebApp.Server.SignalRHub
         {
             int accountId = GetCurrentAccountId(Context);
             var session = await _serverGameService.GetSession(accountId);
-            await Clients.Caller.SendAsync("ReceiveBoard", session.Board.ToDto());
+            var player = session.GetPlayer(accountId);
+            await Clients.Caller.SendAsync("ReceiveBoard", session.Board.ToDto(), player.Color);
         }
 
         public async Task SendTryMove(ChessCellDto from, ChessCellDto to)
@@ -34,8 +35,12 @@ namespace ChessGameWebApp.Server.SignalRHub
 
             try
             {
-                TryMove(session.Board, from.Row, from.Column, to.Row, to.Column);
-                
+                if (session.IsAllowedMove(accountId))
+                    TryMove(session.Board, from.Row, from.Column, to.Row, to.Column);
+                else
+                    throw new InvalidOperationException("It's not his move");
+
+
                 if (session.Board.GameStatus == GameStatus.Checkmate)
                     await _serverGameService.CloseSession(accountId);
             }

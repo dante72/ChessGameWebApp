@@ -25,9 +25,10 @@ namespace ChessGameWebApp.Client.Services
                 .WithAutomaticReconnect()
                 .Build();
 
-            hubConnection.On<ChessBoardDto>("ReceiveBoard", (board) =>
+            hubConnection.On<ChessBoardDto, FigureColors>("ReceiveBoard", (board, playerColor) =>
             {
                 _board.Update(board);
+                _board.PlayerColor = playerColor;
             });
 
             hubConnection.On<ChessCellDto, ChessCellDto>("ReceiveTryMove", (from, to) =>

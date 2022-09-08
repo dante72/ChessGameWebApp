@@ -67,13 +67,25 @@ namespace ChessGameWebApp.Server.Services
                             Players = players.ToList(),
                             Board = new Board(true)
                         };
+                    
+                        PaintPlayers(sesion.Players);
 
                         lock (_sessions)
                             _sessions.Add(sesion);
-                        
+
+
                     }
                     await _gameHub.StartGame(players);
                 }
+        }
+
+        private void PaintPlayers(List<Player> players)
+        {
+            if (players.Count == 2)
+            {
+                players[0].Color = FigureColors.White;
+                players[1].Color = FigureColors.Black;
+            }
         }
     }
 }

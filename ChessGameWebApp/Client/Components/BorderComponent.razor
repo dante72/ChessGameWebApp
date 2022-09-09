@@ -1,0 +1,29 @@
+﻿@code {
+
+    [Parameter]
+    public int Row { get; set; }
+
+    [Parameter]
+    public int Column { get; set; }
+
+    [Parameter]
+    public bool Reverse { get; set; }
+
+    private string GetValue()
+    {
+        if (Column >= 0)
+        {
+            char ch = (char)((int)'A' + Column);
+            return "" + ch;
+        }
+
+        if (Row >= 0)
+        {
+            return $"{Row + 1}";
+        }
+
+        return "";
+    }
+}
+
+<td class="@(Column == -1 ? "vertical": "") @(Row == - 1 ? "horizontal" : "")">@GetValue()</td>

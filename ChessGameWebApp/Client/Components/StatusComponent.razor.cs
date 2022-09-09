@@ -7,6 +7,8 @@ namespace ChessGameWebApp.Client.Components
     {
         [Parameter]
         public string Status { get; set; }
+        [Parameter]
+        public string Player { get; set; }
         private ChessBoard board;
         [Parameter]
         public ChessBoard Board
@@ -20,6 +22,7 @@ namespace ChessGameWebApp.Client.Components
         }
         public void Update()
         {
+            Player = Board.GetPlayer() == Board.PlayerColor ? "Ваш ход" : "Ход противника";
             Status = Enum.GetName(Board.GameStatus);
             StateHasChanged();
         }

@@ -165,7 +165,7 @@ namespace ChessGame
 
             return GameStatus.Normal;
         }
-        public FigureColors GetPlayer() => Index % 2 == 0 ? FigureColors.Black : FigureColors.White;
+        public FigureColors GetPlayer() => Index % 2 == 0 ? FigureColors.White : FigureColors.Black;
         public IEnumerator<Cell> GetEnumerator() => Cells.Cast<Cell>().GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => Cells.GetEnumerator();
     }

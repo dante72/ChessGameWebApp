@@ -149,7 +149,7 @@ namespace ChessGame
 
         public GameStatus GetGameStatus()
         {
-            FigureColors player = GetPlayer();
+            FigureColors player = GetCurrentPlayer();
 
             bool lastMove = IsLastMove(player);
             bool check = IsCheckToKing(player);
@@ -165,7 +165,7 @@ namespace ChessGame
 
             return GameStatus.Normal;
         }
-        public FigureColors GetPlayer() => Index % 2 == 0 ? FigureColors.White : FigureColors.Black;
+        public FigureColors GetCurrentPlayer() => Index % 2 == 0 ? FigureColors.White : FigureColors.Black;
         public IEnumerator<Cell> GetEnumerator() => Cells.Cast<Cell>().GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => Cells.GetEnumerator();
     }

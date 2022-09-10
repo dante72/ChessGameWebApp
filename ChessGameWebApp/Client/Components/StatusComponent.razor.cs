@@ -7,8 +7,6 @@ namespace ChessGameWebApp.Client.Components
     {
         [Parameter]
         public string Status { get; set; }
-        [Parameter]
-        public string Player { get; set; }
         private ChessBoard board;
         [Parameter]
         public ChessBoard Board
@@ -22,9 +20,29 @@ namespace ChessGameWebApp.Client.Components
         }
         public void Update()
         {
-            Player = Board.GetPlayer() == Board.PlayerColor ? "Ваш ход" : "Ход противника";
-            Status = Enum.GetName(Board.GameStatus);
+            switch(Board.GameStatus)
+            {
+                case GameStatus.Normal:
+                    Status = Board.GetCurrentPlayer() == Board.PlayerColor ? "Ваш ход" : "Ход соперника";
+                    break;
+                case GameStatus.Check:
+                    Status = Board.GetCurrentPlayer() == Board.PlayerColor ? "Соперник объявил вам ШАХ!" : "Вы объявили ШАХ сопернику!";
+                    break;
+                case GameStatus.Stalemate:
+                    Status = "Пат, Ничья";
+                    break;
+                case GameStatus.Checkmate:
+                    Status = Board.GetCurrentPlayer() == Board.PlayerColor ? "Соперник объявил вам МАТ!" : "Вы объявили МАТ сопернику!";
+                    break;
+            }
+
             StateHasChanged();
+        }
+
+        protected override void OnInitialized()
+        {
+            Update();
+            base.OnInitialized();
         }
     }
 }

@@ -10,7 +10,15 @@ namespace ChessGame
 {
     public class ChessBoard : Board, IEnumerable<ChessCell>, IChessObservable
     {
-        public FigureColors? PlayerColor { get; set; }
+        private FigureColors? playerColor;
+        public FigureColors? PlayerColor
+        {
+            get => playerColor;
+            set {
+                playerColor = value;
+                observer?.Update();
+            } 
+        }
         public delegate Task<bool> CheckMove(Cell from, Cell to);
         private CheckMove CheckFigureMove { get; set; } = delegate { return Task.FromResult(true); };
         private ChessCell target;

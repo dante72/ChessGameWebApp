@@ -5,7 +5,7 @@ using System.Net.Http.Json;
 
 namespace ChessGameWebApp.Client.Components
 {
-    public class CellComponentModel : ComponentBase, IChessObserver
+    public class CellComponentModel : ComponentBase, IChessObserver, IDisposable
     {
         [Parameter]
         public GameComponent ParentComponent { get; set; }
@@ -27,7 +27,6 @@ namespace ChessGameWebApp.Client.Components
             set
             {
                 _chessCell = value;
-                _chessCell.Subscribe(this);
             } 
         }
         [Parameter]
@@ -57,6 +56,12 @@ namespace ChessGameWebApp.Client.Components
         protected override void OnInitialized()
         {
             ParentComponent.Children.Add((CellComponent)this);
+            ((IChessObservable)ChessCell).Subscribe(this);
+        }
+
+        public void Dispose()
+        {
+            ((IChessObservable)ChessCell).Remove(this);
         }
     }
 }

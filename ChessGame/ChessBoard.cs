@@ -10,13 +10,14 @@ namespace ChessGame
 {
     public class ChessBoard : Board, IEnumerable<ChessCell>, IChessObservable
     {
+        public List<IChessObserver> Observers { get; set; } = new List<IChessObserver>();
         private FigureColors? playerColor;
         public FigureColors? PlayerColor
         {
             get => playerColor;
             set {
                 playerColor = value;
-                observer?.Update();
+                ((IChessObservable)this).Notify();
             } 
         }
         public delegate Task<bool> CheckMove(Cell from, Cell to);
@@ -43,10 +44,10 @@ namespace ChessGame
             set
             {
                 gameStatus = value;
-                observer?.Update();
+                ((IChessObservable)this).Notify();
             }
         }
-        private IChessObserver? observer;
+
         public ChessBoard(bool setup = false)
         {
             Cells = new ChessCell[8, 8];
@@ -100,10 +101,6 @@ namespace ChessGame
         public void SetCheckMethod(CheckMove checkMove)
         {
             CheckFigureMove = checkMove;
-        }
-        public void Subscribe(IChessObserver observer)
-        {
-            this.observer = observer ?? throw new ArgumentNullException(nameof(observer));
         }
 
         public new IEnumerator<ChessCell> GetEnumerator() => Cells.Cast<ChessCell>().GetEnumerator();

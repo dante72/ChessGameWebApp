@@ -2,7 +2,6 @@
 @inherits GameComponentModel
 
 <table>
-
     @for (int i = -1; i < 8; i++)
     {
         <tr>
@@ -14,7 +13,8 @@
                 }
                 else
                 {
-                    <CellComponent Row="@i" Column="@j" ParentComponent="@this" ChessCell="@Board.GetCell(i, j)" ></CellComponent>
+
+                    <CellComponent Row="@(Inversion ? 7 - i : i)" Column="@(Inversion ? 7 - j : j)" ParentComponent="@this" ChessCell="@Board.GetCell((Inversion ? 7 - i : i), (Inversion ? 7 - j : j))" ></CellComponent>
                 }
             }
         </tr>

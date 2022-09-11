@@ -15,7 +15,6 @@ namespace ChessGameWebApp.Client.Components
             set
             {
                 board = value;
-                Board.Subscribe(this);
             }
         }
         public void Update()
@@ -41,8 +40,12 @@ namespace ChessGameWebApp.Client.Components
 
         protected override void OnInitialized()
         {
-            Update();
-            base.OnInitialized();
+            ((IChessObservable)Board).Subscribe(this);
+        }
+
+        public void Dispose()
+        {
+            ((IChessObservable)Board).Remove(this);
         }
     }
 }

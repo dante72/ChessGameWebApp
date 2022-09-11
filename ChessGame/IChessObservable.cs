@@ -8,9 +8,20 @@ namespace ChessGame
 {
     public interface IChessObservable
     {
+        protected List<IChessObserver> Observers { get; set; }
+        public void Notify()
+        {
+            Observers.ForEach(o => o.Update());
+        }
+
         public void Subscribe(IChessObserver observer)
         {
-            observer.Update();
+            Observers.Add(observer);
+        }
+
+        public void Remove(IChessObserver observer)
+        {
+            Observers.Remove(observer);
         }
     }
 }

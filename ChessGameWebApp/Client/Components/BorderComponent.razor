@@ -7,19 +7,19 @@
     public int Column { get; set; }
 
     [Parameter]
-    public bool Reverse { get; set; }
+    public bool Reverse { get; set; } = false;
 
     private string GetValue()
     {
         if (Column >= 0)
         {
-            char ch = (char)((int)'A' + Column);
+            char ch = !Reverse ? (char)((int)'A' + Column) : (char)((int)'A' + 7 - Column);
             return "" + ch;
         }
 
         if (Row >= 0)
         {
-            return $"{Row + 1}";
+            return !Reverse ? $"{Row + 1}" : $"{8 - Row}";
         }
 
         return "";

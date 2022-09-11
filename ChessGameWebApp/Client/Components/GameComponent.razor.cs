@@ -1,14 +1,12 @@
 ﻿using ChessGame;
 using ChessGameWebApp.Client.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.SignalR.Client;
 
 namespace ChessGameWebApp.Client.Components
 {
-    public class GameComponentModel : ComponentBase
+    public class GameComponentModel : ComponentBase, IDisposable, IChessObserver
     {
-        [Parameter]
-        public bool Inversion { get; set; } = false;
+        public bool Inversion { get => Board.PlayerColor == FigureColors.Black; }
         [Inject]
         public IClientGameService _ClientGameService { get; set; }
 
@@ -26,8 +24,21 @@ namespace ChessGameWebApp.Client.Components
         protected override async Task OnInitializedAsync()
         {
             await _GameHubService.GetBoard();
-            if (Board.PlayerColor == FigureColors.Black)
-                Inversion = true;
+        }
+
+        protected override void OnInitialized()
+        {
+            ((IChessObservable)Board).Subscribe(this);
+        }
+
+        public void Dispose()
+        {
+            ((IChessObservable)Board).Remove(this);
+        }
+
+        public void Update()
+        {
+            StateHasChanged();
         }
     }
 }

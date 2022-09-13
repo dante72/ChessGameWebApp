@@ -14,7 +14,7 @@ namespace ChessGameWebApp.Server.Services
             _connectionService = connectionService ?? throw new ArgumentNullException(nameof(connectionService));
         }
 
-        public async Task StartGame(IList<Player> players)
+        public async Task StartGame(IEnumerable<Player> players)
         {
             var connectionIds = await _connectionService.GetConnections(players.Select(p => p.Id).ToArray()); 
             await _hubContext.Clients.Clients(connectionIds).SendAsync("StartGame", true);

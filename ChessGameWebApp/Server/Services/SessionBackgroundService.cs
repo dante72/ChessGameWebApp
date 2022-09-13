@@ -11,7 +11,6 @@ namespace ChessGameWebApp.Server.Services
         private readonly IGameHubService _gameHub;
         private readonly ILogger<SessionBackgroundService> _logger;
         private Task _task;
-        private long _timer = 1_800_000;
         public SessionBackgroundService(List<GameSession> sessions, List<Player> players, IGameHubService gameHub, ILogger<SessionBackgroundService> logger)
         {
             _sessions = sessions ?? throw new ArgumentNullException(nameof(sessions));
@@ -47,47 +46,14 @@ namespace ChessGameWebApp.Server.Services
 
         private async Task TryCreateSession()
         {
-            List<Player> players = new List<Player>();
-            int count = 0;
-            lock (_players)
-                count = _players.Count;
-
-                if (count > 1)
-                {
-                    lock (_players)
-                    {
-                        if (_players.Count > 1)
-                        {
-                            players.Add(_players[0]);
-                            players.Add(_players[1]);
-
-                            foreach (var player in players)
-                                _players.Remove(player);
-                        }
-                    
-                    var sesion = new GameSession();
-                    var board = new Board(true);
-                    
-                    PaintPlayers(players);
-                    board.Players = players;
-                    sesion.Board = board;
-
-                    lock (_sessions)
-                        _sessions.Add(sesion);
-                    }
-
-                    await _gameHub.StartGame(players);
-                }
-        }
-
-        private void PaintPlayers(List<Player> players)
-        {
-            if (players.Count == 2)
+            var session = GameSessionService.Create(_players);
+            if (session != null)
             {
-                players[0].Color = FigureColors.White;
-                players[1].Color = FigureColors.Black;
 
-                players.ForEach(p => p.Timer = _timer / 2);
+                lock (_sessions)
+                    _sessions.Add(session);
+
+                await _gameHub.StartGame(session.Players);
             }
         }
     }

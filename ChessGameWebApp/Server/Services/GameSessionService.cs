@@ -1,6 +1,7 @@
 ﻿using ChessGame;
 using ChessGameWebApp.Server.Models;
 using System.Text.Json;
+using Player = ChessGameWebApp.Server.Models.Player;
 
 namespace ChessGameWebApp.Server.Services
 {
@@ -43,6 +44,52 @@ namespace ChessGameWebApp.Server.Services
             _logger.LogInformation($"Remove session by {accountId}");
 
             return Task.FromResult(true);
+        }
+
+        public static GameSession? Create(List<Player> _players, long _timer = 1_800_000)
+        {
+            GameSession? session = null;
+            List<Player> players = new List<Player>();
+            int count = 0;
+            lock (_players)
+                count = _players.Count;
+
+            if (count > 1)
+            {
+                lock (_players)
+                {
+                    if (_players.Count > 1)
+                    {
+                        players.Add(_players[0]);
+                        players.Add(_players[1]);
+
+                        foreach (var player in players)
+                            _players.Remove(player);
+                    }
+                }
+                
+                session = new GameSession();
+                var board = new Board(true);
+
+                PaintPlayers(players, _timer);
+                board.Players = players;
+                session.Board = board;
+
+                
+            }
+            
+            return session;
+        }
+
+        private static void PaintPlayers(List<Player> players, long timer)
+        {
+            if (players.Count == 2)
+            {
+                players[0].Color = FigureColors.White;
+                players[1].Color = FigureColors.Black;
+
+                players.ForEach(p => p.Timer = timer / 2);
+            }
         }
     }
 }

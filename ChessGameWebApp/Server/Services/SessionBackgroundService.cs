@@ -1,5 +1,6 @@
 ﻿using ChessGame;
 using ChessGameWebApp.Server.Models;
+using Player = ChessGameWebApp.Server.Models.Player;
 
 namespace ChessGameWebApp.Server.Services
 {
@@ -10,6 +11,7 @@ namespace ChessGameWebApp.Server.Services
         private readonly IGameHubService _gameHub;
         private readonly ILogger<SessionBackgroundService> _logger;
         private Task _task;
+        private long _timer = 1_800_000;
         public SessionBackgroundService(List<GameSession> sessions, List<Player> players, IGameHubService gameHub, ILogger<SessionBackgroundService> logger)
         {
             _sessions = sessions ?? throw new ArgumentNullException(nameof(sessions));
@@ -62,19 +64,18 @@ namespace ChessGameWebApp.Server.Services
                             foreach (var player in players)
                                 _players.Remove(player);
                         }
-                        var sesion = new GameSession()
-                        {
-                            Players = players.ToList(),
-                            Board = new Board(true)
-                        };
                     
-                        PaintPlayers(sesion.Players);
+                    var sesion = new GameSession();
+                    var board = new Board(true);
+                    
+                    PaintPlayers(players);
+                    board.Players = players;
+                    sesion.Board = board;
 
-                        lock (_sessions)
-                            _sessions.Add(sesion);
-
-
+                    lock (_sessions)
+                        _sessions.Add(sesion);
                     }
+
                     await _gameHub.StartGame(players);
                 }
         }
@@ -85,6 +86,8 @@ namespace ChessGameWebApp.Server.Services
             {
                 players[0].Color = FigureColors.White;
                 players[1].Color = FigureColors.Black;
+
+                players.ForEach(p => p.Timer = _timer / 2);
             }
         }
     }

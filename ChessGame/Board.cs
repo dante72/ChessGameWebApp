@@ -10,6 +10,27 @@ namespace ChessGame
 {
     public class Board : IEnumerable<Cell>
     {
+        protected IEnumerable<IPlayer> players;
+        public IEnumerable<IPlayer> Players
+        {
+            get => players; 
+            set
+            {
+                players = value;
+
+                if (value.Count() == 2 
+                    && value.FirstOrDefault(p => p.Color == FigureColors.White) != null
+                    && value.FirstOrDefault(p => p.Color == FigureColors.Black) != null
+                    )
+                {
+                    players = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Incorrect players!");
+                }
+            }
+        }
         internal Stack<Figure> MovedFigures { set; get; } = new Stack<Figure>();
         public FigureColors IsAllowedMove { get => Index % 2 == 0 ? FigureColors.White : FigureColors.Black; }
         internal int Index { get; set; } = 0;
@@ -20,6 +41,7 @@ namespace ChessGame
             set => Cells[row, column].Figure = value;
         }
         public virtual GameStatus GameStatus { get; set; }
+
         public Board(bool setup = false)
         {
             Cells = new Cell[8, 8];

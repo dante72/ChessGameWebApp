@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using JwtToken;
 using Microsoft.OpenApi.Models;
 using ChessGameWebApp.Server.Models;
+using Player = ChessGameWebApp.Server.Models.Player;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,7 +52,7 @@ builder.Services.AddScoped<IGameSessionService, GameSessionService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddSingleton<IGameHubService, GameHubService>();
 builder.Services.AddSingleton<IHostedService, SessionBackgroundService>();
-builder.Services.AddSingleton(players => new List<Player>());
+builder.Services.AddSingleton<List<Player>>( players => new List<Player>());
 builder.Services.AddSingleton(sessions => new List<GameSession>());
 builder.Services.AddSingleton(connections => new List<Connection>());
 builder.Services.AddSingleton<IConnectionService, ConnectionService>();

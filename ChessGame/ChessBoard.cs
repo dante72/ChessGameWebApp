@@ -11,19 +11,12 @@ namespace ChessGame
     public class ChessBoard : Board, IEnumerable<ChessCell>, IChessObservable
     {
         public List<IChessObserver> Observers { get; set; } = new List<IChessObserver>();
-        private FigureColors? playerColor;
-        public FigureColors? PlayerColor
-        {
-            get => playerColor;
-            set {
-                playerColor = value;
-                ((IChessObservable)this).Notify();
-            } 
-        }
+        public IPlayer? Player { get; private set; }
+
         public delegate Task<bool> CheckMove(Cell from, Cell to);
         private CheckMove CheckFigureMove { get; set; } = delegate { return Task.FromResult(true); };
         private ChessCell target;
-        internal ChessCell Target 
+        internal ChessCell Target
         {
             get => target;
             set
@@ -55,9 +48,27 @@ namespace ChessGame
                 for (int j = 0; j < 8; j++)
                     Cells[i, j] = new ChessCell(i, j, this);
 
+            Players = CreatePlayers();
+
             if (setup)
                 Setup();
         }
+
+        private List<Player> CreatePlayers()
+        {
+            var players = new List<Player>();
+            players.Add(new Player() { Color = FigureColors.White });
+            players.Add(new Player() { Color = FigureColors.Black });
+
+            return players;
+        }
+
+        public void SetCurrentPlayer(FigureColors playerColor)
+        {
+            Player = Players.First(p => p.Color == playerColor);
+            ((IChessObservable)this).Notify();
+        }
+
         public new ChessCell GetCell(int row, int column)
         {
             return (ChessCell)Cells[row, column];
@@ -84,7 +95,7 @@ namespace ChessGame
             {
                 if (await CheckFigureMove(target, currentCell))
                 {
-                    if (PlayerColor == null || PlayerColor == IsAllowedMove)
+                    if (Player == null || Player?.Color == IsAllowedMove)
                         TryMove(Target, currentCell);
                 }
                 

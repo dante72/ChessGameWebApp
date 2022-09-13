@@ -27,7 +27,7 @@ namespace ChessGameWebApp.Client.Services
 
             hubConnection.On<ChessBoardDto, FigureColors>("ReceiveBoard", (board, playerColor) =>
             {
-                _board.PlayerColor = playerColor;
+                _board.SetCurrentPlayer(playerColor);
                 _board.Update(board);
             });
 

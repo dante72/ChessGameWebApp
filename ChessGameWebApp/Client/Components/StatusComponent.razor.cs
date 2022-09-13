@@ -22,16 +22,16 @@ namespace ChessGameWebApp.Client.Components
             switch(Board.GameStatus)
             {
                 case GameStatus.Normal:
-                    Status = Board.GetCurrentPlayer() == Board.PlayerColor ? "Ваш ход" : "Ход соперника";
+                    Status = Board.GetCurrentPlayer() == Board.Player.Color ? "Ваш ход" : "Ход соперника";
                     break;
                 case GameStatus.Check:
-                    Status = Board.GetCurrentPlayer() == Board.PlayerColor ? "Соперник объявил вам ШАХ!" : "Вы объявили ШАХ сопернику!";
+                    Status = Board.GetCurrentPlayer() == Board.Player.Color ? "Соперник объявил вам ШАХ!" : "Вы объявили ШАХ сопернику!";
                     break;
                 case GameStatus.Stalemate:
                     Status = "Пат, Ничья";
                     break;
                 case GameStatus.Checkmate:
-                    Status = Board.GetCurrentPlayer() == Board.PlayerColor ? "Соперник объявил вам МАТ!" : "Вы объявили МАТ сопернику!";
+                    Status = Board.GetCurrentPlayer() == Board.Player.Color ? "Соперник объявил вам МАТ!" : "Вы объявили МАТ сопернику!";
                     break;
             }
 

@@ -11,12 +11,14 @@ namespace ChessGameWebApp.Server.Services
         private readonly IGameHubService _gameHub;
         private readonly ILogger<SessionBackgroundService> _logger;
         private Task _task;
+        private TimeSpan _time;
         public SessionBackgroundService(List<GameSession> sessions, List<Player> players, IGameHubService gameHub, ILogger<SessionBackgroundService> logger)
         {
             _sessions = sessions ?? throw new ArgumentNullException(nameof(sessions));
             _players = players ?? throw new ArgumentNullException(nameof(players));
             _gameHub = gameHub ?? throw new ArgumentNullException(nameof(gameHub));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _time = TimeSpan.FromMinutes(30);
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -46,7 +48,7 @@ namespace ChessGameWebApp.Server.Services
 
         private async Task TryCreateSession()
         {
-            var session = GameSessionService.Create(_players);
+            var session = GameSessionService.Create(_players, _time);
             if (session != null)
             {
 

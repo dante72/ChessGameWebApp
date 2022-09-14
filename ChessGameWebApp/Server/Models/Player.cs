@@ -12,6 +12,6 @@ namespace ChessGameWebApp.Server.Models
         public int Id { get; set; }
         public int Rating { get; set; }
         public FigureColors Color { get; set; }
-        public long Timer { get; set; }
+        public ChessTimer Timer { get; set; } = new ChessTimer();
     }
 }

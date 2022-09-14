@@ -17,18 +17,22 @@ namespace ChessGameWebApp.Server.Services
         public Task<GameSession> GetSession(int accountId)
         {
             GameSession session;
+
             lock(_sessions)
                 session = _sessions.First(s => s.Players.Any(p => p.Id == accountId));
             _logger.LogInformation($"Get session by {accountId}");
+
             return Task.FromResult(session);
         }
 
         public Task<GameSession?> FindSession(int accountId)
         {
             GameSession? session;
+
             lock (_sessions)
                 session = _sessions.FirstOrDefault(s => s.Players.Any(p => p.Id == accountId));
             _logger.LogInformation($"Get session by {accountId}");
+
             return Task.FromResult(session);
         }
 
@@ -46,10 +50,11 @@ namespace ChessGameWebApp.Server.Services
             return Task.FromResult(true);
         }
 
-        public static GameSession? Create(List<Player> _players, long _timer = 1_800_000)
+        public static GameSession? Create(List<Player> _players, TimeSpan _timer)
         {
             GameSession? session = null;
             List<Player> players = new List<Player>();
+
             int count = 0;
             lock (_players)
                 count = _players.Count;
@@ -74,21 +79,19 @@ namespace ChessGameWebApp.Server.Services
                 PaintPlayers(players, _timer);
                 board.Players = players;
                 session.Board = board;
-
-                
             }
             
             return session;
         }
 
-        private static void PaintPlayers(List<Player> players, long timer)
+        private static void PaintPlayers(List<Player> players, TimeSpan timer)
         {
             if (players.Count == 2)
             {
                 players[0].Color = FigureColors.White;
                 players[1].Color = FigureColors.Black;
 
-                players.ForEach(p => p.Timer = timer / 2);
+                players.ForEach(p => p.Timer.Delta = timer / 2);
             }
         }
     }

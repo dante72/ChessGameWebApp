@@ -5,6 +5,8 @@ namespace ChessGameWebApp.Client.Components
 {
     public class StatusComponentModel : ComponentBase, IChessObserver
     {
+        public IPlayer Player { get; set; }
+        public IPlayer Opponent { get; set; }
         [Parameter]
         public string Status { get; set; }
         private ChessBoard board;
@@ -40,6 +42,11 @@ namespace ChessGameWebApp.Client.Components
 
         protected override void OnInitialized()
         {
+            if (Board.Player != null && Board.Players != null)
+            {
+                Player = (Player)Board.Player;
+                Opponent = (Player)Board.Players.First(p => p != Player);
+            }
             ((IChessObservable)Board).Subscribe(this);
         }
 

@@ -71,6 +71,33 @@ namespace ChessGame
             return board;
         }
 
+        public static ChessTimerDto GetTimer(this Board board)
+        {
+            if (board.Players == null)
+                return null;
+
+            var timerDto = new ChessTimerDto();
+            foreach (var player in board.Players)
+            {
+                timerDto.Players
+                    .First(p => p.Color == player.Color)
+                    .Delta = player.Timer.Delta;
+            }
+
+            return timerDto;
+        }
+
+        public static void SetTimer(this ChessBoard board, ChessTimerDto timer)
+        {
+            if (board.Players == null)
+                return;
+
+            foreach (var player in board.Players)
+            {
+                player.Timer.Delta = timer.Players.First(p => p.Color == player.Color).Delta;
+            }
+        }
+
         public static FigureDto? ToDto(this Figure? figure)
         {
             if (figure == null)

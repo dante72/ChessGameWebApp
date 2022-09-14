@@ -1,0 +1,34 @@
+﻿@using ChessGame
+@using System.Threading
+@inject ChessBoard board
+@implements IDisposable
+
+@code {
+    [Parameter]
+    public IPlayer Player { get; set; } = new Player();
+    private Timer timer;
+
+    private string ShowValue()
+    {
+        return $"{Player.Timer.Value:hh\\:mm\\:ss}";
+    }
+
+    protected override void OnInitialized()
+    {
+        timer = new Timer((_) =>
+            {
+                InvokeAsync(()  =>
+                {
+                    StateHasChanged();
+                });
+            }, null, 0, 1000);
+    }
+
+    public void Dispose()
+    {
+        timer.Dispose();
+    }
+
+}
+
+<b>@ShowValue()</b>

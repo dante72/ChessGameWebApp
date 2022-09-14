@@ -9,6 +9,6 @@ namespace ChessGame
     public interface IPlayer
     {
         FigureColors Color { get; set; }
-        long Timer { get; set; }
+        ChessTimer Timer { get; set; }
     }
 }

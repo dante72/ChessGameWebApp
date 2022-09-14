@@ -25,7 +25,7 @@ namespace ChessGameWebApp.Server.SignalRHub
             int accountId = GetCurrentAccountId(Context);
             var session = await _serverGameService.GetSession(accountId);
             var player = session.GetPlayer(accountId);
-            await Clients.Caller.SendAsync("ReceiveBoard", session.Board.ToDto(), player.Color);
+            await Clients.Caller.SendAsync("ReceiveBoard", session.Board.ToDto(), player.Color, session.Board.GetTimer());
         }
 
         public async Task SendTryMove(ChessCellDto from, ChessCellDto to)

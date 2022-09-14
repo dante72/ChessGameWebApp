@@ -1,7 +1,19 @@
-﻿@using ChessGameWebApp.Client.Components
+﻿@using ChessGame
+@using ChessGameWebApp.Client.Components
+
 @inherits StatusComponentModel
 
-<div>@Status</div>
+<div>
+    <div>
+        <TimerComponent Player="@Board.Players.First(p => p.Color == FigureColors.White)"></TimerComponent>
+    </div>
+    <div>
+        <b>@Status</b>
+    </div>
+    <div>
+        <TimerComponent Player="@Board.Players.First(p => p.Color == FigureColors.Black)"></TimerComponent>
+    </div>
+</div>
 
 @code {
 

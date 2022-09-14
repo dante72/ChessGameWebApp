@@ -49,6 +49,7 @@ namespace ChessGame
                     Cells[i, j] = new ChessCell(i, j, this);
 
             Players = CreatePlayers();
+            Player = Players.First(p => p.Color == FigureColors.White);
 
             if (setup)
                 Setup();

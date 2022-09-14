@@ -5,13 +5,13 @@
 
 <div>
     <div>
-        <TimerComponent Player="@Board.Players.First(p => p.Color == FigureColors.White)"></TimerComponent>
+        <TimerComponent Player="@Board.Players.First(p => p == Board.Player)"></TimerComponent>
     </div>
     <div>
         <b>@Status</b>
     </div>
     <div>
-        <TimerComponent Player="@Board.Players.First(p => p.Color == FigureColors.Black)"></TimerComponent>
+        <TimerComponent Player="@Board.Players.First(p => p != Board.Player)"></TimerComponent>
     </div>
 </div>
 

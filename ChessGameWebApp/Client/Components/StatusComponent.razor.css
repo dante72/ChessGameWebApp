@@ -1,9 +1,10 @@
 ﻿div {
     height: 30px;
-    width: 200px;
+    width: 700px;
     text-align: center;
     color: saddlebrown;
     font-weight: bold;
     font-size: 1rem;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
 }

@@ -53,7 +53,7 @@ namespace ChessGameWebApp.Server.SignalRHub
             finally
             {
                 var connections = await _connectionService.GetConnections(session.Players.Select(p => p.Id).ToArray());
-                await Clients.Clients(connections).SendAsync("ReceiveTryMove", from, to);
+                await Clients.Clients(connections).SendAsync("ReceiveTryMove", from, to, session.Board.GetTimer());
             }
         }
 

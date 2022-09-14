@@ -32,11 +32,12 @@ namespace ChessGameWebApp.Client.Services
                 _board.SetTimer(timer);
             });
 
-            hubConnection.On<ChessCellDto, ChessCellDto>("ReceiveTryMove", (from, to) =>
+            hubConnection.On<ChessCellDto, ChessCellDto, ChessTimerDto>("ReceiveTryMove", (from, to, timer) =>
             {
                 var fromCell = _board.GetCell(from.Row, from.Column);
                 var toCell = _board.GetCell(to.Row, to.Column);
-                
+
+                _board.SetTimer(timer);
                 _board.TryMove(fromCell, toCell);
             });
 

@@ -103,7 +103,6 @@ namespace ChessGame
         {
             MoveBack();
             GameStatus = GetGameStatus();
-            SwitchTimer();
         }
 
         internal void MoveBack()
@@ -129,24 +128,8 @@ namespace ChessGame
 
             from.Figure.MoveTo(to);
             GameStatus = GetGameStatus();
-            SwitchTimer();
-        }
+            
 
-        private void SwitchTimer()
-        {
-            if (Players != null)
-            {
-                var white = Players.First(p => p.Color == FigureColors.White);
-                var black = Players.First(p => p.Color == FigureColors.Black);
-
-                if (!white.Timer.TurnOn && !black.Timer.TurnOn)
-                    white.Timer.Switch();
-                else
-                {
-                    black.Timer.Switch();
-                    white.Timer.Switch();
-                }
-            }
         }
 
         internal void Setup1()
@@ -184,7 +167,7 @@ namespace ChessGame
                 .Where(cell => cell.Figure != null)
                 .Select(cell => cell.Figure)
                 .Where(figure => figure.Color == color)
-                .SelectMany(figure => figure.GetAllPossibleMoves())
+                .SelectMany(figure => figure.GetAttackPossibleMoves())
                 .Any(move => move == cell);
         }
 
@@ -207,10 +190,6 @@ namespace ChessGame
             return GameStatus.Normal;
         }
 
-        public void TurnOnTimer()
-        {
-
-        }
         public FigureColors GetCurrentPlayer() => Index % 2 == 0 ? FigureColors.White : FigureColors.Black;
         public IEnumerator<Cell> GetEnumerator() => Cells.Cast<Cell>().GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => Cells.GetEnumerator();

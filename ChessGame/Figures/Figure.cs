@@ -81,7 +81,9 @@ namespace ChessGame
             return GetPossibleMovesWithoutCheckToKing(moves);
         }
 
-        private IEnumerable<Cell> GetPossibleMovesWithoutCheckToKing(IEnumerable<Cell> moves)
+        internal virtual IEnumerable<Cell> GetAttackPossibleMoves() => GetAllPossibleMoves();
+
+        internal IEnumerable<Cell> GetPossibleMovesWithoutCheckToKing(IEnumerable<Cell> moves)
         {
             var testBoard = new Board(Board);
             var figure = testBoard[Position.Row, Position.Column];

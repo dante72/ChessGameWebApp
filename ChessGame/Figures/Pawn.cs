@@ -51,6 +51,20 @@ namespace ChessGame.Figures
             return moves;
         }
 
+        internal override IEnumerable<Cell> GetAttackPossibleMoves()
+        {
+            var moves = new List<Cell>();
+
+            if (Position is not null)
+            {
+                var direction = Color == FigureColors.White ? Directions.Up : Directions.Down;
+
+                moves.AddRange(AddAttackFields(direction));
+            }
+
+            return moves;
+        }
+
         private List<Cell> AddAttackFields(Directions direction)
         {
             var attackFields = new List<Cell>();

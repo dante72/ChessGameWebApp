@@ -25,11 +25,11 @@ namespace ChessGame
         }
 
         public void Switch() => TurnOn = !TurnOn;
-        public TimeSpan Value { get => turnOn ? endTime - DateTime.UtcNow : Delta; }
+        public TimeSpan Value { get => turnOn ? (endTime - DateTime.UtcNow < TimeSpan.Zero ? TimeSpan.Zero : endTime - DateTime.UtcNow) : Delta; }
         private TimeSpan delta = TimeSpan.Zero;
         public TimeSpan Delta
         {
-            get => delta;
+            get => delta < TimeSpan.Zero ? TimeSpan.Zero : delta;
             set
             {
                 delta = value;

@@ -52,7 +52,7 @@ builder.Services.AddScoped<IGameSessionService, GameSessionService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddSingleton<IGameHubService, GameHubService>();
 builder.Services.AddSingleton<IHostedService, SessionBackgroundService>();
-builder.Services.AddSingleton<List<Player>>( players => new List<Player>());
+builder.Services.AddSingleton<List<Player>>(players => new List<Player>());
 builder.Services.AddSingleton(sessions => new List<GameSession>());
 builder.Services.AddSingleton(connections => new List<Connection>());
 builder.Services.AddSingleton<IConnectionService, ConnectionService>();

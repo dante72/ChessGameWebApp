@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    public enum GameStatus
+    public class PlayerDto
     {
-        Normal,
-        Check,
-        Checkmate,
-        Stalemate,
-        TimeIsUp
+        public FigureColors Color { get; set; }
+        public TimeSpan Delta { get; set; }
     }
 }

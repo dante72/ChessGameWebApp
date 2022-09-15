@@ -17,10 +17,4 @@ namespace ChessGame
             Players[1] = new PlayerDto() { Color = FigureColors.Black };
         }
     }
-
-    public class PlayerDto
-    {
-        public FigureColors Color { get; set; }
-        public TimeSpan Delta { get; set; }
-    }
 }

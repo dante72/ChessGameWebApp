@@ -10,6 +10,7 @@ namespace ChessGame
 {
     public class Board : IEnumerable<Cell>
     {
+        public СhessСlock СhessСlock { get; protected set; }
         protected IEnumerable<IPlayer> players;
         public IEnumerable<IPlayer> Players
         {
@@ -24,6 +25,7 @@ namespace ChessGame
                     )
                 {
                     players = value;
+                    СhessСlock = new СhessСlock(players);
                 }
                 else
                 {
@@ -103,6 +105,7 @@ namespace ChessGame
         {
             MoveBack();
             GameStatus = GetGameStatus();
+            СhessСlock.Switch();
         }
 
         internal void MoveBack()
@@ -126,10 +129,16 @@ namespace ChessGame
             if (from.Figure?.PossibleMoves.Contains(to) != true)
                 throw new InvalidOperationException("Error! Such step is impossible");
 
+            if (GameStatus == GameStatus.TimeIsUp)
+                return;
+
             from.Figure.MoveTo(to);
             GameStatus = GetGameStatus();
-            
 
+            if (GameStatus == GameStatus.Checkmate || GameStatus == GameStatus.Stalemate)
+                СhessСlock.Stop();
+            else
+                СhessСlock.Switch();
         }
 
         internal void Setup1()
@@ -142,6 +151,20 @@ namespace ChessGame
 
             this[7, 4] = new King(FigureColors.White);
             this[7, 7] = new Rook(FigureColors.White);
+        }
+
+        private void Setup2()
+        {
+            // мат в 2 хода
+
+            this[2, 0] = new Pawn(FigureColors.Black);
+            this[2, 2] = new King(FigureColors.Black);
+            this[6, 6] = new Queen(FigureColors.White);
+            this[7, 1] = new King(FigureColors.White);
+            this[3, 0] = new Pawn(FigureColors.White);
+            this[4, 3] = new Pawn(FigureColors.White);
+            this[6, 7] = new Bishop(FigureColors.White);
+            this[3, 3] = new Rook(FigureColors.White);
         }
 
         internal bool IsCheckToKing(FigureColors color)
@@ -173,6 +196,9 @@ namespace ChessGame
 
         public GameStatus GetGameStatus()
         {
+            if (СhessСlock.IsGameOver())
+                return GameStatus.TimeIsUp;
+
             FigureColors player = GetCurrentPlayer();
 
             bool lastMove = IsLastMove(player);

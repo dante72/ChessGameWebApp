@@ -41,6 +41,11 @@ namespace ChessGame
             }
         }
 
+        public void UpdateGameStatus()
+        {
+            GameStatus = GetGameStatus();
+        }
+
         public ChessBoard(bool setup = false)
         {
             Cells = new ChessCell[8, 8];

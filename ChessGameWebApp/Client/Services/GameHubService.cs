@@ -37,8 +37,10 @@ namespace ChessGameWebApp.Client.Services
                 var fromCell = _board.GetCell(from.Row, from.Column);
                 var toCell = _board.GetCell(to.Row, to.Column);
 
-                _board.SetTimer(timer);
                 _board.TryMove(fromCell, toCell);
+
+                if (timer != null)
+                    _board.SetTimer(timer);
             });
 
             hubConnection.On<bool>("StartGame", (start) => 
@@ -46,14 +48,12 @@ namespace ChessGameWebApp.Client.Services
                 if (start)
                     navigationManager.NavigateTo("/Game/start");
             });
-
+            
+            hubConnection.On<bool>("ReceiveMoveBack", (ok) =>
             {
-                hubConnection.On<bool>("ReceiveMoveBack", (ok) =>
-                {
-                    if (ok)
-                        _board.TryMoveBack();
-                });
-            }
+                if (ok)
+                    _board.TryMoveBack();
+            });
         }
 
         public async Task MoveBack()
@@ -82,6 +82,13 @@ namespace ChessGameWebApp.Client.Services
             if (!IsConnected)
                 await hubConnection.StartAsync();
             await hubConnection.SendAsync("StartGame", false);
+        }
+
+        public async Task GameOver()
+        {
+            if (!IsConnected)
+                await hubConnection.StartAsync();
+            await hubConnection.SendAsync("GameOver");
         }
 
         public bool IsConnected

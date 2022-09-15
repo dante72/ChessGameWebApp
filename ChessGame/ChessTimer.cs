@@ -23,10 +23,15 @@ namespace ChessGame
                 return turnOn;
             }
         }
-
-        public void Switch() => TurnOn = !TurnOn;
+        public void Switch(bool off = false)
+        {
+            if (off)
+                TurnOn = false;
+            else
+                TurnOn = !TurnOn;
+        }
         public TimeSpan Value { get => turnOn ? (endTime - DateTime.UtcNow < TimeSpan.Zero ? TimeSpan.Zero : endTime - DateTime.UtcNow) : Delta; }
-        private TimeSpan delta = TimeSpan.Zero;
+        private TimeSpan delta = TimeSpan.FromMinutes(30);
         public TimeSpan Delta
         {
             get => delta < TimeSpan.Zero ? TimeSpan.Zero : delta;

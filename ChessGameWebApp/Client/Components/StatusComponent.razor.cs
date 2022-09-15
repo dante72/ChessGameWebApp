@@ -1,4 +1,5 @@
 ﻿using ChessGame;
+using ChessGameWebApp.Client.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace ChessGameWebApp.Client.Components
@@ -9,6 +10,8 @@ namespace ChessGameWebApp.Client.Components
         public IPlayer Opponent { get; set; }
         [Parameter]
         public string Status { get; set; }
+        [Inject]
+        public IGameHubService _GameHubService { get; set; }
         private ChessBoard board;
         [Parameter]
         public ChessBoard Board
@@ -19,7 +22,7 @@ namespace ChessGameWebApp.Client.Components
                 board = value;
             }
         }
-        public void Update()
+        public async void Update()
         {
             switch(Board.GameStatus)
             {
@@ -30,10 +33,14 @@ namespace ChessGameWebApp.Client.Components
                     Status = Board.GetCurrentPlayer() == Board.Player.Color ? "Соперник объявил вам ШАХ!" : "Вы объявили ШАХ сопернику!";
                     break;
                 case GameStatus.Stalemate:
-                    Status = "Пат, Ничья";
+                    Status = "Пат, Ничья!";
                     break;
                 case GameStatus.Checkmate:
                     Status = Board.GetCurrentPlayer() == Board.Player.Color ? "Соперник объявил вам МАТ!" : "Вы объявили МАТ сопернику!";
+                    break;
+                case GameStatus.TimeIsUp:
+                    Status = Board.GetCurrentPlayer() == Board.Player.Color ? "Ваше время вышло!" : "Время соперника вышло!";
+                    await _GameHubService.GameOver();
                     break;
             }
 

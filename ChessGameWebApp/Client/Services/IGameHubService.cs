@@ -9,5 +9,6 @@ namespace ChessGameWebApp.Client.Services
         Task SendTryMove(Cell from, Cell to);
         Task StartGame();
         Task MoveBack();
+        Task GameOver();
     }
 }

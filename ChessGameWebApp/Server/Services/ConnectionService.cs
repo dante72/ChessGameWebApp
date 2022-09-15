@@ -1,5 +1,4 @@
 ﻿using ChessGameWebApp.Server.Models;
-using System.Collections.Generic;
 
 namespace ChessGameWebApp.Server.Services
 {
@@ -15,7 +14,8 @@ namespace ChessGameWebApp.Server.Services
 
         public Task Add(int accountId, string connectionId)
         {
-            var connection = new Connection{
+            var connection = new Connection
+            {
                 AccountId = accountId,
                 ConnectionId = connectionId
             };

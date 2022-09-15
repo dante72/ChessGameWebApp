@@ -36,12 +36,13 @@ namespace ChessGameWebApp.Server.SignalRHub
             try
             {
                 if (session.IsAllowedMove(accountId))
+                {
                     TryMove(session.Board, from.Row, from.Column, to.Row, to.Column);
+                }
                 else
                     throw new InvalidOperationException("It's not his move");
 
-
-                if (session.Board.GameStatus == GameStatus.Checkmate)
+                if (session.Board.GameStatus == GameStatus.Checkmate || session.Board.GameStatus == GameStatus.Stalemate || session.Board.GameStatus == GameStatus.TimeIsUp)
                     await _serverGameService.CloseSession(accountId);
             }
             catch(InvalidOperationException ex)
@@ -65,6 +66,15 @@ namespace ChessGameWebApp.Server.SignalRHub
 
             var connections = await _connectionService.GetConnections(session.Players.Select(p => p.Id).ToArray());
             await Clients.Clients(connections).SendAsync("ReceiveMoveBack", true);
+        }
+
+        public async Task GameOver()
+        {
+            int accountId = GetCurrentAccountId(Context);
+            var session = await _serverGameService.GetSession(accountId);
+
+            if (session.Board.СhessСlock.IsGameOver())
+                await _serverGameService.CloseSession(accountId);
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)

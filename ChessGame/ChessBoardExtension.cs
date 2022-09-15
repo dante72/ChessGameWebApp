@@ -79,9 +79,9 @@ namespace ChessGame
             var timerDto = new ChessTimerDto();
             foreach (var player in board.Players)
             {
-                timerDto.Players
-                    .First(p => p.Color == player.Color)
-                    .Delta = player.Timer.Delta;
+                var p = timerDto.Players.First(p => p.Color == player.Color);
+                p.Delta = player.Timer.DeltaNow;
+                p.TurnOn = player.Timer.TurnOn;
             }
 
             return timerDto;
@@ -94,7 +94,9 @@ namespace ChessGame
 
             foreach (var player in board.Players)
             {
-                player.Timer.Delta = timer.Players.First(p => p.Color == player.Color).Delta;
+                var p = timer.Players.First(p => p.Color == player.Color);
+                player.Timer.Delta = p.Delta;
+                player.Timer.TurnOn = p.TurnOn;
             }
         }
 

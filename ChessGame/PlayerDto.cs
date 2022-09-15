@@ -10,5 +10,6 @@ namespace ChessGame
     {
         public FigureColors Color { get; set; }
         public TimeSpan Delta { get; set; }
+        public bool TurnOn { get; set; }
     }
 }

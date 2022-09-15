@@ -103,6 +103,9 @@ namespace ChessGame
 
         public void TryMoveBack()
         {
+            if (MovedFigures.Count == 0)
+                return;
+
             MoveBack();
             GameStatus = GetGameStatus();
             СhessСlock.Switch();

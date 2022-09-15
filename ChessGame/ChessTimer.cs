@@ -10,7 +10,7 @@ namespace ChessGame
     {
         private bool turnOn = false;
         public bool TurnOn {
-            private set
+            set
             {
                 turnOn = value;
                 if (turnOn)
@@ -34,13 +34,18 @@ namespace ChessGame
         private TimeSpan delta = TimeSpan.FromMinutes(30);
         public TimeSpan Delta
         {
-            get => delta < TimeSpan.Zero ? TimeSpan.Zero : delta;
+            get
+            {
+                return delta < TimeSpan.Zero ? TimeSpan.Zero : delta; 
+            }
             set
             {
                 delta = value;
                 endTime = DateTime.UtcNow + delta;
             }
         }
+
+        public TimeSpan DeltaNow => endTime - DateTime.UtcNow;
         private DateTime endTime;
         private void Stop()
         {

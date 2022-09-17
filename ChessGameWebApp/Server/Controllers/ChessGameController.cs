@@ -25,12 +25,23 @@ namespace ChessGameWebApp.Server.Controllers
         [Authorize]
         public Task<UserInfo> GetUser()
         {
-            var siteUser = new UserInfo();
-            var claims = User.Identity as ClaimsIdentity;
+            
+            try
+            {
+                var siteUser = new UserInfo();
+                siteUser.UserName = User.Claims.First(c => c.Type == ClaimTypes.Email).Value;
+                siteUser.AccountId = int.Parse(User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                siteUser.Roles = User.Claims
+                    .Where(claim => claim.Type == ClaimTypes.Role)
+                    .Select(c => c.Value)
+                    .ToList();
 
-            siteUser.UserName = claims.FindFirst(ClaimTypes.Email)?.Value;
-            siteUser.AccountId = int.Parse(claims.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            return Task.FromResult(siteUser);
+                return Task.FromResult(siteUser);
+            }
+            catch
+            {
+                return Task.FromResult(new UserInfo());
+            }
         }
 
         
@@ -38,7 +49,7 @@ namespace ChessGameWebApp.Server.Controllers
         [Authorize]
         public async Task AddPlayer()
         {
-            int id = GetUserId(User);
+            int id = GetUserId();
             Player player = new Player() { Id = id };
             await _playerService.Add(player);
         }
@@ -55,15 +66,14 @@ namespace ChessGameWebApp.Server.Controllers
         [Authorize]
         public async Task<bool> SessionExists()
         {
-            int accountId = GetUserId(User);
+            int accountId = GetUserId();
             var result = await _gameSessionService.FindSession(accountId);
             return result == null ? false : true;
         }
 
-        private int GetUserId(ClaimsPrincipal user)
+        private int GetUserId()
         {
-            var claims = User.Identity as ClaimsIdentity;
-            return int.Parse(claims.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return int.Parse(User.Claims.FirstOrDefault(c =>  c.Type == ClaimTypes.NameIdentifier)?.Value);
         }
     }
 }

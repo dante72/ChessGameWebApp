@@ -58,6 +58,7 @@ namespace ChessGameWebApp.Server.SignalRHub
             }
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
         public async Task MoveBack()
         {
             int accountId = GetCurrentAccountId(Context);
@@ -99,8 +100,14 @@ namespace ChessGameWebApp.Server.SignalRHub
 
         private int GetCurrentAccountId(HubCallerContext context)
         {
-            var claims = (ClaimsIdentity)context.User.Identity;
-            return int.Parse(claims.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            try
+            {
+                return int.Parse(context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            }
+            catch
+            {
+                return -1;
+            }
         }
 
         private bool TryMove(Board board, int fromRow, int fromColumn, int toRow, int toColumn)

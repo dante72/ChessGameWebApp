@@ -10,5 +10,6 @@ namespace Models
     {
         public int AccountId { get; set; }
         public string UserName { get; set; }
+        public List<string> Roles { get; set; }
     }
 }

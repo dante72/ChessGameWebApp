@@ -23,6 +23,7 @@
             var user = await webApi.GetUserInfo();
             userInfo.Name = user.UserName;
             userInfo.Id = user.AccountId;
+            userInfo.Roles = user.Roles;
             //await JsRuntime.InvokeVoidAsync("alert", $"Token: {result.AccessToken}");
             NavigationManager.NavigateTo("/");
         }

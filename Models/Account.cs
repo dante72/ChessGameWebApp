@@ -34,5 +34,7 @@ namespace Models
         [DefaultValue("false")]
         [Column("banned")]
         public bool IsBanned { get; set; }
+
+        public List<Role> Roles { get; set; } = new();
     }
 }

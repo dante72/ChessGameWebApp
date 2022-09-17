@@ -20,7 +20,7 @@ namespace ChessGameWebApp.Server.Controllers
             _logger = logger;
         }
 
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {

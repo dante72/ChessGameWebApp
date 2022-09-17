@@ -12,13 +12,17 @@ namespace Repositories
 
         public Task<Account?> FindByEmail(string email)
         {
-            var result = _entities.FirstOrDefault(it => it.Email == email);
+            var result = _entities
+                .Include(i => i.Roles)
+                .FirstOrDefault(it => it.Email == email);
             return Task.FromResult(result);
         }
 
         public Task<Account?> FindByLogin(string login)
         {
-            var result = _entities.FirstOrDefault(it => it.Login == login);
+            var result = _entities
+                .Include(i => i.Roles)
+                .FirstOrDefault(it => it.Login == login);
             return Task.FromResult(result);
         }
     }

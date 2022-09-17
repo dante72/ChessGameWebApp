@@ -13,13 +13,19 @@ public class TokenService : ITokenService
     }
     public string GenerateToken(Account account)
     {
+        var claims = new List<Claim>();
+
+        claims.Add(new Claim(JwtRegisteredClaimNames.NameId, account.Id.ToString()));
+        claims.Add(new Claim(JwtRegisteredClaimNames.Email, account.Email));
+        // Add roles as multiple claims
+        foreach (var role in account.Roles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role.Name));
+        }
+
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new[]
-            {
-                new Claim(JwtRegisteredClaimNames.NameId, account.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, account.Email)
-            }),
+            Subject = new ClaimsIdentity(claims),
             Expires = DateTime.UtcNow.Add(_jwtConfig.LifeTime),
             Audience = _jwtConfig.Audience,
             Issuer = _jwtConfig.Issuer,
@@ -30,6 +36,7 @@ public class TokenService : ITokenService
         };
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenDescriptor);
+
         return tokenHandler.WriteToken(token);
     }
 

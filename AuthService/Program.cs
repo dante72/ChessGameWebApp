@@ -58,6 +58,7 @@ builder.Services.AddDbContext<AuthContext>(
     );
 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWorkEF>();
 builder.Services.AddScoped<IPasswordHasher<Account>, PasswordHasher<Account>>();

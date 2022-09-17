@@ -32,6 +32,8 @@ namespace AuthService.Services
             try
             {
                 account.Password = _passwordHasher.HashPassword(account, account.Password);
+                var role = await _uow.RoleRepository.FindByName("user");
+                account.Roles.Add(role);
                 await _uow.AccountRepository.Add(account);
                 await _uow.SaveChangesAsync();
                 _logger.LogInformation($"Account {account.Email} has been created!");

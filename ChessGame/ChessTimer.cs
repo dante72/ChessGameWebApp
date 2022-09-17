@@ -13,15 +13,15 @@ namespace ChessGame
             set
             {
                 turnOn = value;
+
                 if (turnOn)
-                    Start();
+                    endTime = DateTime.UtcNow + delta;
                 else
-                    Stop();
+                    delta = endTime - DateTime.UtcNow;
+                    
             }
-            get
-            {
-                return turnOn;
-            }
+
+            get => turnOn;
         }
         public void Switch(bool off = false)
         {
@@ -30,30 +30,21 @@ namespace ChessGame
             else
                 TurnOn = !TurnOn;
         }
-        public TimeSpan Value { get => turnOn ? (endTime - DateTime.UtcNow < TimeSpan.Zero ? TimeSpan.Zero : endTime - DateTime.UtcNow) : Delta; }
-        private TimeSpan delta = TimeSpan.FromMinutes(30);
+        public TimeSpan Value 
+        { 
+            get => turnOn ? (endTime - DateTime.UtcNow < TimeSpan.Zero ? TimeSpan.Zero : endTime - DateTime.UtcNow) : Delta;
+        }
+        private TimeSpan delta = TimeSpan.FromMinutes(1);
         public TimeSpan Delta
         {
-            get
-            {
-                return delta < TimeSpan.Zero ? TimeSpan.Zero : delta; 
-            }
-            set
-            {
-                delta = value;
-                endTime = DateTime.UtcNow + delta;
-            }
+            get => delta < TimeSpan.Zero ? TimeSpan.Zero : delta;
+            set => delta = value;
         }
-
-        public TimeSpan DeltaNow => endTime - DateTime.UtcNow;
         private DateTime endTime;
-        private void Stop()
+        public DateTime EndTime
         {
-            Delta = endTime - DateTime.UtcNow;
-        }
-        private void Start()
-        {
-            endTime = DateTime.UtcNow + Delta;
+            get => endTime;
+            set => endTime = value;
         }
     }
 }

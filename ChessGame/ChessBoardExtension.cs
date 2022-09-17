@@ -80,7 +80,9 @@ namespace ChessGame
             foreach (var player in board.Players)
             {
                 var p = timerDto.Players.First(p => p.Color == player.Color);
-                p.Delta = player.Timer.DeltaNow;
+
+                p.EndTime = player.Timer.EndTime;
+                p.Delta = player.Timer.Delta;
                 p.TurnOn = player.Timer.TurnOn;
             }
 
@@ -95,8 +97,12 @@ namespace ChessGame
             foreach (var player in board.Players)
             {
                 var p = timer.Players.First(p => p.Color == player.Color);
+
+                player.Timer.EndTime = p.EndTime;
                 player.Timer.Delta = p.Delta;
-                player.Timer.TurnOn = p.TurnOn;
+
+                if (player.Timer.TurnOn != p.TurnOn)
+                    player.Timer.TurnOn = p.TurnOn;
             }
         }
 

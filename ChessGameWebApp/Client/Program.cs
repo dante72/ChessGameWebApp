@@ -4,6 +4,7 @@ using ChessGameWebApp.Client.Services;
 using AuthWebAPI;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using ChessGameWebApp.Client.Models;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -18,5 +19,6 @@ builder.Services.AddSingleton(b => new ChessBoard());
 builder.Services.AddSingleton<IClientGameService, ClientGameService>();
 builder.Services.AddSingleton<IGameHubService, GameHubService>();
 builder.Services.AddSingleton(user => new SiteUserInfo());
+builder.Services.AddSingleton(updater => new TimeUpdater());
 
 await builder.Build().RunAsync();

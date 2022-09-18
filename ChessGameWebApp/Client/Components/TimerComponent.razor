@@ -1,12 +1,14 @@
 ﻿@using ChessGame
 @using System.Threading
+@using ChessGameWebApp.Client.Models
 @inject ChessBoard board
+@inject TimeUpdater updater
+@implements IChessObserver
 @implements IDisposable
 
 @code {
     [Parameter]
     public IPlayer Player { get; set; }
-    private Timer timer;
 
     private string ShowValue()
     {
@@ -15,21 +17,20 @@
 
     protected override void OnInitialized()
     {
-        timer = new Timer((_) =>
-            {
-                InvokeAsync(()  =>
-                {
-                    if (board.СhessСlock.IsGameOver())
-                        board.UpdateGameStatus();
-                        
-                    StateHasChanged();
-                });
-            }, null, 0, 1000);
+        ((IChessObservable)updater).Subscribe(this);
+    }
+
+    public void Update()
+    {
+        if (board.СhessСlock.IsGameOver())
+            board.UpdateGameStatus();
+            
+        StateHasChanged();
     }
 
     public void Dispose()
     {
-        timer.Dispose();
+        ((IChessObservable)updater).Remove(this);
     }
 }
 

@@ -9,15 +9,15 @@
 
     <main>
         <div class="top-row px-4">
-            <NavLink>@(User.Name ?? "Guest")</NavLink>
-            @if (User.Name == null)
+            <NavLink>@(User.Id > 0 ? User.Name : "Guest")</NavLink>
+            @if (User.Id > 0)
             {
-                <NavLink class="btn btn-primary" href="authorization/auth">Sign In</NavLink>
-                <NavLink class="btn btn-primary" href="authorization/reg">Sign Up</NavLink>
+                <NavLink class="btn btn-primary" href="logout">Sign Out</NavLink>
             }
             else
             {
-                <NavLink class="btn btn-primary" href="logout">Sign Out</NavLink>
+                <NavLink class="btn btn-primary" href="authorization/auth">Sign In</NavLink>
+                <NavLink class="btn btn-primary" href="authorization/reg">Sign Up</NavLink>
             }
         </div>
 

@@ -18,5 +18,12 @@ namespace ChessGameWebApp.Client
                 .Select(c => c.Value)
                 .ToList();
         }
+
+        public void Default()
+        {
+            Name = "Guest";
+            Id = 0;
+            Roles = new List<string>();
+        }
     }
 }

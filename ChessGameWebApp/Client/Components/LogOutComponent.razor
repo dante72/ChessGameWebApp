@@ -10,8 +10,8 @@
     protected override void OnInitialized()
     {
         webApi.SingOut();
-        userInfo.Name = string.Empty;
-        navigationManager.NavigateTo("/", true);
+        userInfo.Default();
+        navigationManager.NavigateTo("/");
     }
 }
 

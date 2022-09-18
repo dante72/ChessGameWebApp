@@ -1,17 +1,20 @@
 ﻿@using ChessGame
 @using ChessGameWebApp.Client.Models
-@inject ChessBoard board
 @inject TimeUpdater updater
 @implements IChessObserver
 @implements IDisposable
 
-@code {
-    [Parameter]
-    public IPlayer Player { get; set; }
 
-    private string ShowValue()
+<b>@Show()</b>
+
+@code {
+
+    [Parameter]
+    public DateTime Time { get; set; }
+
+    private string Show()
     {
-        return $"{Player.Timer.Value:hh\\:mm\\:ss}";
+        return $"{Time - DateTime.UtcNow:hh\\:mm\\:ss}";
     }
 
     protected override void OnInitialized()
@@ -21,9 +24,6 @@
 
     public void Update()
     {
-        if (board.СhessСlock.IsGameOver())
-            board.UpdateGameStatus();
-            
         StateHasChanged();
     }
 
@@ -31,6 +31,5 @@
     {
         ((IChessObservable)updater).Remove(this);
     }
-}
 
-<b>@ShowValue()</b>
+}

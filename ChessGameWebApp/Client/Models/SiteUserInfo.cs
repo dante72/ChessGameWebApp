@@ -17,6 +17,9 @@ namespace ChessGameWebApp.Client
                 .Where(claim => claim.Type.Equals("role"))
                 .Select(c => c.Value)
                 .ToList();
+            var time = long.Parse(claims.First(c => c.Type.Equals("exp")).Value);
+            var dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(time);
+            AccessTokenExpire = dateTimeOffset.UtcDateTime;
         }
 
         public void Default()

@@ -1,4 +1,3 @@
-using ChessGame;
 using ChessGameWebApp.Server.Services;
 using ChessGameWebApp.Server.SignalRHub;
 using Microsoft.IdentityModel.Tokens;
@@ -7,8 +6,11 @@ using JwtToken;
 using Microsoft.OpenApi.Models;
 using ChessGameWebApp.Server.Models;
 using Player = ChessGameWebApp.Server.Models.Player;
+using CommonConfig;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddConfiguration(CommonConfiguration.Create());
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
@@ -17,7 +19,6 @@ builder.Services.AddSwaggerGen(c =>
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-
 JwtConfig jwtConfig = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
 builder.Services
     .AddAuthentication(options =>

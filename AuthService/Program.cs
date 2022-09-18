@@ -1,5 +1,6 @@
 
 using AuthService.Services;
+using CommonConfig;
 using DbContextDao;
 using JwtToken;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,6 +12,8 @@ using Models;
 using Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddConfiguration(CommonConfiguration.Create());
 
 // Add services to the container.
 builder.Services.AddControllers();

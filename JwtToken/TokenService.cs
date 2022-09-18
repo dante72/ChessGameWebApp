@@ -56,4 +56,10 @@ public class TokenService : ITokenService
         return principal;
     }
 
+    public static JwtSecurityToken DecodeToken(string token)
+    {
+        var handler = new JwtSecurityTokenHandler();
+        return handler.ReadJwtToken(token);
+    }
+
 }

@@ -1,4 +1,5 @@
 ﻿@using AuthWebAPI
+@using JwtToken
 @using Models
 @inherits AuthenticationComponentModel
 @inject IAuthWebApi webApi
@@ -20,10 +21,8 @@
 
         if (result != null)
         {
-            var user = await webApi.GetUserInfo();
-            userInfo.Name = user.UserName;
-            userInfo.Id = user.AccountId;
-            userInfo.Roles = user.Roles;
+            var jwt = TokenService.DecodeToken(result.AccessToken);
+            userInfo.Update(jwt.Claims);
             //await JsRuntime.InvokeVoidAsync("alert", $"Token: {result.AccessToken}");
             NavigationManager.NavigateTo("/");
         }

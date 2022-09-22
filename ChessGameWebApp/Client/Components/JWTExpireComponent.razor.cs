@@ -29,20 +29,36 @@ namespace ChessGameWebApp.Client.Components
             Time = User.AccessTokenExpire;
             ((IChessObservable)Updater).Subscribe(this);
         }
+        
+        static private bool isUpdating = false;
+        
+        public void UpdateToken()
+        {
+            if (isUpdating == false)
+            {
+                isUpdating = true;
+                GetTokens().ContinueWith(t => isUpdating = false);
+            }
+        }
+
+        private async Task GetTokens()
+        {
+            var refreshToken = await localStore.GetItemAsync<string>("refresh");
+            var result = await AuthWebAPI.Autorization(refreshToken);
+            
+            var access = TokenService.DecodeToken(result.AccessToken);
+
+            User.Update(access.Claims);
+            Time = User.AccessTokenExpire;
+            
+            if (result.RefreshToken != refreshToken)
+                await localStore.SetItemAsync("refresh", result.RefreshToken);
+        }
 
         public void Update()
         {
-            /*if (User.AccessTokenExpire <= DateTime.UtcNow)
-            {
-                var refreshToken = await localStore.GetItemAsync<string>("refresh");
-                var result = await AuthWebAPI.Autorization(refreshToken);
-
-                var access = TokenService.DecodeToken(result.AccessToken);
-                User.Update(access.Claims);
-
-                if (result.RefreshToken != refreshToken)
-                    await localStore.SetItemAsync("refresh", result.RefreshToken);
-            }*/
+            if (User.AccessTokenExpire - DateTime.UtcNow < TimeSpan.FromMinutes(4))
+                UpdateToken();
 
             StateHasChanged();
         }

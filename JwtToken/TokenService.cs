@@ -68,6 +68,6 @@ public class TokenService : IAccessTokenService, IRefreshTokenService, ITokenSer
         var time = long.Parse(decodeToken.Claims.First(c => c.Type.Equals("exp")).Value);
         var dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(time);
 
-        return dateTimeOffset > DateTime.UtcNow;
+        return dateTimeOffset < DateTime.UtcNow;
     }
 }

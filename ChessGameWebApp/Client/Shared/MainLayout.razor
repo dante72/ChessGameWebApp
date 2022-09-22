@@ -14,7 +14,7 @@
             @if (User.Id > 0)
             {
                 <NavLink class="btn btn-primary" href="logout">Sign Out</NavLink>
-                <JWTExpireComponent Time=@User.AccessTokenExpire></JWTExpireComponent>
+                <JWTExpireComponent></JWTExpireComponent>
             }
             else
             {

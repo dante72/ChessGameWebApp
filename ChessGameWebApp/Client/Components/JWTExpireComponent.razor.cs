@@ -10,28 +10,29 @@ namespace ChessGameWebApp.Client.Components
     public class JWTExpireComponentModel : ComponentBase, IChessObserver, IDisposable
     {
         [Inject]
-        SiteUserInfo User { get; }
+        SiteUserInfo User { get; set; }
 
         [Inject]
-        TimeUpdater Updater { get; }
+        TimeUpdater Updater { get; set; }
 
         [Inject]
-        AuthWebApi AuthWebAPI { get; }
+        IAuthWebApi AuthWebAPI { get; set; }
 
         [Inject]
-        ILocalStorageService localStore { get; }
+        public ILocalStorageService localStore { get; set; }
 
         [Parameter]
         public DateTime Time { get; set; }
 
         protected override void OnInitialized()
         {
+            Time = User.AccessTokenExpire;
             ((IChessObservable)Updater).Subscribe(this);
         }
 
-        public async void Update()
+        public void Update()
         {
-            if (User.AccessTokenExpire <= DateTime.UtcNow)
+            /*if (User.AccessTokenExpire <= DateTime.UtcNow)
             {
                 var refreshToken = await localStore.GetItemAsync<string>("refresh");
                 var result = await AuthWebAPI.Autorization(refreshToken);
@@ -41,7 +42,7 @@ namespace ChessGameWebApp.Client.Components
 
                 if (result.RefreshToken != refreshToken)
                     await localStore.SetItemAsync("refresh", result.RefreshToken);
-            }
+            }*/
 
             StateHasChanged();
         }

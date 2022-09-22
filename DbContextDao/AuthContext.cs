@@ -9,6 +9,7 @@ namespace DbContextDao
     {
         public DbSet<Account> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public AuthContext(DbContextOptions<AuthContext> options) : base(options)
         {
             if (Database.EnsureCreated())

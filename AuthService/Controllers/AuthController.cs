@@ -37,6 +37,28 @@ namespace AuthService.Controllers
             try
             {
                 var result = await _registrationService.GetTokens(login, password);
+
+                return Ok(result);
+            }
+            catch (AuthenticationException ex)
+            {
+                _logger.LogWarning(ex.Message);
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
+                return BadRequest("Unknown error!");
+            }
+        }
+
+        [HttpGet("AutoAuth")]
+        public async Task<IActionResult> AutoAuthentication(string refreshToken)
+        {
+            try
+            {
+                var result = await _registrationService.GetTokens(refreshToken);
+
                 return Ok(result);
             }
             catch (AuthenticationException ex)

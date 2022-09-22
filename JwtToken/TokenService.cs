@@ -4,10 +4,10 @@ using Models;
 using Microsoft.IdentityModel.Tokens;
 
 namespace JwtToken;
-public class TokenService : ITokenService
+public class TokenService : IAccessTokenService, IRefreshTokenService, ITokenService
 {
-    private readonly JwtConfig _jwtConfig;
-    public TokenService(JwtConfig jwtConfig)
+    private readonly IJwtConfig _jwtConfig;
+    public TokenService(IJwtConfig jwtConfig)
     {
         _jwtConfig = jwtConfig ?? throw new ArgumentException(nameof(jwtConfig));
     }
@@ -62,4 +62,12 @@ public class TokenService : ITokenService
         return handler.ReadJwtToken(token);
     }
 
+    public static bool TokenIsExpired(string token)
+    {
+        var decodeToken = DecodeToken(token);
+        var time = long.Parse(decodeToken.Claims.First(c => c.Type.Equals("exp")).Value);
+        var dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(time);
+
+        return dateTimeOffset > DateTime.UtcNow;
+    }
 }

@@ -21,8 +21,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-JwtConfig jwtConfig = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
-builder.Services.AddScoped<ITokenService>(_ => new TokenService(jwtConfig));
+var accessJwtConfig = builder.Configuration.GetSection("AccessJwtConfig").Get<JwtConfig>();
+var refreshJwtConfig = builder.Configuration.GetSection("RefreshJwtConfig").Get<JwtConfig>();
+
+builder.Services.AddScoped<IAccessTokenService>(t => new TokenService(accessJwtConfig));
+builder.Services.AddScoped<IRefreshTokenService>(t => new TokenService(refreshJwtConfig));
 builder.Services
     .AddAuthentication(options =>
     {
@@ -34,7 +37,7 @@ builder.Services
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            IssuerSigningKey = new SymmetricSecurityKey(jwtConfig.SigningKeyBytes),
+            IssuerSigningKey = new SymmetricSecurityKey(accessJwtConfig.SigningKeyBytes),
             ValidateIssuerSigningKey = true,
             ValidateLifetime = true,
             RequireExpirationTime = true,
@@ -42,8 +45,8 @@ builder.Services
 
             ValidateAudience = true,
             ValidateIssuer = true,
-            ValidAudiences = new[] { jwtConfig.Audience },
-            ValidIssuer = jwtConfig.Issuer
+            ValidAudiences = new[] { accessJwtConfig.Audience },
+            ValidIssuer = accessJwtConfig.Issuer
         };
     });
 builder.Services.AddAuthorization();
@@ -62,6 +65,7 @@ builder.Services.AddDbContext<AuthContext>(
 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWorkEF>();
 builder.Services.AddScoped<IPasswordHasher<Account>, PasswordHasher<Account>>();

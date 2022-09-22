@@ -1,4 +1,5 @@
 ﻿@using AuthWebAPI
+@using Blazored.LocalStorage
 @using JwtToken
 @using Models
 @inherits AuthenticationComponentModel
@@ -6,6 +7,7 @@
 @inject IJSRuntime JsRuntime
 @inject SiteUserInfo userInfo
 @inject NavigationManager NavigationManager
+@inject ILocalStorageService localStore
 
 <h3>Authentication</h3>
 
@@ -13,18 +15,26 @@
 
     async void FormSubmitted(EditContext editContext)
     {
-        var result = await webApi.Autorization(new AccountRequestModel()
+        try
         {
-                Login = Login,
-                Password = Password
-        });
+            var result = await webApi.Autorization(new AccountRequestModel()
+                {
+                    Login = Login,
+                    Password = Password
+                });
 
-        if (result != null)
+            if (result != null)
+            {
+                var access = TokenService.DecodeToken(result.AccessToken);
+                userInfo.Update(access.Claims);
+
+                await localStore.SetItemAsync("refresh", result.RefreshToken);
+                NavigationManager.NavigateTo("/");
+            }
+        }
+        catch (Exception ex)
         {
-            var jwt = TokenService.DecodeToken(result.AccessToken);
-            userInfo.Update(jwt.Claims);
-            //await JsRuntime.InvokeVoidAsync("alert", $"Token: {result.AccessToken}");
-            NavigationManager.NavigateTo("/");
+            await JsRuntime.InvokeVoidAsync("alert", ex.Message);
         }
     }
 }

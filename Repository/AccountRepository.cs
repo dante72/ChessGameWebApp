@@ -14,6 +14,7 @@ namespace Repositories
         {
             var result = _entities
                 .Include(i => i.Roles)
+                .Include(it => it.RefreshToken)
                 .FirstOrDefault(it => it.Email == email);
             return Task.FromResult(result);
         }
@@ -22,7 +23,17 @@ namespace Repositories
         {
             var result = _entities
                 .Include(i => i.Roles)
+                .Include(it => it.RefreshToken)
                 .FirstOrDefault(it => it.Login == login);
+            return Task.FromResult(result);
+        }
+
+        public Task<Account?> FindByToken(string token)
+        {
+            var result = _entities
+                .Include(i => i.Roles)
+                .Include(it => it.RefreshToken)
+                .FirstOrDefault(it => it.RefreshToken.Token == token);
             return Task.FromResult(result);
         }
     }

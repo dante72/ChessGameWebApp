@@ -6,6 +6,7 @@ namespace Repositories
     {
         IAccountRepository AccountRepository { get; }
         IRoleRepository RoleRepository { get; }
+        IRefreshTokenRepository RefreshTokenRepository { get; }
         Task SaveChangesAsync();
     }
 }

@@ -11,5 +11,6 @@ namespace Repositories
     {
         Task<Account?> FindByEmail(string email);
         Task<Account?> FindByLogin(string login);
+        Task<Account?> FindByToken(string token);
     }
 }

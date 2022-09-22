@@ -36,5 +36,7 @@ namespace Models
         public bool IsBanned { get; set; }
 
         public List<Role> Roles { get; set; } = new();
+
+        public RefreshToken RefreshToken { get; set; }
     }
 }

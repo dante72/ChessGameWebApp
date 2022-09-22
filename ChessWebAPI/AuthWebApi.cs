@@ -33,10 +33,31 @@ namespace AuthWebAPI
             try
             {
                 var result = await _auth.GetFromJsonAsync<JwtTokens>($"Auth/Authentication?login={account.Login}&password={account.Password}");
+
                 _auth.DefaultRequestHeaders.Authorization
                     = new AuthenticationHeaderValue("Bearer", result?.AccessToken);
                 _gameServer.DefaultRequestHeaders.Authorization
                     = new AuthenticationHeaderValue("Bearer", result?.AccessToken);
+
+                return result;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<JwtTokens?> Autorization(string refreshToken)
+        {
+            try
+            {
+                var result = await _auth.GetFromJsonAsync<JwtTokens>($"Auth/AutoAuth?refreshToken={refreshToken}");
+
+                _auth.DefaultRequestHeaders.Authorization
+                    = new AuthenticationHeaderValue("Bearer", result?.AccessToken);
+                _gameServer.DefaultRequestHeaders.Authorization
+                    = new AuthenticationHeaderValue("Bearer", result?.AccessToken);
+
                 return result;
             }
             catch

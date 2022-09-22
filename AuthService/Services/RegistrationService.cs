@@ -12,19 +12,22 @@ namespace AuthService.Services
         private readonly ILogger<RegistrationService> _logger;
         private readonly IUnitOfWork _uow;
         private readonly IPasswordHasher<Account> _passwordHasher;
-        private readonly ITokenService _tokenService;
+        private readonly IAccessTokenService _accessTokenService;
+        private readonly IRefreshTokenService _refreshTokenService;
 
         public RegistrationService(
             ILogger<RegistrationService> logger,
             IUnitOfWork uow,
             IPasswordHasher<Account> passwordHasher,
-            ITokenService tokenService
+            IAccessTokenService accessTokenService,
+            IRefreshTokenService refreshTokenService
             )
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _uow = uow ?? throw new ArgumentNullException(nameof(uow));
             _passwordHasher = passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher));
-            _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
+            _accessTokenService = accessTokenService ?? throw new ArgumentNullException(nameof(accessTokenService));
+            _refreshTokenService = refreshTokenService ?? throw new ArgumentNullException(nameof(refreshTokenService));
         }
 
         public async Task AddAccount(Account account)
@@ -81,6 +84,18 @@ namespace AuthService.Services
             return _uow.AccountRepository.FindByLogin(login);
         }
 
+        private Task<Account?> GetAccountByToken(string token)
+        {
+            _logger.LogInformation(nameof(GetAccountByLogin));
+            return _uow.AccountRepository.FindByToken(token);
+        }
+
+        private async Task SaveToken(string refreshToken, Account account)
+        {
+            await _uow.RefreshTokenRepository.Add(new RefreshToken() { Token = refreshToken, Account = account });
+            await _uow.SaveChangesAsync();
+        }
+
         public async Task<JwtTokens?> GetTokens(string login, string password)
         {
             _logger.LogInformation(nameof(GetTokens));
@@ -93,9 +108,32 @@ namespace AuthService.Services
             if (!isCorrect)
                 throw new AuthenticationException("Login or password are not correct!");
             
-            var token = _tokenService.GenerateToken(account);
-            
-            return new JwtTokens() { AccessToken = token };
+            var accessToken = _accessTokenService.GenerateToken(account);
+            var refreshToken = _refreshTokenService.GenerateToken(account);
+
+            await SaveToken(refreshToken, account);
+
+            return new JwtTokens() { AccessToken = accessToken, RefreshToken = refreshToken };
+        }
+
+        public async Task<JwtTokens?> GetTokens(string refreshToken)
+        {
+            _logger.LogInformation(nameof(GetTokens));
+
+            var account = await GetAccountByToken(refreshToken);
+
+            if (account == null)
+                throw new AuthenticationException("Invalid token!");
+
+            var accessToken = _accessTokenService.GenerateToken(account);
+
+            if (TokenService.TokenIsExpired(refreshToken))
+            {
+                refreshToken = _refreshTokenService.GenerateToken(account);
+                await SaveToken(refreshToken, account);
+            }
+
+            return new JwtTokens() { AccessToken = accessToken, RefreshToken = refreshToken };
         }
     }
 }

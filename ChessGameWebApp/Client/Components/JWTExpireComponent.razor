@@ -1,35 +1,15 @@
 ﻿@using ChessGame
-@using ChessGameWebApp.Client.Models
-@inject TimeUpdater updater
-@implements IChessObserver
-@implements IDisposable
+
+
+@inherits JWTExpireComponentModel
 
 
 <b>@Show()</b>
 
 @code {
 
-    [Parameter]
-    public DateTime Time { get; set; }
-
     private string Show()
     {
-        return $"{Time - DateTime.UtcNow:hh\\:mm\\:ss}";
+        return $"{(Time - DateTime.UtcNow < TimeSpan.Zero ? TimeSpan.Zero : Time - DateTime.UtcNow):hh\\:mm\\:ss}";
     }
-
-    protected override void OnInitialized()
-    {
-        ((IChessObservable)updater).Subscribe(this);
-    }
-
-    public void Update()
-    {
-        StateHasChanged();
-    }
-
-    public void Dispose()
-    {
-        ((IChessObservable)updater).Remove(this);
-    }
-
 }

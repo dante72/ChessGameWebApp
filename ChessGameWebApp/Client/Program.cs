@@ -21,7 +21,7 @@ builder.Services.AddSingleton<IClientGameService, ClientGameService>();
 builder.Services.AddSingleton<IGameHubService, GameHubService>();
 builder.Services.AddSingleton(user => new SiteUserInfo());
 builder.Services.AddSingleton(updater => new TimeUpdater());
-
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 await builder.Build().RunAsync();

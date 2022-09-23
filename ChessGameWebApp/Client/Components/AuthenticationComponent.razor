@@ -1,13 +1,13 @@
 ﻿@using AuthWebAPI
 @using Blazored.LocalStorage
+@using ChessGameWebApp.Client.Services
 @using JwtToken
 @using Models
 @inherits AuthenticationComponentModel
-@inject IAuthWebApi webApi
 @inject IJSRuntime JsRuntime
-@inject SiteUserInfo userInfo
-@inject NavigationManager NavigationManager
-@inject ILocalStorageService localStore
+@inject IAuthService authService
+@inject NavigationManager navigationManager
+
 
 <h3>Authentication</h3>
 
@@ -17,20 +17,16 @@
     {
         try
         {
-            var result = await webApi.Autorization(new AccountRequestModel()
-                {
-                    Login = Login,
-                    Password = Password
-                });
-
-            if (result != null)
+            var result = await authService.Autorization(new AccountRequestModel()
             {
-                var access = TokenService.DecodeToken(result.AccessToken);
-                userInfo.Update(access.Claims);
+                Login = Login,
+                Password = Password
+            });
 
-                await localStore.SetItemAsync("refresh", result.RefreshToken);
-                NavigationManager.NavigateTo("/");
-            }
+            if (result)
+                navigationManager.NavigateTo("/");
+            else
+                 await JsRuntime.InvokeVoidAsync("alert", "Неверный логин или пароль!");
         }
         catch (Exception ex)
         {

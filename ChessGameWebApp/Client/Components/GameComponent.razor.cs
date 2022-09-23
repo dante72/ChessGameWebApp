@@ -36,9 +36,11 @@ namespace ChessGameWebApp.Client.Components
             ((IChessObservable)Board).Remove(this);
         }
 
-        public void Update()
+        public Task UpdateAsync()
         {
             StateHasChanged();
+
+            return Task.CompletedTask;
         }
     }
 }

@@ -8,6 +8,6 @@ namespace ChessGame
 {
     public interface IChessObserver
     {
-        void Update();
+        Task UpdateAsync();
     }
 }

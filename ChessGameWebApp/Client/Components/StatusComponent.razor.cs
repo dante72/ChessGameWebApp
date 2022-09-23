@@ -22,7 +22,7 @@ namespace ChessGameWebApp.Client.Components
                 board = value;
             }
         }
-        public async void Update()
+        public async Task UpdateAsync()
         {
             switch(Board.GameStatus)
             {

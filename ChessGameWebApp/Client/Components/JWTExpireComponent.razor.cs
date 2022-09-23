@@ -55,12 +55,14 @@ namespace ChessGameWebApp.Client.Components
                 await localStore.SetItemAsync("refresh", result.RefreshToken);
         }
 
-        public void Update()
+        public Task UpdateAsync()
         {
             if (User.AccessTokenExpire - DateTime.UtcNow < TimeSpan.FromMinutes(4))
                 UpdateToken();
 
             StateHasChanged();
+
+            return Task.CompletedTask;
         }
 
         public void Dispose()

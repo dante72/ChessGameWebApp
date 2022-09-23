@@ -11,7 +11,7 @@ namespace ChessGame
         List<IChessObserver> Observers { get; set; }
         void Notify()
         {
-            Observers.ForEach(o => o.Update());
+            Observers.ForEach(o => o.UpdateAsync());
         }
 
         void Subscribe(IChessObserver observer)

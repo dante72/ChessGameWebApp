@@ -19,12 +19,14 @@
         ((IChessObservable)updater).Subscribe(this);
     }
 
-    public void Update()
+    public Task UpdateAsync()
     {
         if (board.СhessСlock.IsGameOver())
             board.UpdateGameStatus();
-            
+
         StateHasChanged();
+
+        return Task.CompletedTask;
     }
 
     public void Dispose()

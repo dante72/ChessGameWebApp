@@ -46,12 +46,14 @@ namespace ChessGameWebApp.Client.Components
                 logger.LogWarning(ex.Message);
             }
         }
-        public void Update()
+        public Task UpdateAsync()
         {
             FigureName = ChessCell.FigureName;
             IsMarked = ChessCell.IsMarked;
             IsPointer = ChessCell.IsPointer;
             StateHasChanged();
+
+            return Task.CompletedTask;
         }
         protected override void OnInitialized()
         {

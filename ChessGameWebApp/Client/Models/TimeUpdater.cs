@@ -11,7 +11,7 @@ namespace ChessGameWebApp.Client.Models
         {
             timer = new Timer((_) =>
             {
-                Observers.ForEach(o => o.UpdateAsync());
+                ((IChessObservable)this).Notify();
             }, null, 0, 1000);
         }
 

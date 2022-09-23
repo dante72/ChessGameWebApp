@@ -7,6 +7,6 @@
 
     private string Show()
     {
-        return $"{(Time - DateTime.UtcNow < TimeSpan.Zero ? TimeSpan.Zero : Time - DateTime.UtcNow):hh\\:mm\\:ss}";
+        return $"{(User.AccessTokenExpire - DateTime.UtcNow < TimeSpan.Zero ? TimeSpan.Zero : User.AccessTokenExpire - DateTime.UtcNow):hh\\:mm\\:ss}";
     }
 }

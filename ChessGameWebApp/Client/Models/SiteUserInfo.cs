@@ -7,7 +7,7 @@ namespace ChessGameWebApp.Client
         public string Name { get; set; }
         public int Id { get; set; }
         public List<string> Roles { get; set; }
-        public DateTime AccessTokenExpire { get; set; }
+        public DateTime AccessTokenExpire { get; set; } = DateTime.UtcNow + TimeSpan.FromMinutes(5);
 
         public void Update(IEnumerable<Claim> claims)
         {

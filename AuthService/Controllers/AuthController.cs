@@ -1,8 +1,10 @@
 ﻿using AuthService.Services;
 using AuthWebAPI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using System.Security.Authentication;
+using System.Security.Claims;
 
 namespace AuthService.Controllers
 {
@@ -71,6 +73,14 @@ namespace AuthService.Controllers
                 _logger.LogWarning(ex.Message);
                 return BadRequest("Unknown error!");
             }
+        }
+
+        [HttpGet("LogOut")]
+        [Authorize]
+        public async Task LogOut()
+        {
+            var accountId = int.Parse(User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            await _registrationService.LogOut(accountId);
         }
     }
 }

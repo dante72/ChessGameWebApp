@@ -66,13 +66,13 @@ namespace AuthWebAPI
             }
         }
 
-        public Task SingOut()
+        public async Task SingOut()
         {
+            await _auth.GetAsync($"Auth/LogOut");
+
             _auth.DefaultRequestHeaders.Authorization = null;
             _gameServer.DefaultRequestHeaders.Authorization = null;
 
-
-            return Task.CompletedTask;
         }
 
         public async Task<WeatherForecast[]> Weather()

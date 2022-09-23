@@ -101,7 +101,6 @@ namespace AuthService.Services
             _logger.LogInformation(nameof(GetTokens));
             var account = await GetAccountByLogin(login) ?? await GetAccountByEmail(login);
 
-
             var isCorrect = account != null
                 && _passwordHasher.VerifyHashedPassword(account, account.Password, password) != PasswordVerificationResult.Failed;
 
@@ -134,6 +133,17 @@ namespace AuthService.Services
             }
 
             return new JwtTokens() { AccessToken = accessToken, RefreshToken = refreshToken };
+        }
+
+        public async Task LogOut(int accountId)
+        {
+            var token = await _uow.RefreshTokenRepository.FindByAccountId(accountId);
+
+            if (token != null)
+            {
+                await _uow.RefreshTokenRepository.Remove(token);
+                await _uow.SaveChangesAsync();
+            }
         }
     }
 }

@@ -13,5 +13,12 @@ namespace Repositories
         public RefreshTokenRepository(AuthContext dbContext) : base(dbContext)
         {
         }
+
+        public Task<RefreshToken?> FindByAccountId(int accountId)
+        {
+            var result = _entities
+                .FirstOrDefault(it => it.AccountId == accountId);
+            return Task.FromResult(result);
+        }
     }
 }

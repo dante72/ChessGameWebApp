@@ -13,6 +13,11 @@
 
 @code {
 
+
+    protected override void OnInitialized()
+    {
+        //authService.TokenAutorization().ContinueWith(t => { if (t.Result) navigationManager.NavigateTo("/"); });
+    }
     async void FormSubmitted(EditContext editContext)
     {
         try

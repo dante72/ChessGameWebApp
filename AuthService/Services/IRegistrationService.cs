@@ -12,5 +12,6 @@ namespace AuthService.Services
         Task<Account?> GetAccountByLogin(string login);
         Task<JwtTokens?> GetTokens(string login, string password);
         Task<JwtTokens?> GetTokens(string refreshToken);
+        Task LogOut(int accountId);
     }
 }

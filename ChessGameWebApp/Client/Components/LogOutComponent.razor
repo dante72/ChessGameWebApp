@@ -1,17 +1,13 @@
 ﻿@page "/logout"
-
-@using AuthWebAPI
+@using ChessGameWebApp.Client.Services
+@inject IAuthService authService
 @inject NavigationManager navigationManager
-@inject IAuthWebApi webApi
-@inject SiteUserInfo userInfo
 
 @code {
 
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
-        webApi.SingOut();
-        userInfo.Default();
-        navigationManager.NavigateTo("/");
+        await authService.LogOut();
     }
 }
 

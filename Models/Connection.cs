@@ -18,6 +18,6 @@ namespace Models
         [Column("account_id")]
         public int AccountId { get; set; }
 
-        public Account Account { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

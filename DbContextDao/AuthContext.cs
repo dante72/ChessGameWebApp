@@ -44,6 +44,7 @@ namespace DbContextDao
             };
 
             user.Roles.Add(Roles.First(r => r.Name == "admin"));
+            user.Roles.Add(Roles.First(r => r.Name == "user"));
             Users.Add(user);
             SaveChanges();
         }

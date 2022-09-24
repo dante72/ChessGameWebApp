@@ -1,13 +1,25 @@
-﻿using System.Security.Claims;
+﻿using ChessGame;
+using System.Security.Claims;
 
 namespace ChessGameWebApp.Client
 {
-    public class SiteUserInfo
+    public class SiteUserInfo : IChessObservable
     {
         public string Name { get; set; }
         public int Id { get; set; }
-        public List<string> Roles { get; set; }
+
+        public List<string> roles = new List<string>();
+        public List<string> Roles
+        {
+            get => roles;
+            set
+            {
+                roles = value;
+                ((IChessObservable)this).Notify();
+            }
+        } 
         public DateTime AccessTokenExpire { get; set; } = DateTime.UtcNow + TimeSpan.FromMinutes(5);
+        public List<IChessObserver> Observers { get; set; } = new();
 
         public void Update(IEnumerable<Claim> claims)
         {

@@ -18,6 +18,6 @@ namespace Models
         [MaxLength(25)]
         public string Name { get; set; }
 
-        public List<Account> Accounts { get; set; } = new();
+        public virtual List<Account> Accounts { get; set; } = new();
     }
 }

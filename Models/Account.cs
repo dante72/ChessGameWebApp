@@ -35,8 +35,8 @@ namespace Models
         [Column("banned")]
         public bool IsBanned { get; set; }
 
-        public List<Role> Roles { get; set; } = new();
+        public virtual List<Role> Roles { get; set; } = new();
 
-        public RefreshToken RefreshToken { get; set; }
+        public virtual RefreshToken RefreshToken { get; set; }
     }
 }

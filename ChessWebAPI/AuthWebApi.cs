@@ -87,9 +87,9 @@ namespace AuthWebAPI
             return await _gameServer.GetFromJsonAsync<UserInfo?>("ChessGame/GetUser");
         }
 
-        public async Task AddPlayer()
+        public async Task<bool> AddOrRemovePlayer()
         {
-            await _gameServer.GetAsync("ChessGame/AddPlayer");
+            return await _gameServer.GetFromJsonAsync<bool>("ChessGame/AddOrRemovePlayer");
         }
 
         public async Task<int> PlayerCount()

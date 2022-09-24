@@ -7,12 +7,12 @@
 @inject NavigationManager navigationManager
 
 
-<input class="btn btn-primary" type="button" value="GO" @onclick="goGame"/>
-<p>Players: @count</p>
+<input class="btn btn-primary @(!IsStandState ? "" : "red")" type="button" value="@(!IsStandState ? "Start" : "Stop")" @onclick="goGame"/>
 
 
 @code {
-
+    [Parameter]
+    public bool IsStandState { get; set; } = false;
     private int count = 0;
     private async void goGame()
     {
@@ -22,8 +22,8 @@
         }
         else
         {
-            await webApi.AddPlayer();
-            count = await webApi.PlayerCount();
+            IsStandState = await webApi.AddOrRemovePlayer();
+            //count = await webApi.PlayerCount();
         }
         StateHasChanged();
     }

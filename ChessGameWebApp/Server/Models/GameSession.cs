@@ -14,7 +14,8 @@ namespace ChessGameWebApp.Server.Models
 
         public bool IsAllowedMove(int accountId)
         {
-            var player = Players.First(p => p.Id== accountId);
+            var player = Players.First(p => p.Id == accountId);
+
             return player.Color == Board.IsAllowedMove;
         }
 

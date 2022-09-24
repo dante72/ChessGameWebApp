@@ -11,6 +11,25 @@ namespace ChessGameWebApp.Server.Services
             _players = players ?? throw new ArgumentNullException(nameof(players));
         }
 
+        public Task<bool> AddOrRemove(Player player)
+        {
+            bool addPlayer = false;
+            lock (_players)
+            {
+                var p = _players.FirstOrDefault(p => p.Id == player.Id);
+
+                if (p != null)
+                    _players.Remove(p);
+                else
+                {
+                    _players.Add(player);
+                    addPlayer = true;
+                }
+            }
+
+            return Task.FromResult(addPlayer);
+        }
+
         public Task Add(Player player)
         {
             lock (_players)

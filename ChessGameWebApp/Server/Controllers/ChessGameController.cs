@@ -45,13 +45,13 @@ namespace ChessGameWebApp.Server.Controllers
         }
 
         
-        [HttpGet ("AddPlayer")]
+        [HttpGet ("AddOrRemovePlayer")]
         [Authorize]
-        public async Task AddPlayer()
+        public async Task<bool> AddOrRemovePlayer()
         {
             int id = GetUserId();
             Player player = new Player() { Id = id };
-            await _playerService.Add(player);
+            return await _playerService.AddOrRemove(player);
         }
 
         

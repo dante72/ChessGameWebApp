@@ -7,5 +7,6 @@ namespace ChessGameWebApp.Server.Services
         Task Add(Player player);
         Task Remove(Player player);
         Task<int> Count();
+        Task<bool> AddOrRemove(Player player);
     }
 }

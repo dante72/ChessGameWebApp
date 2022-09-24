@@ -17,7 +17,7 @@ namespace AuthWebAPI
         Task<WeatherForecast[]> Weather();
         Task<UserInfo?> GetUserInfo();
         Task SingOut();
-        Task<bool> AddOrRemovePlayer();
+        Task<bool> AddOrRemovePlayer(int rivalId = 0);
         Task<int> PlayerCount();
         Task<bool> SessionExists();
     }

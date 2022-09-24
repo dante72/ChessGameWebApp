@@ -57,7 +57,7 @@ namespace ChessGameWebApp.Server.Services
 
             int count = 0;
             lock (_players)
-                count = _players.Count;
+                count = _players.Where(p => p.RivalId == 0).Count();
 
             if (count > 1)
             {
@@ -65,11 +65,13 @@ namespace ChessGameWebApp.Server.Services
                 {
                     if (_players.Count > 1)
                     {
-                        players.Add(_players[0]);
-                        players.Add(_players[1]);
+                        var p1 = _players.First(p => p.RivalId == 0);
+                        _players.Remove(p1);
+                        players.Add(p1);
 
-                        foreach (var player in players)
-                            _players.Remove(player);
+                        var p2 = _players.First(p => p.RivalId == 0);
+                        _players.Remove(p2);
+                        players.Add(p2);
                     }
                 }
                 

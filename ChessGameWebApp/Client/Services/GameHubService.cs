@@ -75,7 +75,7 @@ namespace ChessGameWebApp.Client.Services
                         _siteUserInfo.Status = status;
                     else
                     {
-                        _siteUserInfo.RivalId = id;
+                        //_siteUserInfo.RivalId = id;
                         _siteUserInfo.RivalStatus = status;
                     }
                 }

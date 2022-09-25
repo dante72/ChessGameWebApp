@@ -19,6 +19,8 @@ namespace ChessGameWebApp.Client.Components
         protected IAuthWebApi AuthWebApi { get; set; }
 
         [Parameter]
+        public bool RandomRival { get; set; } = true;
+        [Parameter]
         public int RivalId { get; set; } = 0;
         [Parameter]
         public bool IsRival { get; set; } = false;
@@ -30,7 +32,7 @@ namespace ChessGameWebApp.Client.Components
             if (await AuthWebApi.SessionExists())
                 NavigationManager.NavigateTo("/game/start");
             else
-                await GameHubService.AddOrRemovePlayer();
+                await GameHubService.AddOrRemovePlayer(!RandomRival ? User.RivalId : 0);
         }
 
         protected bool PlayerStatus = false;

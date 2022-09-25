@@ -13,14 +13,14 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddBlazoredModal();
 
-builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddSingleton(sp => new AuthHttpClient { BaseAddress = new Uri("https://localhost:7256/") });
-builder.Services.AddSingleton<IAuthWebApi, AuthWebApi>();
-builder.Services.AddSingleton(b => new ChessBoard());
-builder.Services.AddSingleton<IClientGameService, ClientGameService>();
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddScoped(sp => new AuthHttpClient { BaseAddress = new Uri("https://localhost:7256/") });
+builder.Services.AddScoped<IAuthWebApi, AuthWebApi>();
+builder.Services.AddScoped(b => new ChessBoard());
+builder.Services.AddScoped<IClientGameService, ClientGameService>();
 builder.Services.AddScoped<IGameHubService, GameHubService>();
-builder.Services.AddSingleton(user => new SiteUserInfo());
-builder.Services.AddSingleton(updater => new TimeUpdater());
+builder.Services.AddScoped(user => new SiteUserInfo());
+builder.Services.AddScoped(updater => new TimeUpdater());
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<IAuthService, AuthService>();
 

@@ -136,6 +136,12 @@ namespace ChessGameWebApp.Server.SignalRHub
             Player player = new Player() { Id = id, RivalId = rivalId };
             var result = await _playerService.AddOrRemove(player);
 
+            var connection1 = await _connectionService.GetConnections(new int[] { rivalId });
+            var connection2 = await _connectionService.GetConnections(new int[] { id });
+
+            //await Clients.Clients(connection1).SendAsync("ChangeStatus", rivalId, result);
+            //await Clients.Clients(connection2).SendAsync("ChangeStatus", id, result);
+
             var connections = await _connectionService.GetConnections(new int[] { id, rivalId });
             await Clients.Clients(connections).SendAsync("ChangeStatus", id, result);
         }
@@ -144,8 +150,11 @@ namespace ChessGameWebApp.Server.SignalRHub
         {
             int id = GetCurrentAccountId(Context);
 
-            var connections = await _connectionService.GetConnections(new int[] { id, rivalId });
-            await Clients.Clients(connections).SendAsync("GetInvite", id, "RivalName");
+            var connection1 = await _connectionService.GetConnections(new int[] { rivalId });
+            var connection2 = await _connectionService.GetConnections(new int[] { id });
+
+            await Clients.Clients(connection1).SendAsync("GetInvite", id, "RivalName");
+            await Clients.Clients(connection2).SendAsync("GetInvite", rivalId, "RivalName");
         }
     }
 }

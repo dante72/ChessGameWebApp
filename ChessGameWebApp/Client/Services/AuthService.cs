@@ -99,12 +99,12 @@ namespace ChessGameWebApp.Client.Services
         private object _lock = new object();
         public async void TryUpdateToken()
         {
-            if (_siteUserInfo.AccessTokenExpire - DateTime.UtcNow > TimeSpan.FromSeconds(270))
+            if (_siteUserInfo.AccessTokenExpire - DateTime.UtcNow > TimeSpan.FromSeconds(2))
                 return;
 
             lock(_lock)
             {
-                if (_siteUserInfo.AccessTokenExpire - DateTime.UtcNow > TimeSpan.FromSeconds(270))
+                if (_siteUserInfo.AccessTokenExpire - DateTime.UtcNow > TimeSpan.FromSeconds(2))
                     return;
             }
             

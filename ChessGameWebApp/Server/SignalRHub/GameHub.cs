@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
+using Player = ChessGameWebApp.Server.Models.Player;
 
 namespace ChessGameWebApp.Server.SignalRHub
 {
@@ -14,11 +15,14 @@ namespace ChessGameWebApp.Server.SignalRHub
         private readonly ILogger<GameHub> _logger;
         private readonly IGameSessionService _serverGameService;
         private readonly IConnectionService _connectionService;
-        public GameHub(ILogger<GameHub> logger, IGameSessionService serverGameService, IConnectionService connectionService)
+        private readonly IPlayerService _playerService;
+
+        public GameHub(ILogger<GameHub> logger, IGameSessionService serverGameService, IConnectionService connectionService, IPlayerService playerService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _serverGameService = serverGameService ?? throw new ArgumentNullException(nameof(serverGameService));
             _connectionService = connectionService ?? throw new ArgumentNullException(nameof(connectionService));
+            _playerService = playerService ?? throw new ArgumentNullException(nameof(playerService));
         }
         public async Task SendBoard()
         {
@@ -124,6 +128,16 @@ namespace ChessGameWebApp.Server.SignalRHub
             {
                 return false;
             }
+        }
+
+        public async Task AddOrRemovePlayer(int rivalId)
+        {
+            int id = GetCurrentAccountId(Context);
+            Player player = new Player() { Id = id, RivalId = rivalId };
+            var result = await _playerService.AddOrRemove(player);
+
+            var connections = await _connectionService.GetConnections(new int[] { id, rivalId });
+            await Clients.Clients(connections).SendAsync("ChangeStatus", id, result);
         }
     }
 }

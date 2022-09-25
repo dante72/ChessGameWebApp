@@ -9,14 +9,17 @@ namespace ChessGameWebApp.Client.Services
         private readonly ILogger<GameHubService> _logger;
         private readonly ChessBoard _board;
         private readonly NavigationManager _navigationManager;
-        private HubConnection hubConnection;
+        private readonly HubConnection hubConnection;
+        private readonly SiteUserInfo _siteUserInfo;
 
         public ChessCell[] CurrentMove { get; set; } = new ChessCell[0];
-        public GameHubService(ILogger<GameHubService> logger, ChessBoard board, NavigationManager navigationManager, HttpClient httpClient)
+        public GameHubService(ILogger<GameHubService> logger, ChessBoard board, NavigationManager navigationManager, HttpClient httpClient, SiteUserInfo siteUserInfo)
         {
             _logger = logger;
             _board = board;
             _navigationManager = navigationManager;
+            _siteUserInfo = siteUserInfo;
+
             hubConnection = new HubConnectionBuilder()
                 .WithUrl(_navigationManager.ToAbsoluteUri("/gamehub"), options =>
                  {
@@ -54,8 +57,19 @@ namespace ChessGameWebApp.Client.Services
                 if (ok)
                     _board.TryMoveBack();
             });
-        }
 
+            hubConnection.On<int, bool>("ChangeStatus", (id, status) =>
+            {
+                lock(_siteUserInfo)
+                {
+                    if (_siteUserInfo.Id == id)
+                        _siteUserInfo.Status = status;
+                    else
+                        _siteUserInfo.RivalStatus = status;
+                }
+            });
+
+        }
         public async Task MoveBack()
         {
             if (!IsConnected)
@@ -89,6 +103,13 @@ namespace ChessGameWebApp.Client.Services
             if (!IsConnected)
                 await hubConnection.StartAsync();
             await hubConnection.SendAsync("GameOver");
+        }
+
+        public async Task AddOrRemovePlayer(int rivalId = 0)
+        {
+            if (!IsConnected)
+                await hubConnection.StartAsync();
+            await hubConnection.SendAsync("AddOrRemovePlayer", rivalId);
         }
 
         public bool IsConnected

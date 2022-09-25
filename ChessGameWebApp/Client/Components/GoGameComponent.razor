@@ -1,47 +1,13 @@
 ﻿<h3>GoGameComponent</h3>
-@inject SiteUserInfo userInfo
 @using AuthWebAPI
 @using ChessGameWebApp.Client.Services
-@inject IAuthWebApi webApi
-@inject IGameHubService gameHub
-@inject NavigationManager navigationManager
+@inherits GoGameComponentModel
 
 
-<input class="btn btn-primary @(!IsStandState ? "" : "red")" type="button" value="@(!IsStandState ? "Start" : "Stop")" @onclick="goGame"/>
+<input class="btn btn-primary @(!User.Status ? "" : "red")" type="button" value="@(!User.Status ? "Start" : "Stop")" @onclick="StartGame"/>
 
 
 @code {
-    [Parameter]
-    public bool IsStandState { get; set; } = false;
-    private int count = 0;
-    private async void goGame()
-    {
-        if (await webApi.SessionExists())
-        {
-            navigationManager.NavigateTo("/game/start");
-        }
-        else
-        {
-            IsStandState = await webApi.AddOrRemovePlayer();
-            //count = await webApi.PlayerCount();
-        }
-        StateHasChanged();
-    }
 
-    protected override async Task OnInitializedAsync()
-    {
-        //устанавливает первое подключение для корректной работы первого подключения с сервера
-        if (!gameHub.IsConnected)
-            await gameHub.StartGame();
-
-        try
-        {
-            count = await webApi.PlayerCount();
-        }
-        catch
-        {
-            
-        }
-    }
 
 }

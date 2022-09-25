@@ -75,7 +75,6 @@ namespace ChessGameWebApp.Client.Services
                         _siteUserInfo.Status = status;
                     else
                     {
-                        //_siteUserInfo.RivalId = id;
                         _siteUserInfo.RivalStatus = status;
                     }
                 }
@@ -84,6 +83,7 @@ namespace ChessGameWebApp.Client.Services
             hubConnection.On<int, string>("GetInvite", (id, rivalName) =>
             {
                 _siteUserInfo.RivalId = id;
+                _siteUserInfo.RivalName = rivalName;
                 _modal.Show<InviteComponent>("Invite");
             });
         }

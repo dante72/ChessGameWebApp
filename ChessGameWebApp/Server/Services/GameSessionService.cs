@@ -86,6 +86,42 @@ namespace ChessGameWebApp.Server.Services
             return session;
         }
 
+        public static GameSession? ConcreteCreate(List<Player> _players, TimeSpan _timer)
+        {
+            GameSession? session = null;
+            List<Player> players = new List<Player>();
+
+            int count = 0;
+            lock (_players)
+                count = _players.Where(p => p.RivalId != 0).Count();
+
+            if (count > 1)
+            {
+                lock (_players)
+                {
+                    if (_players.Count > 1)
+                    {
+                        var p1 = _players.First(p => p.RivalId != 0);
+                        _players.Remove(p1);
+                        players.Add(p1);
+
+                        var p2 = _players.First(p => p.Id == p1.RivalId);
+                        _players.Remove(p2);
+                        players.Add(p2);
+                    }
+                }
+
+                session = new GameSession();
+                var board = new Board(true);
+
+                PaintPlayers(players, _timer);
+                board.Players = players;
+                session.Board = board;
+            }
+
+            return session;
+        }
+
         private static void PaintPlayers(List<Player> players, TimeSpan timer)
         {
             if (players.Count == 2)

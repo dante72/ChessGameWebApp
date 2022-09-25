@@ -51,6 +51,16 @@ namespace ChessGameWebApp.Server.Services
             var session = GameSessionService.Create(_players, _time);
             if (session != null)
             {
+                lock (_sessions)
+                    _sessions.Add(session);
+
+                await _gameHub.StartGame(session.Players);
+            }
+
+            session = GameSessionService.ConcreteCreate(_players, _time);
+
+            if (session != null)
+            {
 
                 lock (_sessions)
                     _sessions.Add(session);

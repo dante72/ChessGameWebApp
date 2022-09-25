@@ -24,6 +24,7 @@ namespace ChessGameWebApp.Client
         public bool Status { get => status; set { status = value; ((IChessObservable)this).Notify(); } }
         public bool RivalStatus { get => rivalStatus; set { rivalStatus = value; ((IChessObservable)this).Notify(); } }
         public int RivalId { get; set; }
+        public string RivalName { get; set; }
         public DateTime AccessTokenExpire { get; set; } = DateTime.UtcNow + TimeSpan.FromMinutes(5);
         public List<IChessObserver> Observers { get; set; } = new();
         public void Update(IEnumerable<Claim> claims)

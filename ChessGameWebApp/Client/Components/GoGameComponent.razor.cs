@@ -20,8 +20,7 @@ namespace ChessGameWebApp.Client.Components
 
         [Parameter]
         public bool RandomRival { get; set; } = true;
-        [Parameter]
-        public int RivalId { get; set; } = 0;
+
         [Parameter]
         public bool IsRival { get; set; } = false;
         public async void StartGame()

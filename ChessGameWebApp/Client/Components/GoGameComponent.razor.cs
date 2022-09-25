@@ -35,14 +35,6 @@ namespace ChessGameWebApp.Client.Components
         }
 
         protected bool PlayerStatus = false;
-
-        protected override async Task OnInitializedAsync()
-        {
-            //устанавливает первое подключение для корректной работы первого подключения с сервера
-            if (!GameHubService.IsConnected)
-                await GameHubService.StartGame();
-        }
-
         protected override void OnInitialized()
         {
             ((IChessObservable)User).Subscribe(this);

@@ -91,6 +91,13 @@ namespace ChessGameWebApp.Client.Services
             {
                 navigationManager.NavigateTo("/");
             });
+
+            InitConnection();
+        }
+
+        public async void InitConnection()
+        {
+            await StartGame();
         }
         public async Task MoveBack()
         {

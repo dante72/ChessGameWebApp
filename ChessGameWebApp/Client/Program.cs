@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using ChessGameWebApp.Client.Models;
 using Blazored.LocalStorage;
 using Blazored.Modal;
+using ChessGameWebApp.Shared;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -23,5 +24,6 @@ builder.Services.AddScoped(user => new SiteUserInfo());
 builder.Services.AddScoped(updater => new TimeUpdater());
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped(chat => new List<ChatMessage>());
 
 await builder.Build().RunAsync();

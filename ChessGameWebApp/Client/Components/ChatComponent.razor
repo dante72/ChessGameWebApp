@@ -10,10 +10,7 @@
 @inject IJSRuntime JsRuntime
 @inject IGameHubService gameHub
 @inject IModalService modal
- 
- 
-<h5>Click this button Show Modal Popup</h5>
- <button @onclick="@(()=>modal.Show<Counter>("Test"))" class="btn btn-primary">View</button>
+@inject List<ChatMessage> messages
 
 <div class="form-group">
     <label>
@@ -43,7 +40,6 @@
 @code {
 
     private HubConnection hubConnection;
-    private List<ChatMessage> messages = new List<ChatMessage>();
     private string userInput;
     private string messageInput;
 

@@ -1,4 +1,5 @@
-﻿using Blazored.Modal.Services;
+﻿using Blazored.Modal;
+using Blazored.Modal.Services;
 using ChessGame;
 using ChessGameWebApp.Client.Components;
 using Microsoft.AspNetCore.Components;
@@ -14,6 +15,8 @@ namespace ChessGameWebApp.Client.Services
         private readonly HubConnection hubConnection;
         private readonly SiteUserInfo _siteUserInfo;
         private readonly IModalService _modal;
+
+        private IModalReference modalReferense;
 
         public ChessCell[] CurrentMove { get; set; } = new ChessCell[0];
         public GameHubService(ILogger<GameHubService> logger,
@@ -84,12 +87,12 @@ namespace ChessGameWebApp.Client.Services
             {
                 _siteUserInfo.RivalId = id;
                 _siteUserInfo.RivalName = rivalName;
-                _modal.Show<InviteComponent>("Invite");
+                modalReferense = _modal.Show<InviteComponent>("Invite");
             });
 
             hubConnection.On("CloseInvite",() =>
             {
-                navigationManager.NavigateTo("/");
+                modalReferense?.Close();
             });
 
             InitConnection();

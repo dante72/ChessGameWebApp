@@ -129,11 +129,11 @@ namespace ChessGameWebApp.Client.Services
             await hubConnection.SendAsync("AddOrRemovePlayer", rivalId);
         }
 
-        public async Task SendInvite(int rivalId)
+        public async Task SendInvite(int rivalId, string rivalName)
         {
             if (!IsConnected)
                 await hubConnection.StartAsync();
-            await hubConnection.SendAsync("SendInvite", rivalId);
+            await hubConnection.SendAsync("SendInvite", rivalId, rivalName);
         }
 
         public bool IsConnected

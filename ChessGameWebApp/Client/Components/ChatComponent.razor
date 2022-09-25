@@ -30,7 +30,7 @@
     @foreach (var message in messages)
     {
         <li>
-            <button type="button" class="btn btn-primary" disabled="@(!IsConnected)" @onclick="() => SendInvite(message.AccountId)">Invite</button>
+            <button type="button" class="btn btn-primary" disabled="@(!IsConnected)" @onclick="() => SendInvite(message.AccountId, message.Username)">Invite</button>
             <small>@($"{message.Time:hh\\:mm\\:ss}")</small>
             <b>@message.Username: </b>
             @message.Message
@@ -47,9 +47,9 @@
     private string userInput;
     private string messageInput;
 
-    private async void SendInvite(int accountId)
+    private async void SendInvite(int accountId, string username)
     {
-        await gameHub.SendInvite(accountId);
+        await gameHub.SendInvite(accountId, username);
     }
 
     protected override async Task OnInitializedAsync()

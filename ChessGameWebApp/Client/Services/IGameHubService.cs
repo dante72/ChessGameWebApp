@@ -11,6 +11,6 @@ namespace ChessGameWebApp.Client.Services
         Task MoveBack();
         Task GameOver();
         Task AddOrRemovePlayer(int rivalId = 0);
-        Task SendInvite(int rivalId);
+        Task SendInvite(int rivalId, string rivalName);
     }
 }

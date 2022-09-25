@@ -86,6 +86,11 @@ namespace ChessGameWebApp.Client.Services
                 _siteUserInfo.RivalName = rivalName;
                 _modal.Show<InviteComponent>("Invite");
             });
+
+            hubConnection.On("CloseInvite",() =>
+            {
+                navigationManager.NavigateTo("/");
+            });
         }
         public async Task MoveBack()
         {
@@ -134,6 +139,13 @@ namespace ChessGameWebApp.Client.Services
             if (!IsConnected)
                 await hubConnection.StartAsync();
             await hubConnection.SendAsync("SendInvite", rivalId, rivalName);
+        }
+
+        public async Task CloseInvite(int rivalId)
+        {
+            if (!IsConnected)
+                await hubConnection.StartAsync();
+            await hubConnection.SendAsync("CloseInvite", rivalId);
         }
 
         public bool IsConnected

@@ -1,8 +1,14 @@
-﻿@inject SiteUserInfo User
+﻿@using ChessGameWebApp.Client.Services
+@inject SiteUserInfo User
+@implements IDisposable
+@inject IGameHubService gameHubService
 
 @code
 {
-
+    public async void Dispose()
+    {
+        await gameHubService.CloseInvite(User.RivalId);
+    }
 }
 <table>
     <tr>

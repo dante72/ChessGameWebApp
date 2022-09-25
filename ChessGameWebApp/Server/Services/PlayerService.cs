@@ -51,6 +51,18 @@ namespace ChessGameWebApp.Server.Services
             return Task.CompletedTask;
         }
 
+        public Task Remove(int id)
+        {
+            lock (_players)
+            {
+                var p = _players.FirstOrDefault(p => p.Id == id);
+
+                if (p != null)
+                    _players.Remove(p);
+            }
+            return Task.CompletedTask;
+        }
+
         public Task<int> Count()
         {
             lock(_players)

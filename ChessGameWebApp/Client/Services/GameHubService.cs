@@ -1,4 +1,6 @@
-﻿using ChessGame;
+﻿using Blazored.Modal.Services;
+using ChessGame;
+using ChessGameWebApp.Client.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 
@@ -11,14 +13,21 @@ namespace ChessGameWebApp.Client.Services
         private readonly NavigationManager _navigationManager;
         private readonly HubConnection hubConnection;
         private readonly SiteUserInfo _siteUserInfo;
+        private readonly IModalService _modal;
 
         public ChessCell[] CurrentMove { get; set; } = new ChessCell[0];
-        public GameHubService(ILogger<GameHubService> logger, ChessBoard board, NavigationManager navigationManager, HttpClient httpClient, SiteUserInfo siteUserInfo)
+        public GameHubService(ILogger<GameHubService> logger,
+                              ChessBoard board,
+                              NavigationManager navigationManager,
+                              HttpClient httpClient,
+                              SiteUserInfo siteUserInfo,
+                              IModalService modal)
         {
-            _logger = logger;
-            _board = board;
-            _navigationManager = navigationManager;
-            _siteUserInfo = siteUserInfo;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _board = board ?? throw new ArgumentNullException(nameof(board));
+            _navigationManager = navigationManager ?? throw new ArgumentNullException(nameof(navigationManager));
+            _siteUserInfo = siteUserInfo ?? throw new ArgumentNullException(nameof(siteUserInfo));
+            _modal = modal ?? throw new ArgumentNullException(nameof(modal));
 
             hubConnection = new HubConnectionBuilder()
                 .WithUrl(_navigationManager.ToAbsoluteUri("/gamehub"), options =>
@@ -65,10 +74,18 @@ namespace ChessGameWebApp.Client.Services
                     if (_siteUserInfo.Id == id)
                         _siteUserInfo.Status = status;
                     else
+                    {
+                        _siteUserInfo.RivalId = id;
                         _siteUserInfo.RivalStatus = status;
+                    }
                 }
             });
 
+            hubConnection.On<int, string>("GetInvite", (id, rivalName) =>
+            {
+                _siteUserInfo.RivalId = id;
+                _modal.Show<InviteComponent>("Invite");
+            });
         }
         public async Task MoveBack()
         {
@@ -110,6 +127,13 @@ namespace ChessGameWebApp.Client.Services
             if (!IsConnected)
                 await hubConnection.StartAsync();
             await hubConnection.SendAsync("AddOrRemovePlayer", rivalId);
+        }
+
+        public async Task SendInvite(int rivalId)
+        {
+            if (!IsConnected)
+                await hubConnection.StartAsync();
+            await hubConnection.SendAsync("SendInvite", rivalId);
         }
 
         public bool IsConnected

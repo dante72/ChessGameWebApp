@@ -1,0 +1,102 @@
+﻿@using ChessGameWebApp.Client.Pages
+@using ChessGameWebApp.Client.Services
+@using ChessGameWebApp.Shared
+@using Microsoft.AspNetCore.SignalR.Client;
+@using ChessGameWebApp.Client.Components
+@inject NavigationManager navigationManager
+@implements IAsyncDisposable
+@inject SiteUserInfo userInfo
+@inject HttpClient httpClient
+@inject IJSRuntime JsRuntime
+@inject IGameHubService gameHub
+@inject IModalService modal
+ 
+ 
+<h5>Click this button Show Modal Popup</h5>
+ <button @onclick="@(()=>modal.Show<Counter>("Test"))" class="btn btn-primary">View</button>
+
+<div class="form-group">
+    <label>
+        <input @bind="messageInput" size="50" />
+    </label>
+    <button class="btn btn-primary" @onclick="Send" disabled="@(!IsConnected)">Send</button>
+
+</div>
+
+<hr>
+
+<div class="messagesList">
+    <ul>
+    @foreach (var message in messages)
+    {
+        <li>
+            <button type="button" class="btn btn-primary" disabled="@(!IsConnected)" @onclick="() => SendInvite(message.AccountId)">Invite</button>
+            <small>@($"{message.Time:hh\\:mm\\:ss}")</small>
+            <b>@message.Username: </b>
+            @message.Message
+        </li>
+    }
+    </ul>
+</div>
+
+
+@code {
+
+    private HubConnection hubConnection;
+    private List<ChatMessage> messages = new List<ChatMessage>();
+    private string userInput;
+    private string messageInput;
+
+    private async void SendInvite(int accountId)
+    {
+        await gameHub.SendInvite(accountId);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+
+            hubConnection = new HubConnectionBuilder()
+                    .WithUrl(navigationManager.ToAbsoluteUri("/chathub"), options =>
+                     {
+                         options.AccessTokenProvider = () => Task.FromResult(httpClient.DefaultRequestHeaders.Authorization?.Parameter);
+                     })
+                    .WithAutomaticReconnect()
+                    .Build();
+
+            hubConnection.On<ChatMessage>("ReceiveMessage", (param) =>
+            {
+                var encodedMsg = $"{param.Time:hh\\:mm\\:ss} {param.Username}: {param.Message}";
+                messages.Insert(0, param);
+                InvokeAsync(StateHasChanged);
+            });
+
+            await hubConnection.StartAsync();
+        }
+        catch(Exception ex)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", ex.Message);
+        }
+    }
+
+    private async Task Send()
+    {
+        if (messageInput == "")
+            return;
+
+        await hubConnection.SendAsync("SendMessage", messageInput);
+        messageInput = "";
+    }
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+}

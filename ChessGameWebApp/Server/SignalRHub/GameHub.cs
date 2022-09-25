@@ -139,5 +139,13 @@ namespace ChessGameWebApp.Server.SignalRHub
             var connections = await _connectionService.GetConnections(new int[] { id, rivalId });
             await Clients.Clients(connections).SendAsync("ChangeStatus", id, result);
         }
+
+        public async Task SendInvite(int rivalId)
+        {
+            int id = GetCurrentAccountId(Context);
+
+            var connections = await _connectionService.GetConnections(new int[] { id, rivalId });
+            await Clients.Clients(connections).SendAsync("GetInvite", id, "RivalName");
+        }
     }
 }

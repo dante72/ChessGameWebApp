@@ -28,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repository\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JwtToken", "JwtToken\JwtToken.csproj", "{3B3E010F-9EFD-4FF4-8F52-6AB38B163D55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonConfig", "CommonConfig\CommonConfig.csproj", "{F0AAFA4A-DCFD-43E6-BCCA-D037B4F5F0B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonConfig", "CommonConfig\CommonConfig.csproj", "{F0AAFA4A-DCFD-43E6-BCCA-D037B4F5F0B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,10 +4,9 @@
 @inherits GoGameComponentModel
 
 
-<input class="btn btn-primary @(!User.Status ? "" : "red")" type="button" value="@(!User.Status ? "Start" : "Stop")" @onclick="StartGame"/>
+<input class="btn btn-primary @(!PlayerStatus ? "" : "red")" type="button" value="@(!PlayerStatus ? "Start" : "Stop")" @onclick="StartGame"/>
 
 
 @code {
-
 
 }

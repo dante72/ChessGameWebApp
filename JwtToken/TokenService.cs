@@ -17,6 +17,7 @@ public class TokenService : IAccessTokenService, IRefreshTokenService, ITokenSer
 
         claims.Add(new Claim(JwtRegisteredClaimNames.NameId, account.Id.ToString()));
         claims.Add(new Claim(JwtRegisteredClaimNames.Email, account.Email));
+        claims.Add(new Claim(JwtRegisteredClaimNames.GivenName, account.Username));
         // Add roles as multiple claims
         foreach (var role in account.Roles)
         {

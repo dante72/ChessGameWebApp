@@ -37,7 +37,7 @@
 
 @code {
 
-    private HubConnection hubConnection;
+    private static HubConnection hubConnection;
     private string userInput;
     private string messageInput;
 
@@ -50,6 +50,8 @@
     {
         try
         {
+            if (hubConnection != null)
+                return;
 
             hubConnection = new HubConnectionBuilder()
                     .WithUrl(navigationManager.ToAbsoluteUri("/chathub"), options =>

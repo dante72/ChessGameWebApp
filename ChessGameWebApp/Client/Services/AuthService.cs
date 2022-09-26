@@ -123,10 +123,10 @@ namespace ChessGameWebApp.Client.Services
         {
             var refreshToken = await GetTokenFromLocalStorage();
 
-            if (refreshToken == null)
-            {
-                await LogOut();
-            }
+            //if (refreshToken == null)
+            //{
+            //    await LogOut();
+            //}
             var result = await _authWebApi.Autorization(refreshToken);
 
             var access = TokenService.DecodeToken(result.AccessToken);

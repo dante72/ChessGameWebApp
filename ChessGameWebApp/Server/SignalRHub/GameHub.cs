@@ -143,11 +143,12 @@ namespace ChessGameWebApp.Server.SignalRHub
         public async Task SendInvite(int rivalId, string rivalName)
         {
             int id = GetCurrentAccountId(Context);
+            string username = GetUserName(Context);
 
             var connection1 = await _connectionService.GetConnections(new int[] { rivalId });
             var connection2 = await _connectionService.GetConnections(new int[] { id });
 
-            await Clients.Clients(connection1).SendAsync("GetInvite", id, "username");
+            await Clients.Clients(connection1).SendAsync("GetInvite", id, username);
             await Clients.Clients(connection2).SendAsync("GetInvite", rivalId, rivalName);
         }
 
@@ -160,6 +161,11 @@ namespace ChessGameWebApp.Server.SignalRHub
 
             var connections = await _connectionService.GetConnections(new int[] { rivalId });
             await Clients.Clients(connections).SendAsync("CloseInvite");
+        }
+
+        private string GetUserName(HubCallerContext context)
+        {
+            return context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName).Value;
         }
     }
 }

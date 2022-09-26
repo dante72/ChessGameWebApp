@@ -16,7 +16,6 @@
         <input @bind="messageInput" size="50" />
     </label>
     <button class="btn btn-primary" @onclick="Send" disabled="@(!IsConnected)">Send</button>
-
 </div>
 
 <hr>
@@ -26,7 +25,7 @@
     @foreach (var message in messages)
     {
         <li>
-            <button type="button" class="btn btn-primary" disabled="@(!IsConnected)" @onclick="() => SendInvite(message.AccountId, message.Username)">Invite</button>
+            <button type="button" class="btn btn-primary" disabled="@(!IsConnected || userInfo.Id == message.AccountId)" @onclick="() => SendInvite(message.AccountId, message.Username)">Invite</button>
             <small>@($"{message.Time:hh\\:mm\\:ss}")</small>
             <b>@message.Username: </b>
             @message.Message

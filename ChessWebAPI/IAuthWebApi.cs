@@ -11,7 +11,7 @@ namespace AuthWebAPI
 {
     public interface IAuthWebApi
     {
-        Task Registration(AccountRequestModel account);
+        Task<bool> Registration(AccountRequestModel account);
         Task<JwtTokens?> Autorization(AccountRequestModel account);
         Task<JwtTokens?> Autorization(string refreshToken);
         Task<WeatherForecast[]> Weather();

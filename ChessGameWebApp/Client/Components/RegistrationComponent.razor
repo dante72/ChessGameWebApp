@@ -1,18 +1,31 @@
 ﻿@using AuthWebAPI
 @inherits RegistrationComponentModel
 @inject IAuthWebApi webApi
+@inject IJSRuntime JsRuntime
+@inject NavigationManager navigationManager
+
 <h3>Registration</h3>
 
 @code {
     async void FormSubmitted(EditContext editContext)
     {
-        await webApi.Registration(new AccountRequestModel()
+        bool result = await webApi.Registration(new AccountRequestModel()
         {
             Username = Username,
             Login = Login,
             Password = Password,
             Email = Email
         });
+
+        if (result)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", $"Registration is successfully");
+            navigationManager.NavigateTo("/authorization/auth");
+        }
+        else
+        {
+            await JsRuntime.InvokeVoidAsync("alert", $"same login, email or username already exist");
+        }
     }
 }
 

@@ -16,16 +16,22 @@ namespace AuthWebAPI
             _gameServer = gameServer ?? throw new NullReferenceException(nameof(gameServer));
         }
 
-        public async Task Registration(AccountRequestModel account)
+        public async Task<bool> Registration(AccountRequestModel account)
         {
             try
             {
                 var res = await _auth.PostAsJsonAsync($"Auth/Registaration", account);
+
+                if (res.IsSuccessStatusCode)
+                    return true;
+
             }
             catch
             {
                 throw;
             }
+
+            return false;
         }
 
         public async Task<JwtTokens?> Autorization(AccountRequestModel account)

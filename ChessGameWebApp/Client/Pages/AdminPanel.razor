@@ -10,7 +10,7 @@
 @inject NavigationManager navigationManager
 
 
-<h3>Authentication</h3>
+<h3>Admin Panel</h3>
 
 @code {
 
@@ -50,7 +50,7 @@
 <EditForm Model="@this" OnValidSubmit="@FormSubmitted">
     <table>
         <tr>
-            <td><label for="username">Login</label></td>
+            <td><label for="username">Enter username</label></td>
             <td><input type="text" name="username" @bind-value="username" /></td>
         </tr>
             <tr>
@@ -68,6 +68,7 @@
         <th>Id</th>
         <th>Username</th>
         <th>Email</th>
+        <th>Roles</th>
         <th>Banned</th>
     </tr>
     
@@ -77,6 +78,7 @@
             <td>@account.Id</td>
             <td>@account.Username</td>
             <td>@account.Email</td>
+            <td>@account.ShowRoles()</td>
             <td><button type="button" class="btn btn-primary" @onclick="() => BanAccount(account.Email)">@account.IsBanned</button></td>
         </tr>
     }

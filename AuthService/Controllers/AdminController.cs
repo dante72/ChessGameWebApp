@@ -67,7 +67,8 @@ namespace AuthService.Controllers
                 Id = account.Id,
                 Email = account.Email,
                 IsBanned = account.IsBanned,
-                Username = account.Username
+                Username = account.Username,
+                Roles = account.Roles.Select(x => x.Name).ToList()
             };
         }
     }

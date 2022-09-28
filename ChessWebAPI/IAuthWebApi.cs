@@ -20,5 +20,7 @@ namespace AuthWebAPI
         Task<bool> AddOrRemovePlayer(int rivalId = 0);
         Task<int> PlayerCount();
         Task<bool> SessionExists();
+        Task<List<AccountDto>> Search(string username);
+        Task BanOrUnban(string email);
     }
 }

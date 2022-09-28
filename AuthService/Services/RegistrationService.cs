@@ -58,6 +58,13 @@ namespace AuthService.Services
             _logger.LogInformation(nameof(GetAccounts));
             return _uow.AccountRepository.GetAll();
         }
+
+        public Task<List<Account>> SearchAccounts(string username)
+        {
+            _logger.LogInformation(nameof(GetAccounts));
+            return _uow.AccountRepository.SearchByUsername(username);
+        }
+
         public Task GetAccountById(int id)
         {
             _logger.LogInformation(nameof(GetAccountById));
@@ -68,6 +75,14 @@ namespace AuthService.Services
         {
             _logger.LogInformation($"BanAccount {account.Login}");
             account.IsBanned = true;
+            await _uow.AccountRepository.Update(account);
+            await _uow.SaveChangesAsync();
+        }
+
+        public async Task UnBanAccount(Account account)
+        {
+            _logger.LogInformation($"UnBanAccount {account.Login}");
+            account.IsBanned = false;
             await _uow.AccountRepository.Update(account);
             await _uow.SaveChangesAsync();
         }

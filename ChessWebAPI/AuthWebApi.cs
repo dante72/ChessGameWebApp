@@ -107,5 +107,15 @@ namespace AuthWebAPI
         {
             return await _gameServer.GetFromJsonAsync<bool>("ChessGame/SessionExists");
         }
+
+        public async Task<List<AccountDto>> Search(string username)
+        {
+            return await _auth.GetFromJsonAsync<List<AccountDto>>($"Admin/Search?username={username}");
+        }
+
+        public async Task BanOrUnban(string email)
+        {
+            await _auth.GetAsync($"Admin/Ban?email={email}");
+        }
     }
 }

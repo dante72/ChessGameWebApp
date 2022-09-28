@@ -99,12 +99,12 @@ namespace ChessGameWebApp.Client.Services
         private object _lock = new object();
         public async void TryUpdateToken()
         {
-            if (_siteUserInfo.AccessTokenExpire - DateTime.UtcNow > TimeSpan.FromSeconds(2))
+            if (_siteUserInfo.AccessTokenExpire - DateTime.UtcNow > TimeSpan.FromSeconds(10))
                 return;
 
             lock(_lock)
             {
-                if (_siteUserInfo.AccessTokenExpire - DateTime.UtcNow > TimeSpan.FromSeconds(2))
+                if (_siteUserInfo.AccessTokenExpire - DateTime.UtcNow > TimeSpan.FromSeconds(10))
                     return;
             }
             
@@ -123,10 +123,10 @@ namespace ChessGameWebApp.Client.Services
         {
             var refreshToken = await GetTokenFromLocalStorage();
 
-            //if (refreshToken == null)
-            //{
-            //    await LogOut();
-            //}
+            if (refreshToken == null)
+            {
+                await LogOut();
+            }
             var result = await _authWebApi.Autorization(refreshToken);
 
             var access = TokenService.DecodeToken(result.AccessToken);

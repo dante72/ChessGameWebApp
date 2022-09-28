@@ -88,11 +88,4 @@
     public bool IsConnected =>
         hubConnection.State == HubConnectionState.Connected;
 
-    public async ValueTask DisposeAsync()
-    {
-        if (hubConnection is not null)
-        {
-            await hubConnection.DisposeAsync();
-        }
-    }
 }

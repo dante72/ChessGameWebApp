@@ -65,6 +65,7 @@ namespace AuthService.Controllers
             return new AccountDto()
             {
                 Id = account.Id,
+                Login = account.Login,
                 Email = account.Email,
                 IsBanned = account.IsBanned,
                 Username = account.Username,

@@ -121,7 +121,10 @@ namespace AuthService.Services
 
             if (!isCorrect)
                 throw new AuthenticationException("Login or password are not correct!");
-            
+
+            if (account.IsBanned)
+                throw new AuthenticationException("Account is banned!");
+
             var accessToken = _accessTokenService.GenerateToken(account);
             var refreshToken = _refreshTokenService.GenerateToken(account);
 

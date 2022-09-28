@@ -28,6 +28,25 @@ namespace ChessGame
             return chessBoardDto;
         }
 
+        public static ChessBoardDto ToDto(this Board chessBoard)
+        {
+            var chessBoardDto = new ChessBoardDto();
+
+            foreach (Cell cell in chessBoard.Cells)
+            {
+                chessBoardDto.Cells.Add(new ChessCellDto()
+                {
+                    Row = cell.Row,
+                    Column = cell.Column,
+                    Figure = cell.Figure?.ToDto()
+                });
+            }
+
+            chessBoardDto.Index = chessBoard.Index;
+
+            return chessBoardDto;
+        }
+
         public static void Update(this ChessBoard chessBoard, ChessBoardDto? data)
         {
             if (data == null)
@@ -50,6 +69,41 @@ namespace ChessGame
             }
 
             return board;
+        }
+
+        public static ChessTimerDto GetTimer(this Board board)
+        {
+            if (board.Players == null)
+                return null;
+
+            var timerDto = new ChessTimerDto();
+            foreach (var player in board.Players)
+            {
+                var p = timerDto.Players.First(p => p.Color == player.Color);
+
+                p.EndTime = player.Timer.EndTime;
+                p.Delta = player.Timer.Delta;
+                p.TurnOn = player.Timer.TurnOn;
+            }
+
+            return timerDto;
+        }
+
+        public static void SetTimer(this ChessBoard board, ChessTimerDto timer)
+        {
+            if (board.Players == null)
+                return;
+
+            foreach (var player in board.Players)
+            {
+                var p = timer.Players.First(p => p.Color == player.Color);
+
+                player.Timer.EndTime = p.EndTime;
+                player.Timer.Delta = p.Delta;
+
+                if (player.Timer.TurnOn != p.TurnOn)
+                    player.Timer.TurnOn = p.TurnOn;
+            }
         }
 
         public static FigureDto? ToDto(this Figure? figure)

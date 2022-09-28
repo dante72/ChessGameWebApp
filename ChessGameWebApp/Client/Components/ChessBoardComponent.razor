@@ -1,0 +1,19 @@
+﻿@using ChessGame
+@using ChessGameWebApp.Client.Services;
+@inherits GameComponentModel
+@inject IGameHubService gameHub
+@inject SiteUserInfo user
+
+@code {
+    private async void moveBack()
+    {
+        await gameHub.MoveBack();
+    }
+
+}
+@if (user.Roles.Contains("admin"))
+{
+    <input class="btn btn-primary" type="button" value="MoveBack" @onclick="moveBack"/>
+}
+<StatusComponent Board="@Board"></StatusComponent>
+<GameComponent></GameComponent>

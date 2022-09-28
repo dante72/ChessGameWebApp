@@ -1,6 +1,8 @@
 ﻿@page "/fetchdata"
 @using ChessGameWebApp.Shared
-@inject HttpClient Http
+@using AuthWebAPI
+@inject IAuthWebApi Auth
+@inject IJSRuntime JsRuntime
 
 <PageTitle>Weather forecast</PageTitle>
 
@@ -42,6 +44,13 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        try
+        {
+            forecasts = await Auth.Weather();
+        }
+        catch(Exception ex)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", $"Error: {ex.Message}");
+        }
     }
 }

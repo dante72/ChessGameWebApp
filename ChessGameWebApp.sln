@@ -11,12 +11,24 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGameWebApp.Shared", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGame", "ChessGame\ChessGame.csproj", "{99FD221C-4429-4808-889E-83BC8C91E932}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessWebAPI", "ChessWebAPI\ChessWebAPI.csproj", "{50FFF098-3AE5-4F6A-A708-BE78D803D12C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthWebAPI", "ChessWebAPI\AuthWebAPI.csproj", "{50FFF098-3AE5-4F6A-A708-BE78D803D12C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{48E7240B-C9AE-4393-BFCD-CC3CE11B5393}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{9C5F4230-63B0-49A8-9825-491FA94DEAFF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\AuthService.csproj", "{D557BECA-DD59-4ACB-8B15-09BFEF58227D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbContextDao", "DbContextDao\DbContextDao.csproj", "{7586A5E8-F765-4B97-B3B4-05218FCCF2E7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repository\Repositories.csproj", "{971D8AF2-8761-47CA-9254-8514515E9623}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JwtToken", "JwtToken\JwtToken.csproj", "{3B3E010F-9EFD-4FF4-8F52-6AB38B163D55}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonConfig", "CommonConfig\CommonConfig.csproj", "{F0AAFA4A-DCFD-43E6-BCCA-D037B4F5F0B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +56,30 @@ Global
 		{50FFF098-3AE5-4F6A-A708-BE78D803D12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50FFF098-3AE5-4F6A-A708-BE78D803D12C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50FFF098-3AE5-4F6A-A708-BE78D803D12C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C5F4230-63B0-49A8-9825-491FA94DEAFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C5F4230-63B0-49A8-9825-491FA94DEAFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C5F4230-63B0-49A8-9825-491FA94DEAFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C5F4230-63B0-49A8-9825-491FA94DEAFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D557BECA-DD59-4ACB-8B15-09BFEF58227D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D557BECA-DD59-4ACB-8B15-09BFEF58227D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D557BECA-DD59-4ACB-8B15-09BFEF58227D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D557BECA-DD59-4ACB-8B15-09BFEF58227D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7586A5E8-F765-4B97-B3B4-05218FCCF2E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7586A5E8-F765-4B97-B3B4-05218FCCF2E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7586A5E8-F765-4B97-B3B4-05218FCCF2E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7586A5E8-F765-4B97-B3B4-05218FCCF2E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{971D8AF2-8761-47CA-9254-8514515E9623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{971D8AF2-8761-47CA-9254-8514515E9623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{971D8AF2-8761-47CA-9254-8514515E9623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{971D8AF2-8761-47CA-9254-8514515E9623}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B3E010F-9EFD-4FF4-8F52-6AB38B163D55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B3E010F-9EFD-4FF4-8F52-6AB38B163D55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B3E010F-9EFD-4FF4-8F52-6AB38B163D55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B3E010F-9EFD-4FF4-8F52-6AB38B163D55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0AAFA4A-DCFD-43E6-BCCA-D037B4F5F0B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0AAFA4A-DCFD-43E6-BCCA-D037B4F5F0B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0AAFA4A-DCFD-43E6-BCCA-D037B4F5F0B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0AAFA4A-DCFD-43E6-BCCA-D037B4F5F0B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

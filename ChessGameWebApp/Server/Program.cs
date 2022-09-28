@@ -1,23 +1,69 @@
-using ChessGame;
 using ChessGameWebApp.Server.Services;
 using ChessGameWebApp.Server.SignalRHub;
-using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using JwtToken;
+using Microsoft.OpenApi.Models;
+using ChessGameWebApp.Server.Models;
+using Player = ChessGameWebApp.Server.Models.Player;
+using CommonConfig;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddSingleton(b => new ChessBoard(true));
-builder.Services.AddScoped<IServerGameService, ServerGameService>();
+builder.Configuration.AddConfiguration(CommonConfiguration.Create());
+
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+});
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+JwtConfig jwtConfig = builder.Configuration.GetSection("AccessJwtConfig").Get<JwtConfig>();
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            IssuerSigningKey = new SymmetricSecurityKey(jwtConfig.SigningKeyBytes),
+            ValidateIssuerSigningKey = true,
+            ValidateLifetime = true,
+            RequireExpirationTime = true,
+            RequireSignedTokens = true,
+
+            ValidateAudience = true,
+            ValidateIssuer = true,
+            ValidAudiences = new[] { jwtConfig.Audience },
+            ValidIssuer = jwtConfig.Issuer
+        };
+    });
+//builder.Services.AddAuthorization();
+
+
 builder.Services.AddControllersWithViews();
+
+// Add services to the container.
+builder.Services.AddScoped<IGameSessionService, GameSessionService>();
+builder.Services.AddScoped<IPlayerService, PlayerService>();
+builder.Services.AddSingleton<IGameHubService, GameHubService>();
+builder.Services.AddSingleton<IHostedService, SessionBackgroundService>();
+builder.Services.AddSingleton<List<Player>>(players => new List<Player>());
+builder.Services.AddSingleton(sessions => new List<GameSession>());
+builder.Services.AddSingleton(connections => new List<Connection>());
+builder.Services.AddSingleton<IConnectionService, ConnectionService>();
+
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
-builder.Services.AddResponseCompression(opts =>
-{
-    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-        new[] { "application/octet-stream" });
-});
 
 var app = builder.Build();
+
+//app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -38,16 +84,21 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.MapControllers();
 
 app.MapRazorPages();
-app.MapControllers();
-app.MapFallbackToFile("index.html");
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Catalog}/{action=Products}/{id?}");
+//app.MapFallbackToFile("index.html");
 
 app.MapHub<BroadcastHub>("/chathub");
 app.MapHub<GameHub>("/gamehub");
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+});
 
 app.Run();

@@ -11,7 +11,7 @@ namespace ChessGame.Figures
         public Rook(FigureColors color) : base(color)
         {
         }
-        protected override List<Cell> GetAllPossibleMoves()
+        internal override List<Cell> GetAllPossibleMoves()
         {
             var list = new List<Cell>();
             if (Position is not null)
@@ -24,5 +24,6 @@ namespace ChessGame.Figures
 
             return list;
         }
+        internal override Figure Clone() => new Rook(Color);
     }
 }

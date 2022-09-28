@@ -1,12 +1,11 @@
 ﻿using ChessGame;
 using ChessGameWebApp.Client.Services;
-using ChessWebAPI;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 
 namespace ChessGameWebApp.Client.Components
 {
-    public class CellComponentModel : ComponentBase, IChessCellObserver
+    public class CellComponentModel : ComponentBase, IChessObserver, IDisposable
     {
         [Parameter]
         public GameComponent ParentComponent { get; set; }
@@ -28,7 +27,6 @@ namespace ChessGameWebApp.Client.Components
             set
             {
                 _chessCell = value;
-                _chessCell.Subscribe(this);
             } 
         }
         [Parameter]
@@ -48,16 +46,24 @@ namespace ChessGameWebApp.Client.Components
                 logger.LogWarning(ex.Message);
             }
         }
-        public void Update()
+        public Task UpdateAsync()
         {
             FigureName = ChessCell.FigureName;
             IsMarked = ChessCell.IsMarked;
             IsPointer = ChessCell.IsPointer;
             StateHasChanged();
+
+            return Task.CompletedTask;
         }
         protected override void OnInitialized()
         {
             ParentComponent.Children.Add((CellComponent)this);
+            ((IChessObservable)ChessCell).Subscribe(this);
+        }
+
+        public void Dispose()
+        {
+            ((IChessObservable)ChessCell).Remove(this);
         }
     }
 }

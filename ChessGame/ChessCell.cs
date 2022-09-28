@@ -9,18 +9,20 @@ namespace ChessGame
     /// <summary>
     /// Класс для клиет-серверного взаимодействия
     /// </summary>
-    public class ChessCell : Cell, IChessCellObservable
+    public class ChessCell : Cell, IChessObservable
     {
-        private IChessCellObserver? observer;
         private bool _isPointer;
         private bool _isMarked;
         private string? _figureName;
 
-        public bool IsPointer { get => _isPointer; set { _isPointer = value; observer?.Update(); } }
-        public bool IsMarked { get => _isMarked; set { _isMarked = value; observer?.Update(); } }
-        public string? FigureName { get => _figureName; set { _figureName = value; observer?.Update(); } }
+        public bool IsPointer { get => _isPointer; set { _isPointer = value; ((IChessObservable)this).Notify(); } }
+        public bool IsMarked { get => _isMarked; set { _isMarked = value; ((IChessObservable)this).Notify(); } }
+        public string? FigureName { get => _figureName; set { _figureName = value; ((IChessObservable)this).Notify(); } }
+        public List<IChessObserver> Observers { get; set; } = new List<IChessObserver>();
 
-        public ChessCell(int row, int column, Board board) : base(row, column, board) { }
+        public ChessCell(int row, int column, Board board) : base(row, column, board)
+        {
+        }
 
         private string? GetActualFigureName()
         {
@@ -28,10 +30,6 @@ namespace ChessGame
                 return null;
 
             return $"{Figure.Color}{Figure.GetType().Name}";
-        }
-        public void Subscribe(IChessCellObserver observer)
-        {
-            this.observer = observer ?? throw new ArgumentNullException(nameof(observer));  
         }
 
         public override Figure? Figure
@@ -42,6 +40,6 @@ namespace ChessGame
                 base.Figure = value;
                 FigureName = GetActualFigureName();
             }
-        }
+        }      
     }
 }

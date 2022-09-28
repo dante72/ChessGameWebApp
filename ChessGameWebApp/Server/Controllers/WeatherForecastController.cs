@@ -1,4 +1,5 @@
 using ChessGameWebApp.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChessGameWebApp.Server.Controllers
@@ -19,6 +20,7 @@ namespace ChessGameWebApp.Server.Controllers
             _logger = logger;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {

@@ -1,4 +1,9 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using ChessGame
+@inject SiteUserInfo user
+@implements IChessObserver
+@implements IDisposable
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">ChessGameWebApp</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -14,25 +19,31 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="game">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Game
-            </NavLink>
-        </div>
+
+        @if (user.Roles.Contains("user"))
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="game">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Game
+                </NavLink>
+            </div>
+        }
+
+        @if (user.Roles.Contains("admin"))
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="adminpanel">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Admin Panel
+                </NavLink>
+            </div>
+        }
+
     </nav>
 </div>
 
+
 @code {
+    
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -40,5 +51,22 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+    
+    protected override void OnInitialized()
+    {
+        ((IChessObservable)user).Subscribe(this);
+    }
+    
+    public Task UpdateAsync()
+    {
+        StateHasChanged();
+        
+        return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        ((IChessObservable)user).Remove(this);
     }
 }

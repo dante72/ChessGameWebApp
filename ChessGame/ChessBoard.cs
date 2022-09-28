@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    public class ChessBoard : Board, IEnumerable<ChessCell>
+    public class ChessBoard : Board, IEnumerable<ChessCell>, IChessObservable
     {
+        public List<IChessObserver> Observers { get; set; } = new List<IChessObserver>();
+        public IPlayer? Player { get; private set; }
+
         public delegate Task<bool> CheckMove(Cell from, Cell to);
         private CheckMove CheckFigureMove { get; set; } = delegate { return Task.FromResult(true); };
         private ChessCell target;
-        internal ChessCell Target 
+        internal ChessCell Target
         {
             get => target;
             set
@@ -24,6 +27,25 @@ namespace ChessGame
                 target.IsPointer = true;
             }
         }
+        private GameStatus gameStatus;
+        public override GameStatus GameStatus
+        {
+            get
+            {
+                return gameStatus;
+            }
+            set
+            {
+                gameStatus = value;
+                ((IChessObservable)this).Notify();
+            }
+        }
+
+        public void UpdateGameStatus()
+        {
+            GameStatus = GetGameStatus();
+        }
+
         public ChessBoard(bool setup = false)
         {
             Cells = new ChessCell[8, 8];
@@ -31,11 +53,29 @@ namespace ChessGame
                 for (int j = 0; j < 8; j++)
                     Cells[i, j] = new ChessCell(i, j, this);
 
+            Players = CreatePlayers();
+            Player = Players.First(p => p.Color == FigureColors.White);
+
             if (setup)
                 Setup();
         }
 
-        public ChessCell GetCell(int row, int column)
+        private List<Player> CreatePlayers()
+        {
+            var players = new List<Player>();
+            players.Add(new Player() { Color = FigureColors.White });
+            players.Add(new Player() { Color = FigureColors.Black });
+
+            return players;
+        }
+
+        public void SetCurrentPlayer(FigureColors playerColor)
+        {
+            Player = Players.First(p => p.Color == playerColor);
+            ((IChessObservable)this).Notify();
+        }
+
+        public new ChessCell GetCell(int row, int column)
         {
             return (ChessCell)Cells[row, column];
         }
@@ -61,7 +101,8 @@ namespace ChessGame
             {
                 if (await CheckFigureMove(target, currentCell))
                 {
-                    Target.Figure?.MoveTo(currentCell);
+                    if (Player == null || Player?.Color == IsAllowedMove)
+                        TryMove(Target, currentCell);
                 }
                 
                 ClearPossibleMoves();
@@ -72,7 +113,6 @@ namespace ChessGame
             }
 
             Target = currentCell;
-
         }
 
         public void SetCheckMethod(CheckMove checkMove)
@@ -80,7 +120,7 @@ namespace ChessGame
             CheckFigureMove = checkMove;
         }
 
-        public IEnumerator<ChessCell> GetEnumerator() => Cells.Cast<ChessCell>().GetEnumerator();
+        public new IEnumerator<ChessCell> GetEnumerator() => Cells.Cast<ChessCell>().GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => Cells.GetEnumerator();
     }
 }

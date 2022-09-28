@@ -1,5 +1,4 @@
 ﻿using ChessGame;
-using ChessWebAPI;
 
 namespace ChessGameWebApp.Client.Services
 {
@@ -21,7 +20,7 @@ namespace ChessGameWebApp.Client.Services
         public async Task<bool> TryMove(Cell from, Cell to)
         {
             await _gameHubService.SendTryMove(from, to);
-            return true;
+            return false;
         }
     }
 }

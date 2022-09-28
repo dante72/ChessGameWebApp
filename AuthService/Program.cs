@@ -51,7 +51,7 @@ builder.Services
     });
 builder.Services.AddAuthorization();
 
-var dbConfig = builder.Configuration.GetSection("MySqlConfig");
+/*var dbConfig = builder.Configuration.GetSection("MySqlConfig");
 
 builder.Services.AddDbContext<AuthContext>(
     options => options.UseMySql(
@@ -61,9 +61,14 @@ builder.Services.AddDbContext<AuthContext>(
                    password={dbConfig["Password"]};
                    database={dbConfig["Database"]};",
                  new MySqlServerVersion(dbConfig["Version"]))
+    );*/
+
+var dbConfig = builder.Configuration.GetSection("SqLiteConfig");
+builder.Services.AddDbContext<AuthContext>(
+    options => options.UseSqlite($"Data Source={dbConfig["Filename"]};")
     );
 
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();

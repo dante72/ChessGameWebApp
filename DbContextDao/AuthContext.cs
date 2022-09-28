@@ -12,10 +12,12 @@ namespace DbContextDao
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public AuthContext(DbContextOptions<AuthContext> options) : base(options)
         {
+            
             if (Database.EnsureCreated())
             {
                 DefaultConfigure();
             }
+
         }
 
         private void DefaultConfigure()

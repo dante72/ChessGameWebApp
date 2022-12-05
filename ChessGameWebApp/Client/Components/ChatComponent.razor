@@ -6,10 +6,10 @@
 @inject NavigationManager navigationManager
 @implements IAsyncDisposable
 @inject SiteUserInfo userInfo
-@inject HttpClient httpClient
 @inject IJSRuntime JsRuntime
 @inject IGameHubService gameHub
 @inject List<ChatMessage> messages
+@inject IChatHubService chatHub
 
 <div class="form-group">
     <label>
@@ -37,8 +37,6 @@
 
 @code {
 
-    private static HubConnection hubConnection;
-    private string userInput;
     private string messageInput;
 
     private async void SendInvite(int accountId, string username)
@@ -48,32 +46,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            if (hubConnection != null)
-                return;
-
-            hubConnection = new HubConnectionBuilder()
-                    .WithUrl(navigationManager.ToAbsoluteUri("/chathub"), options =>
-                     {
-                         options.AccessTokenProvider = () => Task.FromResult(httpClient.DefaultRequestHeaders.Authorization?.Parameter);
-                     })
-                    .WithAutomaticReconnect()
-                    .Build();
-
-            hubConnection.On<ChatMessage>("ReceiveMessage", (param) =>
-            {
-                var encodedMsg = $"{param.Time:hh\\:mm\\:ss} {param.Username}: {param.Message}";
-                messages.Insert(0, param);
-                InvokeAsync(StateHasChanged);
-            });
-
-            await hubConnection.StartAsync();
-        }
-        catch(Exception ex)
-        {
-            await JsRuntime.InvokeVoidAsync("alert", ex.Message);
-        }
+        chatHub.SetUpdater(() => InvokeAsync(StateHasChanged));
+        await chatHub.Start();
     }
 
     private async Task Send()
@@ -81,14 +55,15 @@
         if (messageInput == "")
             return;
 
-        await hubConnection.SendAsync("SendMessage", messageInput);
+        await chatHub.Send(messageInput);
+
         messageInput = "";
     }
 
-    public bool IsConnected =>
-        hubConnection.State == HubConnectionState.Connected;
+    public bool IsConnected => chatHub.IsConnected;
 
     public async ValueTask DisposeAsync()
     {
+        await chatHub.DisposeAsync();
     }
 }

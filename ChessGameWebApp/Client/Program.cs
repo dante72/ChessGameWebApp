@@ -20,6 +20,7 @@ builder.Services.AddScoped<IAuthWebApi, AuthWebApi>();
 builder.Services.AddScoped(b => new ChessBoard());
 builder.Services.AddScoped<IClientGameService, ClientGameService>();
 builder.Services.AddScoped<IGameHubService, GameHubService>();
+builder.Services.AddScoped<IChatHubService, ChatHubService>();
 builder.Services.AddScoped(user => new SiteUserInfo());
 builder.Services.AddScoped(updater => new TimeUpdater());
 builder.Services.AddBlazoredLocalStorage();

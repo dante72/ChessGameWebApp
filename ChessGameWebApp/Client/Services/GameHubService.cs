@@ -15,6 +15,7 @@ namespace ChessGameWebApp.Client.Services
         private readonly HubConnection hubConnection;
         private readonly SiteUserInfo _siteUserInfo;
         private readonly IModalService _modal;
+        private readonly HttpClient _httpClient;
 
         private IModalReference modalReferense;
 
@@ -31,11 +32,12 @@ namespace ChessGameWebApp.Client.Services
             _navigationManager = navigationManager ?? throw new ArgumentNullException(nameof(navigationManager));
             _siteUserInfo = siteUserInfo ?? throw new ArgumentNullException(nameof(siteUserInfo));
             _modal = modal ?? throw new ArgumentNullException(nameof(modal));
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
             hubConnection = new HubConnectionBuilder()
                 .WithUrl(_navigationManager.ToAbsoluteUri("/gamehub"), options =>
                  {
-                     options.AccessTokenProvider = () => Task.FromResult(httpClient.DefaultRequestHeaders.Authorization.Parameter);
+                     options.AccessTokenProvider = () => Task.FromResult(_httpClient.DefaultRequestHeaders.Authorization?.Parameter);
                  })
                 .WithAutomaticReconnect()
                 .Build();

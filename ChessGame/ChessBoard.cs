@@ -62,9 +62,11 @@ namespace ChessGame
 
         private List<Player> CreatePlayers()
         {
-            var players = new List<Player>();
-            players.Add(new Player() { Color = FigureColors.White });
-            players.Add(new Player() { Color = FigureColors.Black });
+            var players = new List<Player>
+            {
+                new Player() { Color = FigureColors.White },
+                new Player() { Color = FigureColors.Black }
+            };
 
             return players;
         }

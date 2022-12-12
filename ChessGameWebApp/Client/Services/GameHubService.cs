@@ -163,6 +163,14 @@ namespace ChessGameWebApp.Client.Services
         public bool IsConnected
         { get => hubConnection.State == HubConnectionState.Connected; }
 
+
+        public Task Help()
+        {
+            _board.GetHelp();
+
+            return Task.CompletedTask;
+        }
+
         public async ValueTask DisposeAsync()
         {
             if (hubConnection is not null)

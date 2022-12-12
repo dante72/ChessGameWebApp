@@ -12,6 +12,8 @@ namespace ChessGameWebApp.Client.Components
         [Inject]
         public ILogger<CellComponentModel> logger { get; set; }
         [Parameter]
+        public bool IsHelp { get; set; }
+        [Parameter]
         public bool IsMarked { get; set; }
         [Parameter]
         public bool IsPointer { get; set; }
@@ -51,6 +53,8 @@ namespace ChessGameWebApp.Client.Components
             FigureName = ChessCell.FigureName;
             IsMarked = ChessCell.IsMarked;
             IsPointer = ChessCell.IsPointer;
+            IsHelp= ChessCell.IsHelp;
+
             StateHasChanged();
 
             return Task.CompletedTask;

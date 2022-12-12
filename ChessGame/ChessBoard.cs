@@ -46,6 +46,18 @@ namespace ChessGame
             GameStatus = GetGameStatus();
         }
 
+        public void GetHelp()
+        {
+            GetCell(0, 0).IsHelp = true;
+            GetCell(1, 0).IsHelp = true;
+        }
+
+        private void ClearHelp()
+        {
+            foreach (ChessCell cell in Cells)
+                cell.IsHelp = false;
+        }
+
         public ChessBoard(bool setup = false)
         {
             Cells = new ChessCell[8, 8];
@@ -115,6 +127,13 @@ namespace ChessGame
             }
 
             Target = currentCell;
+        }
+
+        public override void TryMove(Cell from, Cell to)
+        {
+            base.TryMove(from, to);
+            ClearHelp();
+            ClearPossibleMoves();
         }
 
         public void SetCheckMethod(CheckMove checkMove)

@@ -10,10 +10,16 @@
         await gameHub.MoveBack();
     }
 
+    private async void getHelp()
+    {
+        await gameHub.Help();
+    }
+
 }
 @if (user.Roles.Contains("admin"))
 {
     <input class="btn btn-primary" type="button" value="MoveBack" @onclick="moveBack"/>
+    <input class="btn btn-primary" type="button" value="Help" @onclick="getHelp" />
 }
 <StatusComponent Board="@Board"></StatusComponent>
 <GameComponent></GameComponent>

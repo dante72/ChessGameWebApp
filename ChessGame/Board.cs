@@ -127,7 +127,7 @@ namespace ChessGame
             Index--;
         }
 
-        public void TryMove(Cell from, Cell to)
+        public virtual void TryMove(Cell from, Cell to)
         {
             if (from.Figure?.PossibleMoves.Contains(to) != true)
                 throw new InvalidOperationException("Error! Such step is impossible");

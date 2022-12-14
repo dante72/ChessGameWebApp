@@ -48,8 +48,10 @@ namespace ChessGame
 
         public void GetHelp()
         {
-            GetCell(0, 0).IsHelp = true;
-            GetCell(1, 0).IsHelp = true;
+            var res = this.GetMoveEvaluation().First();
+
+            GetCell(res.Key.Position.Row, res.Key.Position.Column).IsHelp = true;
+            GetCell(res.Value.Row, res.Value.Column).IsHelp = true;
         }
 
         private void ClearHelp()

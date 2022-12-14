@@ -44,6 +44,8 @@ namespace ChessGame
         }
         public virtual GameStatus GameStatus { get; set; }
 
+        public IEnumerable<Figure> Figures { get => this.Where(cell => cell.Figure is not null).Select(cell => cell.Figure); }
+
         public Board(bool setup = false)
         {
             Cells = new Cell[8, 8];

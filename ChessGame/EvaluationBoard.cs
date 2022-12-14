@@ -10,7 +10,7 @@ namespace ChessGame
 {
     internal static class EvaluationBoard
     {
-        private static float GetValue(Figure figure)
+        private static float GetValue(this Figure figure)
         {
             switch (figure)
             {
@@ -30,7 +30,7 @@ namespace ChessGame
             }
         }
 
-        private static float GetPositionValue(Figure figure)
+        private static float GetPositionValue(this Figure figure)
         {
             switch (figure)
             {
@@ -65,10 +65,10 @@ namespace ChessGame
         
         internal static float GetWeight(this Figure figure)
         {
-            return (figure.Color == FigureColors.White ? 1.0f : -1.0f) * GetValue(figure) + GetPositionValue(figure);
+            return (figure.Color == FigureColors.White ? 1.0f : -1.0f) * figure.GetValue() + figure.GetPositionValue();
         }
 
-        internal static float GetEvaluation(this Board board)
+        private static float GetBoardEvaluation(this Board board)
         {
 
             float sum = 0;
@@ -83,13 +83,59 @@ namespace ChessGame
 
             if (board.GameStatus == GameStatus.Checkmate)
             {
-                if (board.Index % 2 == 0)
+                if (board.IsAllowedMove == FigureColors.White)
                     sum += 9999f;
                 else
                     sum -= 9999f;
             }
 
             return sum;
+        }
+
+        public static Dictionary<Figure, Cell> GetMoveEvaluation(this Board board, int depth = 1)
+        {
+            Dictionary<Figure, Cell> dic = new Dictionary<Figure, Cell>();
+            Figure figure = null;
+            Cell move = null;
+
+            float res = 0, score;
+            var color = board.GetCurrentPlayer() == FigureColors.White;
+
+            if (color)
+                res = -9999f;
+            else
+                res = 9999f;
+             
+            foreach (var f in board.Figures)
+            {
+                var moves = f.PossibleMoves;
+                
+                foreach (var m in moves)
+                {
+                    f.MoveTo(m);
+
+                    score = board.GetBoardEvaluation();
+                    if (color && res < score)
+                    {
+                        res = score;
+                        figure = f;
+                        move = m;
+                    }
+                    else
+                    if (!color && res > score)
+                    {
+                        res = score;
+                        figure = f;
+                        move = m;
+                    }
+
+                    board.MoveBack();
+                }
+            }
+
+            dic.Add(figure, move);
+
+            return dic;
         }
 
         private static float[,] Reverce(float[,] array)

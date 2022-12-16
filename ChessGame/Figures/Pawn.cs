@@ -39,7 +39,7 @@ namespace ChessGame.Figures
         {
             var moves = new List<Cell>();
 
-            if (Position is not null)
+            if (Position != null)
             {
                 var direction = Color == FigureColors.White ? Directions.Up : Directions.Down;
 
@@ -55,7 +55,7 @@ namespace ChessGame.Figures
         {
             var moves = new List<Cell>();
 
-            if (Position is not null)
+            if (Position != null)
             {
                 var direction = Color == FigureColors.White ? Directions.Up : Directions.Down;
 

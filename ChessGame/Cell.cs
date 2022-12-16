@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using ChessGame.Figures;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -95,12 +95,29 @@ namespace ChessGame
 
         public static bool operator == (Cell b1, Cell b2)
         {
-            return b1.Column == b2.Column && b1.Row == b2.Row;
+            if ((object)b1 == null)
+                return (object)b2 == null;
+
+            return b1.Equals(b2);
         }
 
         public static bool operator != (Cell b1, Cell b2)
         {
             return !(b1 == b2);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            var b2 = (Cell)obj;
+            return Column == b2.Column && Row == b2.Row;
+        }
+
+        public override int GetHashCode()
+        {
+            return Row.GetHashCode() ^ Column.GetHashCode();
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ChessGame
@@ -13,7 +12,7 @@ namespace ChessGame
         internal int MovesCount { get; set; }
         internal FigureColors Color { get; private set; }
         internal Cell Position { get; set; }
-        internal abstract IEnumerable<Cell> GetAllPossibleMoves();
+        internal abstract List<Cell> GetAllPossibleMoves();
         public IEnumerable<Cell> PossibleMoves
         {
             get => GetPossibleMoves();
@@ -111,5 +110,7 @@ namespace ChessGame
         {
             return GetType().Name;
         }
+
+        internal virtual Type Type() => GetType();
     }
 }

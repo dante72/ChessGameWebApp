@@ -14,7 +14,7 @@ namespace ChessGame.Figures
         internal override List<Cell> GetAllPossibleMoves()
         {
             var list = new List<Cell>();
-            if (Position is not null)
+            if (Position != null)
             {
                 for (int i = -2; i <= 2; i++)
                     for (int j = -2; j <= 2; j++)

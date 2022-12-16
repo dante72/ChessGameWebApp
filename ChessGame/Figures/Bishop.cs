@@ -14,7 +14,7 @@ namespace ChessGame.Figures
         internal override List<Cell> GetAllPossibleMoves()
         {
             var list = new List<Cell>();
-            if (Position is not null)
+            if (Position != null)
             {
                 list.AddRange(Position.GetCellsInDirection(Directions.LeftUp));
                 list.AddRange(Position.GetCellsInDirection(Directions.RightDown));

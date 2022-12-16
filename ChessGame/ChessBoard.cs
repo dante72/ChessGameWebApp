@@ -21,7 +21,7 @@ namespace ChessGame
             get => target;
             set
             {
-                if (target is not null)
+                if (target != null)
                     target.IsPointer = false;
                 target = value;
                 target.IsPointer = true;

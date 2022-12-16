@@ -8,22 +8,23 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    internal static class EvaluationBoard
+    internal static class AI
     {
         private static float GetValue(this Figure figure)
         {
+
             switch (figure)
             {
-                case Pawn:
+                case Pawn p:
                     return 10f;
-                case Bishop:
-                case Knight:
+                case Bishop b:
+                case Knight kn:
                     return 30f;
-                case Rook:
+                case Rook r:
                     return 50f;
-                case Queen:
+                case Queen q:
                     return 90f;
-                case King:
+                case King k:
                     return 900f;
                 default:
                     throw new NotImplementedException($"Error type {figure.GetType().Name}");
@@ -34,27 +35,27 @@ namespace ChessGame
         {
             switch (figure)
             {
-                case Pawn:
+                case Pawn p:
                     return figure.Color == FigureColors.White
                         ? PawnEvalWhite[figure.Position.Row, figure.Position.Column]
                         : -PawnEvalBlack[figure.Position.Row, figure.Position.Column];
-                case Bishop:
+                case Bishop b:
                     return figure.Color == FigureColors.White
                         ? BishopEvalWhite[figure.Position.Row, figure.Position.Column]
                         : -BishopEvalBlack[figure.Position.Row, figure.Position.Column];
-                case Knight:
+                case Knight kn:
                     return figure.Color == FigureColors.White
                         ? KnightEval[figure.Position.Row, figure.Position.Column]
                         : -KnightEval[figure.Position.Row, figure.Position.Column];
-                case Rook:
+                case Rook r:
                     return figure.Color == FigureColors.White
                         ? RookEvalWhite[figure.Position.Row, figure.Position.Column]
                         : -RookEvalBlack[figure.Position.Row, figure.Position.Column];
-                case Queen:
+                case Queen q:
                     return figure.Color == FigureColors.White
                         ? QueenEval[figure.Position.Row, figure.Position.Column]
                         : -QueenEval[figure.Position.Row, figure.Position.Column];
-                case King:
+                case King k:
                     return figure.Color == FigureColors.White
                         ? KingEvalWhite[figure.Position.Row, figure.Position.Column]
                         : -KingEvalBlack[figure.Position.Row, figure.Position.Column];

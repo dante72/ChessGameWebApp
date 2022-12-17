@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessGame.Figures
 {
-    internal class Pawn : Figure
+    public class Pawn : Figure
     {
         private int passentIndex = 0;
         public Pawn(FigureColors color) : base(color)

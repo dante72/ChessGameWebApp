@@ -37,7 +37,7 @@ namespace ChessGame
         public FigureColors IsAllowedMove { get => Index % 2 == 0 ? FigureColors.White : FigureColors.Black; }
         internal int Index { get; set; } = 0;
         internal Cell[,] Cells;
-        internal Figure? this[int row, int column]
+        public Figure? this[int row, int column]
         {
             get => Cells[row, column].Figure;
             set => Cells[row, column].Figure = value;

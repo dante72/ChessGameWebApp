@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessGame.Figures
 {
-    internal class Knight : Figure
+    public class Knight : Figure
     {
         public Knight(FigureColors color) : base(color)
         {

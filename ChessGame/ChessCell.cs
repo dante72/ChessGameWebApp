@@ -42,6 +42,13 @@ namespace ChessGame
                 base.Figure = value;
                 FigureName = GetActualFigureName();
             }
-        }      
+        }
+
+        internal new ChessBoard Board => (ChessBoard)base.Board;
+        public Task Click()
+        {
+            Board?.Click(Row, Column);
+            return Task.CompletedTask;
+        }
     }
 }

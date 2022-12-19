@@ -11,7 +11,7 @@ namespace ChessGame
         internal Stack<SavedMove> SavedMoves { set; get; } = new Stack<SavedMove>();
         internal int MovesCount { get; set; }
         public FigureColors Color { get; private set; }
-        internal Cell Position { get; set; }
+        public Cell Position { get; set; }
         internal abstract List<Cell> GetAllPossibleMoves();
         public IEnumerable<Cell> PossibleMoves
         {

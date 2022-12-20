@@ -32,6 +32,8 @@ namespace ChessGame
             cell.Figure?.SaveMoves(cell);
             SaveMoves(Position);
 
+            Board.AddCurrentMove(Position, cell, !doubleMove);
+
             Position.Figure = null;
             cell.Figure = this;
 

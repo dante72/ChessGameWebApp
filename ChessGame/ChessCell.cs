@@ -45,10 +45,9 @@ namespace ChessGame
         }
 
         internal new ChessBoard Board => (ChessBoard)base.Board;
-        public Task Click()
+        public async Task Click()
         {
-            Board?.Click(Row, Column);
-            return Task.CompletedTask;
+            await Board.Click(Row, Column);
         }
     }
 }

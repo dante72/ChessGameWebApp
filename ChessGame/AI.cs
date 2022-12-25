@@ -15,16 +15,16 @@ namespace ChessGame
 
             switch (figure)
             {
-                case Pawn p:
+                case Pawn _:
                     return 10f;
-                case Bishop b:
-                case Knight kn:
+                case Bishop _:
+                case Knight _:
                     return 30f;
-                case Rook r:
+                case Rook _:
                     return 50f;
-                case Queen q:
+                case Queen _:
                     return 90f;
-                case King k:
+                case King _:
                     return 900f;
                 default:
                     throw new NotImplementedException($"Error type {figure.GetType().Name}");
@@ -35,27 +35,27 @@ namespace ChessGame
         {
             switch (figure)
             {
-                case Pawn p:
+                case Pawn _:
                     return figure.Color == FigureColor.White
                         ? PawnEvalWhite[figure.Position.Row, figure.Position.Column]
                         : -PawnEvalBlack[figure.Position.Row, figure.Position.Column];
-                case Bishop b:
+                case Bishop _:
                     return figure.Color == FigureColor.White
                         ? BishopEvalWhite[figure.Position.Row, figure.Position.Column]
                         : -BishopEvalBlack[figure.Position.Row, figure.Position.Column];
-                case Knight kn:
+                case Knight _:
                     return figure.Color == FigureColor.White
                         ? KnightEval[figure.Position.Row, figure.Position.Column]
                         : -KnightEval[figure.Position.Row, figure.Position.Column];
-                case Rook r:
+                case Rook _:
                     return figure.Color == FigureColor.White
                         ? RookEvalWhite[figure.Position.Row, figure.Position.Column]
                         : -RookEvalBlack[figure.Position.Row, figure.Position.Column];
-                case Queen q:
+                case Queen _:
                     return figure.Color == FigureColor.White
                         ? QueenEval[figure.Position.Row, figure.Position.Column]
                         : -QueenEval[figure.Position.Row, figure.Position.Column];
-                case King k:
+                case King _:
                     return figure.Color == FigureColor.White
                         ? KingEvalWhite[figure.Position.Row, figure.Position.Column]
                         : -KingEvalBlack[figure.Position.Row, figure.Position.Column];

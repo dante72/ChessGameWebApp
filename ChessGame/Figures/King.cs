@@ -8,7 +8,7 @@ namespace ChessGame.Figures
 {
     public class King : Figure
     {
-        public King(FigureColors color) : base(color)
+        public King(FigureColor color) : base(color)
         {
         }
         internal override List<Cell> GetAllPossibleMoves()
@@ -29,7 +29,7 @@ namespace ChessGame.Figures
                 AddCastlingMoves(moves);
 
             return moves
-                .Where(m => !Board.IsUnderAttack(m, Color == FigureColors.White ? FigureColors.Black : FigureColors.White))
+                .Where(m => !Board.IsUnderAttack(m, Color == FigureColor.White ? FigureColor.Black : FigureColor.White))
                 .ToList();
         }
 
@@ -48,12 +48,12 @@ namespace ChessGame.Figures
 
             if (left.Count != 0)
                 if (left.Last()?.Figure is Rook rook && rook.IsFirstMove == 0
-                    && !Board.IsUnderAttack(Board.Cells[Position.Row, Position.Column - 1], Color == FigureColors.White ? FigureColors.Black : FigureColors.White))
+                    && !Board.IsUnderAttack(Board.Cells[Position.Row, Position.Column - 1], Color == FigureColor.White ? FigureColor.Black : FigureColor.White))
                     moves.Add(Board.Cells[Position.Row, Position.Column - 2]);
 
             if (right.Count != 0)
                 if (right.Last()?.Figure is Rook rook && rook.IsFirstMove == 0
-                    && !Board.IsUnderAttack(Board.Cells[Position.Row, Position.Column + 1], Color == FigureColors.White ? FigureColors.Black : FigureColors.White))
+                    && !Board.IsUnderAttack(Board.Cells[Position.Row, Position.Column + 1], Color == FigureColor.White ? FigureColor.Black : FigureColor.White))
                     moves.Add(Board.Cells[Position.Row, Position.Column + 2]);
         }
 

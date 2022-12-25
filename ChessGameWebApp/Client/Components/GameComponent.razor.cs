@@ -6,7 +6,7 @@ namespace ChessGameWebApp.Client.Components
 {
     public class GameComponentModel : ComponentBase, IDisposable, IChessObserver
     {
-        public bool Inversion { get => Board.Player?.Color == FigureColors.Black; }
+        public bool Inversion { get => Board.Player?.Color == FigureColor.Black; }
         [Inject]
         public IClientGameService _ClientGameService { get; set; }
 

@@ -36,27 +36,27 @@ namespace ChessGame
             switch (figure)
             {
                 case Pawn p:
-                    return figure.Color == FigureColors.White
+                    return figure.Color == FigureColor.White
                         ? PawnEvalWhite[figure.Position.Row, figure.Position.Column]
                         : -PawnEvalBlack[figure.Position.Row, figure.Position.Column];
                 case Bishop b:
-                    return figure.Color == FigureColors.White
+                    return figure.Color == FigureColor.White
                         ? BishopEvalWhite[figure.Position.Row, figure.Position.Column]
                         : -BishopEvalBlack[figure.Position.Row, figure.Position.Column];
                 case Knight kn:
-                    return figure.Color == FigureColors.White
+                    return figure.Color == FigureColor.White
                         ? KnightEval[figure.Position.Row, figure.Position.Column]
                         : -KnightEval[figure.Position.Row, figure.Position.Column];
                 case Rook r:
-                    return figure.Color == FigureColors.White
+                    return figure.Color == FigureColor.White
                         ? RookEvalWhite[figure.Position.Row, figure.Position.Column]
                         : -RookEvalBlack[figure.Position.Row, figure.Position.Column];
                 case Queen q:
-                    return figure.Color == FigureColors.White
+                    return figure.Color == FigureColor.White
                         ? QueenEval[figure.Position.Row, figure.Position.Column]
                         : -QueenEval[figure.Position.Row, figure.Position.Column];
                 case King k:
-                    return figure.Color == FigureColors.White
+                    return figure.Color == FigureColor.White
                         ? KingEvalWhite[figure.Position.Row, figure.Position.Column]
                         : -KingEvalBlack[figure.Position.Row, figure.Position.Column];
                 default:
@@ -66,7 +66,7 @@ namespace ChessGame
         
         internal static float GetWeight(this Figure figure)
         {
-            return (figure.Color == FigureColors.White ? 1.0f : -1.0f) * figure.GetValue() + figure.GetPositionValue();
+            return (figure.Color == FigureColor.White ? 1.0f : -1.0f) * figure.GetValue() + figure.GetPositionValue();
         }
 
         private static float GetBoardEvaluation(this Board board)
@@ -84,7 +84,7 @@ namespace ChessGame
 
             if (board.GameStatus == GameStatus.Checkmate)
             {
-                if (board.IsAllowedMove == FigureColors.White)
+                if (board.IsAllowedMove == FigureColor.White)
                     sum += 9999f;
                 else
                     sum -= 9999f;
@@ -100,7 +100,7 @@ namespace ChessGame
             Cell move = null;
 
             float res = 0, score;
-            var color = board.GetCurrentPlayer() == FigureColors.White;
+            var color = board.GetCurrentPlayer() == FigureColor.White;
 
             if (color)
                 res = -9999f;

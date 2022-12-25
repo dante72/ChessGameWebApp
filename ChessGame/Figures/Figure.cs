@@ -10,7 +10,7 @@ namespace ChessGame
     {
         internal Stack<SavedMove> SavedMoves { set; get; } = new Stack<SavedMove>();
         internal int MovesCount { get; set; }
-        public FigureColors Color { get; private set; }
+        public FigureColor Color { get; private set; }
         public Cell Position { get; set; }
         internal abstract List<Cell> GetAllPossibleMoves();
         public IEnumerable<Cell> PossibleMoves
@@ -18,7 +18,7 @@ namespace ChessGame
             get => GetPossibleMoves();
         }
         public int IsFirstMove { get; set; }
-        internal Figure(FigureColors color, int firstMove = 0)
+        internal Figure(FigureColor color, int firstMove = 0)
         {
             Color = color;
             IsFirstMove = firstMove;
@@ -67,7 +67,7 @@ namespace ChessGame
         }
         public bool IsMove()
         {
-            return Color == FigureColors.White && Board.Index % 2 == 0 || Color == FigureColors.Black && Board.Index % 2 == 1;
+            return Color == FigureColor.White && Board.Index % 2 == 0 || Color == FigureColor.Black && Board.Index % 2 == 1;
         }
         protected virtual IEnumerable<Cell> GetPossibleMoves()
         {

@@ -8,7 +8,7 @@ namespace ChessGame
 {
     public class FigureDto
     {
-        public FigureColors Color { get; set; }
+        public FigureColor Color { get; set; }
         public int IsFirstMove { get; set; }
         public string Type { get; set; }
     }

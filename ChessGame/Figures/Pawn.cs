@@ -9,18 +9,18 @@ namespace ChessGame.Figures
     public class Pawn : Figure
     {
         private int passentIndex = 0;
-        public Pawn(FigureColors color) : base(color)
+        public Pawn(FigureColor color) : base(color)
         {
         }
         internal override void MoveTo(Cell cell, bool doubleMove = false)
         {
 
-            if (cell.Row > 0 && Board[cell.Row - 1, cell.Column] is Pawn pawn && pawn.IsFirstMove == 1 && pawn.Color == FigureColors.White && pawn.passentIndex == Board.Index)
+            if (cell.Row > 0 && Board[cell.Row - 1, cell.Column] is Pawn pawn && pawn.IsFirstMove == 1 && pawn.Color == FigureColor.White && pawn.passentIndex == Board.Index)
             {
                 pawn.SaveMoves(pawn.Position);
                 pawn.Position.Figure = null;
             }
-            if (cell.Row < 7 && Board[cell.Row + 1, cell.Column] is Pawn p && p.IsFirstMove == 1 && p.Color == FigureColors.Black && p.passentIndex == Board.Index)
+            if (cell.Row < 7 && Board[cell.Row + 1, cell.Column] is Pawn p && p.IsFirstMove == 1 && p.Color == FigureColor.Black && p.passentIndex == Board.Index)
             {
                 p.SaveMoves(p.Position);
                 p.Position.Figure = null;
@@ -41,7 +41,7 @@ namespace ChessGame.Figures
 
             if (Position != null)
             {
-                var direction = Color == FigureColors.White ? Directions.Up : Directions.Down;
+                var direction = Color == FigureColor.White ? Directions.Up : Directions.Down;
 
                 moves.AddRange(AddAttackFields(direction));
                 moves.AddRange(AddForwardFields(direction));
@@ -57,7 +57,7 @@ namespace ChessGame.Figures
 
             if (Position != null)
             {
-                var direction = Color == FigureColors.White ? Directions.Up : Directions.Down;
+                var direction = Color == FigureColor.White ? Directions.Up : Directions.Down;
 
                 moves.AddRange(AddAttackFields(direction));
             }

@@ -42,7 +42,7 @@ namespace ChessGameWebApp.Client.Services
                 .WithAutomaticReconnect()
                 .Build();
 
-            hubConnection.On<ChessBoardDto, FigureColors, ChessTimerDto>("ReceiveBoard", (board, playerColor, timer) =>
+            hubConnection.On<ChessBoardDto, FigureColor, ChessTimerDto>("ReceiveBoard", (board, playerColor, timer) =>
             {
                 _board.SetCurrentPlayer(playerColor);
                 _board.Update(board);

@@ -70,7 +70,7 @@ namespace ChessGame
             Players = CreatePlayers();
 
             if (!onSameBoard)
-                Player = Players.First(p => p.Color == FigureColors.White);
+                Player = Players.First(p => p.Color == FigureColor.White);
 
             if (setup)
                 Setup();
@@ -80,14 +80,14 @@ namespace ChessGame
         {
             var players = new List<Player>
             {
-                new Player() { Color = FigureColors.White },
-                new Player() { Color = FigureColors.Black }
+                new Player() { Color = FigureColor.White },
+                new Player() { Color = FigureColor.Black }
             };
 
             return players;
         }
 
-        public void SetCurrentPlayer(FigureColors playerColor)
+        public void SetCurrentPlayer(FigureColor playerColor)
         {
             Player = Players.First(p => p.Color == playerColor);
             ((IChessObservable)this).Notify();

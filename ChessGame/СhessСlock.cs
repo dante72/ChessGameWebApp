@@ -17,8 +17,8 @@ namespace ChessGame
 
         public void Switch()
         {
-            var white = players.First(p => p.Color == FigureColors.White);
-            var black = players.First(p => p.Color == FigureColors.Black);
+            var white = players.First(p => p.Color == FigureColor.White);
+            var black = players.First(p => p.Color == FigureColor.Black);
             
             if (!white.Timer.TurnOn && !black.Timer.TurnOn)
                 white.Timer.Switch();

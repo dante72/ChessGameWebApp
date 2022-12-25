@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessGame
 {
-    public enum FigureColors
+    public enum FigureColor
     {
         White,
         Black

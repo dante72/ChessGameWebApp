@@ -8,7 +8,7 @@ namespace ChessGame.Figures
 {
     public class Bishop : Figure
     {
-        public Bishop(FigureColors color) : base(color)
+        public Bishop(FigureColor color) : base(color)
         {
         }
         internal override List<Cell> GetAllPossibleMoves()

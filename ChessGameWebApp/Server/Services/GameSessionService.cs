@@ -126,8 +126,8 @@ namespace ChessGameWebApp.Server.Services
         {
             if (players.Count == 2)
             {
-                players[0].Color = FigureColors.White;
-                players[1].Color = FigureColors.Black;
+                players[0].Color = FigureColor.White;
+                players[1].Color = FigureColor.Black;
 
                 players.ForEach(p => p.Timer.Delta = timer / 2);
             }

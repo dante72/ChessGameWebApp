@@ -8,7 +8,7 @@ namespace ChessGame.Figures
 {
     public class Rook : Figure
     {
-        public Rook(FigureColors color) : base(color)
+        public Rook(FigureColor color) : base(color)
         {
         }
         internal override List<Cell> GetAllPossibleMoves()

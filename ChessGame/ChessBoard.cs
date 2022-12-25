@@ -41,17 +41,6 @@ namespace ChessGame
             }
         }
 
-        private List<Cell> currentMove = new List<Cell>();
-        public override List<Cell> CurrentMove
-        {
-            get => currentMove;
-            internal set
-            {
-                currentMove= value;
-                ((IChessObservable)this).Notify();
-            }
-        }
-
         public void UpdateGameStatus()
         {
             GameStatus = GetGameStatus();

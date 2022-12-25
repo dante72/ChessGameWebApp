@@ -33,16 +33,6 @@ namespace ChessGame
                 }
             }
         }
-        public virtual List<Cell> CurrentMove { get; internal set; } = new List<Cell>();
-
-        internal void AddCurrentMove(Cell from, Cell to, bool clear = true)
-        {
-            if (clear)
-                CurrentMove = new List<Cell>();
-
-            CurrentMove.Add(from);
-            CurrentMove.Add(to);
-        }
         internal Stack<Figure> MovedFigures { set; get; } = new Stack<Figure>();
         public FigureColors IsAllowedMove { get => Index % 2 == 0 ? FigureColors.White : FigureColors.Black; }
         internal int Index { get; set; } = 0;

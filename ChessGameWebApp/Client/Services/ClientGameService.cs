@@ -19,7 +19,7 @@ namespace ChessGameWebApp.Client.Services
 
         public async Task<bool> TryMove(Cell from, Cell to)
         {
-            await _gameHubService.SendTryMove(from, to);
+            await _gameHubService.SendTryMove(from.ToDto(), to.ToDto());
             return false;
         }
     }

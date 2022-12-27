@@ -118,7 +118,7 @@ namespace ChessGameWebApp.Client.Services
             await hubConnection.SendAsync("SendBoard");
         }
 
-        public async Task SendTryMove(Cell from, Cell to)
+        public async Task SendTryMove(ChessCellDto from, ChessCellDto to)
         {
             if (!IsConnected)
                 await hubConnection.StartAsync();

@@ -5,18 +5,18 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
 
-namespace ChessGameWebApp.Client.Services
+namespace ChessGameWebApp.Client.Services.Impl
 {
-    public class ChatHubService : IChatHubService
+    public class ChatHubServiceImpl : IChatHubService
     {
-        private readonly ILogger<ChatHubService> _logger;
+        private readonly ILogger<ChatHubServiceImpl> _logger;
         private readonly HubConnection _hubConnection;
         private readonly HttpClient _httpClient;
 
         public delegate Task Updater();
         private Updater _updater;
 
-        public ChatHubService(ILogger<ChatHubService> logger,
+        public ChatHubServiceImpl(ILogger<ChatHubServiceImpl> logger,
                               NavigationManager navigationManager,
                               HttpClient httpClient,
                               List<ChatMessage> messages)
@@ -31,7 +31,7 @@ namespace ChessGameWebApp.Client.Services
                 })
                 .WithAutomaticReconnect()
                 .Build();
-            
+
             _hubConnection.On<ChatMessage>("ReceiveMessage", (param) =>
             {
                 var encodedMsg = $"{param.Time:hh\\:mm\\:ss} {param.Username}: {param.Message}";

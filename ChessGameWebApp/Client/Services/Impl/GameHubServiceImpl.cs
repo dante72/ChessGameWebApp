@@ -5,11 +5,11 @@ using ChessGameWebApp.Client.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace ChessGameWebApp.Client.Services
+namespace ChessGameWebApp.Client.Services.Impl
 {
-    public class GameHubService : IGameHubService, IAsyncDisposable
+    public class GameHubServiceImpl : IGameHubService, IAsyncDisposable
     {
-        private readonly ILogger<GameHubService> _logger;
+        private readonly ILogger<GameHubServiceImpl> _logger;
         private readonly ChessBoard _board;
         private readonly NavigationManager _navigationManager;
         private readonly HubConnection hubConnection;
@@ -20,7 +20,7 @@ namespace ChessGameWebApp.Client.Services
         private IModalReference modalReferense;
 
         public ChessCell[] CurrentMove { get; set; } = new ChessCell[0];
-        public GameHubService(ILogger<GameHubService> logger,
+        public GameHubServiceImpl(ILogger<GameHubServiceImpl> logger,
                               ChessBoard board,
                               NavigationManager navigationManager,
                               HttpClient httpClient,
@@ -60,12 +60,12 @@ namespace ChessGameWebApp.Client.Services
                     _board.SetTimer(timer);
             });
 
-            hubConnection.On<bool>("StartGame", (start) => 
+            hubConnection.On<bool>("StartGame", (start) =>
             {
                 if (start)
                     navigationManager.NavigateTo("/Game/start");
             });
-            
+
             hubConnection.On<bool>("ReceiveMoveBack", (ok) =>
             {
                 if (ok)
@@ -74,7 +74,7 @@ namespace ChessGameWebApp.Client.Services
 
             hubConnection.On<int, bool>("ChangeStatus", (id, status) =>
             {
-                lock(_siteUserInfo)
+                lock (_siteUserInfo)
                 {
                     if (_siteUserInfo.Id == id)
                         _siteUserInfo.Status = status;
@@ -92,7 +92,7 @@ namespace ChessGameWebApp.Client.Services
                 modalReferense = _modal.Show<InviteComponent>("Invite");
             });
 
-            hubConnection.On("CloseInvite",() =>
+            hubConnection.On("CloseInvite", () =>
             {
                 modalReferense?.Close();
             });

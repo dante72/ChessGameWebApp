@@ -8,6 +8,7 @@ using ChessGameWebApp.Client.Models;
 using Blazored.LocalStorage;
 using Blazored.Modal;
 using ChessGameWebApp.Shared;
+using ChessGameWebApp.Client.Services.Impl;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -18,13 +19,13 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped(sp => new AuthHttpClient { BaseAddress = new Uri("https://localhost:7256/") });
 builder.Services.AddScoped<IAuthWebApi, AuthWebApi>();
 builder.Services.AddScoped(b => new ChessBoard());
-builder.Services.AddScoped<IClientGameService, ClientGameService>();
-builder.Services.AddScoped<IGameHubService, GameHubService>();
-builder.Services.AddScoped<IChatHubService, ChatHubService>();
+builder.Services.AddScoped<IClientGameService, ClientGameServiceImpl>();
+builder.Services.AddScoped<IGameHubService, GameHubServiceImpl>();
+builder.Services.AddScoped<IChatHubService, ChatHubServiceImpl>();
 builder.Services.AddScoped(user => new SiteUserInfo());
 builder.Services.AddScoped(updater => new TimeUpdater());
 builder.Services.AddBlazoredLocalStorage();
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
 builder.Services.AddScoped(chat => new List<ChatMessage>());
 
 await builder.Build().RunAsync();

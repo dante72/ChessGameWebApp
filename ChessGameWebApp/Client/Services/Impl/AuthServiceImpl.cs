@@ -5,18 +5,18 @@ using ChessGameWebApp.Client.Models;
 using JwtToken;
 using Microsoft.AspNetCore.Components;
 
-namespace ChessGameWebApp.Client.Services
+namespace ChessGameWebApp.Client.Services.Impl
 {
-    public class AuthService : IAuthService, IChessObserver, IDisposable
+    public class AuthServiceImpl : IAuthService, IChessObserver, IDisposable
     {
-        private readonly ILogger<AuthService> _logger;
+        private readonly ILogger<AuthServiceImpl> _logger;
         private readonly IAuthWebApi _authWebApi;
         private readonly SiteUserInfo _siteUserInfo;
         private readonly ILocalStorageService _localStorageService;
         private readonly TimeUpdater _timeUpdater;
         private readonly NavigationManager _navigationManager;
 
-        public AuthService(ILogger<AuthService> logger,
+        public AuthServiceImpl(ILogger<AuthServiceImpl> logger,
                            IAuthWebApi authWebApi,
                            SiteUserInfo siteUserInfo,
                            ILocalStorageService localStorageService,
@@ -102,13 +102,13 @@ namespace ChessGameWebApp.Client.Services
             if (_siteUserInfo.AccessTokenExpire - DateTime.UtcNow > TimeSpan.FromSeconds(10))
                 return;
 
-            lock(_lock)
+            lock (_lock)
             {
                 if (_siteUserInfo.AccessTokenExpire - DateTime.UtcNow > TimeSpan.FromSeconds(10))
                     return;
             }
-            
-            await GetTokens();               
+
+            await GetTokens();
         }
 
         public async Task LogOut()

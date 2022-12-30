@@ -1,4 +1,4 @@
-﻿using static ChessGameWebApp.Client.Services.ChatHubService;
+﻿using static ChessGameWebApp.Client.Services.Impl.ChatHubServiceImpl;
 
 namespace ChessGameWebApp.Client.Services
 {

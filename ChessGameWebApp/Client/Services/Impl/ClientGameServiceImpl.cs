@@ -1,15 +1,15 @@
 ﻿using ChessGame;
 
-namespace ChessGameWebApp.Client.Services
+namespace ChessGameWebApp.Client.Services.Impl
 {
-    public class ClientGameService : IClientGameService
+    public class ClientGameServiceImpl : IClientGameService
     {
-        private readonly ILogger<ClientGameService> _logger;
+        private readonly ILogger<ClientGameServiceImpl> _logger;
         private readonly ChessBoard _board;
         IGameHubService _gameHubService;
 
         public ChessCell[] CurrentMove { get; set; } = new ChessCell[0];
-        public ClientGameService(ILogger<ClientGameService> logger, ChessBoard board, IGameHubService gameHubService)
+        public ClientGameServiceImpl(ILogger<ClientGameServiceImpl> logger, ChessBoard board, IGameHubService gameHubService)
         {
             _logger = logger;
             _board = board;

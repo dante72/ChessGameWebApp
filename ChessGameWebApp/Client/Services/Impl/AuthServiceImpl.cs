@@ -1,5 +1,4 @@
 ﻿using AuthWebAPI;
-using Blazored.LocalStorage;
 using ChessGame;
 using ChessGameWebApp.Client.Models;
 using JwtToken;
@@ -12,14 +11,14 @@ namespace ChessGameWebApp.Client.Services.Impl
         private readonly ILogger<AuthServiceImpl> _logger;
         private readonly IAuthWebApi _authWebApi;
         private readonly SiteUserInfo _siteUserInfo;
-        private readonly ILocalStorageService _localStorageService;
+        private readonly IMyLocalStorageService _localStorageService;
         private readonly TimeUpdater _timeUpdater;
         private readonly NavigationManager _navigationManager;
 
         public AuthServiceImpl(ILogger<AuthServiceImpl> logger,
                            IAuthWebApi authWebApi,
                            SiteUserInfo siteUserInfo,
-                           ILocalStorageService localStorageService,
+                           IMyLocalStorageService localStorageService,
                            TimeUpdater timeUpdater,
                            NavigationManager navigationManager)
         {
@@ -52,7 +51,7 @@ namespace ChessGameWebApp.Client.Services.Impl
 
         private async Task<string> GetTokenFromLocalStorage()
         {
-            return await _localStorageService.GetItemAsync<string>("refresh" + _siteUserInfo.Id);
+            return await _localStorageService.GetItemAsync("refresh" + _siteUserInfo.Id);
         }
 
         private async Task SetTokenToLocalStorage(string token)
@@ -67,10 +66,7 @@ namespace ChessGameWebApp.Client.Services.Impl
 
         private async Task<string?> GetFirstTokenFromLocalStorage()
         {
-            var keys = await _localStorageService.KeysAsync();
-            var key = keys.FirstOrDefault(i => i.StartsWith("refresh"));
-
-            return await _localStorageService.GetItemAsync<string>(key);
+            return await _localStorageService.GetItemAsync();
         }
 
         public async Task<bool> TokenAutorization()

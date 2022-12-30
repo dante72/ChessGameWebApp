@@ -176,7 +176,7 @@ namespace ChessGameWebApp.Client.Services.Impl
             if (hubConnection is not null)
             {
                 await hubConnection.StopAsync();
-                await hubConnection.DisposeAsync();
+                //await hubConnection.DisposeAsync();
             }
         }
     }

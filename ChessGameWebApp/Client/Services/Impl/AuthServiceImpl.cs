@@ -8,26 +8,22 @@ namespace ChessGameWebApp.Client.Services.Impl
 {
     public class AuthServiceImpl : IAuthService, IChessObserver, IDisposable
     {
-        private readonly ILogger<AuthServiceImpl> _logger;
-        private readonly IAuthWebApi _authWebApi;
-        private readonly SiteUserInfo _siteUserInfo;
-        private readonly IMyLocalStorageService _localStorageService;
-        private readonly TimeUpdater _timeUpdater;
-        private readonly NavigationManager _navigationManager;
-
+        protected readonly ILogger<AuthServiceImpl> _logger;
+        protected readonly IAuthWebApi _authWebApi;
+        protected readonly SiteUserInfo _siteUserInfo;
+        protected readonly IMyLocalStorageService _localStorageService;
+        protected readonly TimeUpdater _timeUpdater;
         public AuthServiceImpl(ILogger<AuthServiceImpl> logger,
                            IAuthWebApi authWebApi,
                            SiteUserInfo siteUserInfo,
                            IMyLocalStorageService localStorageService,
-                           TimeUpdater timeUpdater,
-                           NavigationManager navigationManager)
+                           TimeUpdater timeUpdater)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _authWebApi = authWebApi ?? throw new ArgumentNullException(nameof(authWebApi));
             _siteUserInfo = siteUserInfo ?? throw new ArgumentNullException(nameof(siteUserInfo));
             _localStorageService = localStorageService ?? throw new ArgumentNullException(nameof(localStorageService));
             _timeUpdater = timeUpdater ?? throw new ArgumentNullException(nameof(timeUpdater));
-            _navigationManager = navigationManager ?? throw new ArgumentNullException(nameof(navigationManager));
 
             ((IChessObservable)timeUpdater).Subscribe(this);
         }
@@ -107,12 +103,12 @@ namespace ChessGameWebApp.Client.Services.Impl
             await GetTokens();
         }
 
-        public async Task LogOut()
+        public virtual async Task LogOut()
         {
             await RemoveTokenFromLocalStorage();
             await _authWebApi.SingOut();
             _siteUserInfo.Default();
-            _navigationManager.NavigateTo("/", true);
+            //_navigationManager.NavigateTo("/", true);
         }
 
         private async Task GetTokens()

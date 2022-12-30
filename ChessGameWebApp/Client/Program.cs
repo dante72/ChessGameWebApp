@@ -24,7 +24,7 @@ builder.Services.AddScoped<IChatHubService, ChatHubServiceImpl>();
 builder.Services.AddScoped(user => new SiteUserInfo());
 builder.Services.AddScoped(updater => new TimeUpdater());
 builder.Services.AddScoped<IMyLocalStorageService, MyLocalStorageServiceImpl>();
-builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
+builder.Services.AddScoped<IAuthService, AuthServiceImplV2>();
 builder.Services.AddScoped(chat => new List<ChatMessage>());
 
 await builder.Build().RunAsync();

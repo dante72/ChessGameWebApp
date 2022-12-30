@@ -19,7 +19,7 @@ namespace ChessGameWebApp.Client.Services.Impl
 
         private IModalReference modalReferense;
 
-        public ChessCell[] CurrentMove { get; set; } = new ChessCell[0];
+       // public ChessCell[] CurrentMove { get; set; } = new ChessCell[0];
         public GameHubServiceImpl(ILogger<GameHubServiceImpl> logger,
                               ChessBoard board,
                               NavigationManager navigationManager,

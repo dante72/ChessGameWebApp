@@ -9,27 +9,23 @@ namespace ChessGameWebApp.Client.Services.Impl
 {
     public class GameHubServiceImpl : IGameHubService, IAsyncDisposable
     {
-        private readonly ILogger<GameHubServiceImpl> _logger;
-        private readonly ChessBoard _board;
-        private readonly NavigationManager _navigationManager;
-        private readonly HubConnection hubConnection;
-        private readonly SiteUserInfo _siteUserInfo;
-        private readonly IModalService _modal;
-        private readonly HttpClient _httpClient;
+        protected readonly ILogger<GameHubServiceImpl> _logger;
+        protected readonly ChessBoard _board;
+        protected readonly NavigationManager _navigationManager;
+        protected readonly HubConnection hubConnection;
+        protected readonly SiteUserInfo _siteUserInfo;
 
-        private IModalReference modalReferense;
+        protected readonly HttpClient _httpClient;
         public GameHubServiceImpl(ILogger<GameHubServiceImpl> logger,
                               ChessBoard board,
                               NavigationManager navigationManager,
                               HttpClient httpClient,
-                              SiteUserInfo siteUserInfo,
-                              IModalService modal)
+                              SiteUserInfo siteUserInfo)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _board = board ?? throw new ArgumentNullException(nameof(board));
             _navigationManager = navigationManager ?? throw new ArgumentNullException(nameof(navigationManager));
             _siteUserInfo = siteUserInfo ?? throw new ArgumentNullException(nameof(siteUserInfo));
-            _modal = modal ?? throw new ArgumentNullException(nameof(modal));
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
             hubConnection = new HubConnectionBuilder()
@@ -87,17 +83,21 @@ namespace ChessGameWebApp.Client.Services.Impl
             {
                 _siteUserInfo.RivalId = id;
                 _siteUserInfo.RivalName = rivalName;
-                modalReferense = _modal.Show<InviteComponent>("Invite");
+                GetInviteAction();
             });
 
             hubConnection.On("CloseInvite", () =>
             {
-                modalReferense?.Close();
+                CloseInviteAction();
             });
+
 
             InitConnection();
         }
 
+        public virtual void GetInviteAction() { }
+
+        public virtual void CloseInviteAction() { }
         public async void InitConnection()
         {
             await StartGame();

@@ -19,7 +19,7 @@ builder.Services.AddScoped(sp => new AuthHttpClient { BaseAddress = new Uri("htt
 builder.Services.AddScoped<IAuthWebApi, AuthWebApi>();
 builder.Services.AddScoped(b => new ChessBoard());
 builder.Services.AddScoped<IClientGameService, ClientGameServiceImpl>();
-builder.Services.AddScoped<IGameHubService, GameHubServiceImpl>();
+builder.Services.AddScoped<IGameHubService, GameHubServiceImplV2>();
 builder.Services.AddScoped<IChatHubService, ChatHubServiceImpl>();
 builder.Services.AddScoped(user => new SiteUserInfo());
 builder.Services.AddScoped(updater => new TimeUpdater());

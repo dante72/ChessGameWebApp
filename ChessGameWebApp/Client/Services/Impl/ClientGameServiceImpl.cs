@@ -8,7 +8,6 @@ namespace ChessGameWebApp.Client.Services.Impl
         private readonly ChessBoard _board;
         IGameHubService _gameHubService;
 
-        //public ChessCell[] CurrentMove { get; set; } = new ChessCell[0];
         public ClientGameServiceImpl(ILogger<ClientGameServiceImpl> logger, ChessBoard board, IGameHubService gameHubService)
         {
             _logger = logger;

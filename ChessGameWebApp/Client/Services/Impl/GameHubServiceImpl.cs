@@ -18,8 +18,6 @@ namespace ChessGameWebApp.Client.Services.Impl
         private readonly HttpClient _httpClient;
 
         private IModalReference modalReferense;
-
-       // public ChessCell[] CurrentMove { get; set; } = new ChessCell[0];
         public GameHubServiceImpl(ILogger<GameHubServiceImpl> logger,
                               ChessBoard board,
                               NavigationManager navigationManager,

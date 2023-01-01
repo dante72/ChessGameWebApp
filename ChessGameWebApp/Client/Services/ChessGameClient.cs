@@ -7,30 +7,65 @@ using ChessGameWebApp.Client.Models;
 using ChessGameWebApp.Client.Services;
 using ChessGameWebApp.Client.Services.Impl;
 using ChessGameWebApp.Shared;
-using Microsoft.Extensions.Logging;
 
 namespace ChessGameWebApp.Client.Services
 {
     public class ChessGameClient
     {
-        /*builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-         builder.Services.AddScoped(sp => new AuthHttpClient { BaseAddress = new Uri("https://localhost:7256/") });
-builder.Services.AddScoped<IAuthWebApi, AuthWebApi>();
-builder.Services.AddScoped(b => new ChessBoard());
-builder.Services.AddScoped<IClientGameService, ClientGameServiceImpl>();
-builder.Services.AddScoped<IGameHubService, GameHubServiceImplV2>();
-builder.Services.AddScoped<IChatHubService, ChatHubServiceImpl>();
-builder.Services.AddScoped(user => new SiteUserInfo());
-builder.Services.AddScoped(updater => new TimeUpdater());
-builder.Services.AddScoped<IMyLocalStorageService, MyLocalStorageServiceImpl>();
-builder.Services.AddScoped<IAuthService, AuthServiceImplV2>();
-builder.Services.AddScoped(chat => new List<ChatMessage>());*/
+        public readonly WindsorContainer container = new WindsorContainer();
 
-public readonly WindsorContainer container = new WindsorContainer();
+        public readonly GameHttpClient gameHttpClient;
+        public readonly AuthHttpClient authHttpClient;
+        public readonly IAuthWebApi authWebApi;
+        public readonly ChessBoard chessBoard;
+        public readonly IClientGameService clientGameService;
+        public readonly IGameHubService gameHubService;
+        public readonly IChatHubService chatHubService;
+        public readonly SiteUserInfo siteUserInfo;
+        public readonly TimeUpdater timeUpdater;
+        public readonly IMyLocalStorageService myLocalStorage;
+        public readonly IAuthService authService;
+        public readonly List<ChatMessage> messages;
 
         public ChessGameClient()
         {
+            container.Register(Component.For<GameHttpClient>());
+            gameHttpClient = container.Resolve<GameHttpClient>();
+
+            container.Register(Component.For<AuthHttpClient>());
+            authHttpClient = container.Resolve<AuthHttpClient>();
+
+            container.Register(Component.For<IAuthWebApi>()
+                .ImplementedBy<AuthWebApi>());
+            authWebApi = container.Resolve<IAuthWebApi>();
+
             container.Register(Component.For<ChessBoard>());
+            chessBoard = container.Resolve<ChessBoard>();
+
+            container.Register(Component.For<IGameHubService>()
+                .ImplementedBy<GameHubServiceImplV2>());
+            gameHubService = container.Resolve<IGameHubService>();
+
+            container.Register(Component.For<IChatHubService>()
+                .ImplementedBy<ChatHubServiceImpl>());
+            chatHubService = container.Resolve<IChatHubService>();
+
+            container.Register(Component.For<SiteUserInfo>());
+            siteUserInfo = container.Resolve<SiteUserInfo>();
+
+            container.Register(Component.For<TimeUpdater>());
+            timeUpdater = container.Resolve<TimeUpdater>();
+
+            container.Register(Component.For<IMyLocalStorageService>()
+                .ImplementedBy<MyLocalStorageServiceImpl>());
+            myLocalStorage = container.Resolve<IMyLocalStorageService>();
+
+            container.Register(Component.For<IAuthService>()
+                .ImplementedBy<AuthServiceImplV2>());
+            authService = container.Resolve<IAuthService>();
+
+            container.Register(Component.For<List<ChatMessage>>());
+            messages = container.Resolve<List<ChatMessage>>();
         }
     }
 }

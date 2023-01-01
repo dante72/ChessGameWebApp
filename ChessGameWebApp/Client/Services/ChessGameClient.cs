@@ -2,9 +2,7 @@
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using ChessGame;
-using ChessGameWebApp.Client;
 using ChessGameWebApp.Client.Models;
-using ChessGameWebApp.Client.Services;
 using ChessGameWebApp.Client.Services.Impl;
 using ChessGameWebApp.Shared;
 
@@ -12,7 +10,7 @@ namespace ChessGameWebApp.Client.Services
 {
     public class ChessGameClient
     {
-        public readonly WindsorContainer container = new WindsorContainer();
+        private readonly WindsorContainer container = new WindsorContainer();
 
         public readonly GameHttpClient gameHttpClient;
         public readonly AuthHttpClient authHttpClient;

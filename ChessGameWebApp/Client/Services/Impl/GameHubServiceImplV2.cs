@@ -1,4 +1,5 @@
-﻿using Blazored.Modal;
+﻿using AuthWebAPI;
+using Blazored.Modal;
 using Blazored.Modal.Services;
 using ChessGame;
 using ChessGameWebApp.Client.Components;
@@ -13,7 +14,7 @@ namespace ChessGameWebApp.Client.Services.Impl
         public GameHubServiceImplV2(ILogger<GameHubServiceImpl> logger,
                                     ChessBoard board,
                                     NavigationManager navigationManager,
-                                    HttpClient httpClient,
+                                    GameHttpClient httpClient,
                                     SiteUserInfo siteUserInfo,
                                     IModalService modal)
                             : base(logger,

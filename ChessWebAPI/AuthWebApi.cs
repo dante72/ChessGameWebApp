@@ -9,8 +9,8 @@ namespace AuthWebAPI
     public class AuthWebApi : IAuthWebApi
     {
         public readonly AuthHttpClient _auth;
-        public readonly HttpClient _gameServer;
-        public AuthWebApi(AuthHttpClient auth, HttpClient gameServer)
+        public readonly GameHttpClient _gameServer;
+        public AuthWebApi(AuthHttpClient auth, GameHttpClient gameServer)
         {
             _auth = auth ?? throw new NullReferenceException(nameof(auth));
             _gameServer = gameServer ?? throw new NullReferenceException(nameof(gameServer));

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace AuthWebAPI
 {
-    public class AuthHttpClient : HttpClient
+    public class GameHttpClient : HttpClient
     {
-        public AuthHttpClient() { 
-            BaseAddress = new Uri("https://localhost:7256/");
+        public GameHttpClient()
+        {
+            BaseAddress = new Uri("https://localhost:7084/");
         }
     }
 }

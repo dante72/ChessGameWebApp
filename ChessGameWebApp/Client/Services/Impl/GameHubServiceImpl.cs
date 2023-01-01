@@ -1,4 +1,5 @@
-﻿using Blazored.Modal;
+﻿using AuthWebAPI;
+using Blazored.Modal;
 using Blazored.Modal.Services;
 using ChessGame;
 using ChessGameWebApp.Client.Components;
@@ -15,11 +16,11 @@ namespace ChessGameWebApp.Client.Services.Impl
         protected readonly HubConnection hubConnection;
         protected readonly SiteUserInfo _siteUserInfo;
 
-        protected readonly HttpClient _httpClient;
+        protected readonly GameHttpClient _httpClient;
         public GameHubServiceImpl(ILogger<GameHubServiceImpl> logger,
                               ChessBoard board,
                               NavigationManager navigationManager,
-                              HttpClient httpClient,
+                              GameHttpClient httpClient,
                               SiteUserInfo siteUserInfo)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

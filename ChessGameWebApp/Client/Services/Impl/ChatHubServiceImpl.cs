@@ -1,4 +1,5 @@
-﻿using ChessGame;
+﻿using AuthWebAPI;
+using ChessGame;
 using ChessGameWebApp.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -11,14 +12,14 @@ namespace ChessGameWebApp.Client.Services.Impl
     {
         private readonly ILogger<ChatHubServiceImpl> _logger;
         private readonly HubConnection _hubConnection;
-        private readonly HttpClient _httpClient;
+        private readonly GameHttpClient _httpClient;
 
         public delegate Task Updater();
         private Updater _updater;
 
         public ChatHubServiceImpl(ILogger<ChatHubServiceImpl> logger,
                               NavigationManager navigationManager,
-                              HttpClient httpClient,
+                              GameHttpClient httpClient,
                               List<ChatMessage> messages)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

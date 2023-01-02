@@ -11,7 +11,7 @@ namespace ChessGameWebApp.Client.Services
 {
     public class ChessGameClient
     {
-        private readonly WindsorContainer container = new WindsorContainer();
+        protected readonly WindsorContainer container = new WindsorContainer();
 
         public readonly GameHttpClient gameHttpClient;
         public readonly AuthHttpClient authHttpClient;
@@ -51,7 +51,7 @@ namespace ChessGameWebApp.Client.Services
             chessBoard = container.Resolve<ChessBoard>();
 
             container.Register(Component.For<IGameHubService>()
-                .ImplementedBy<GameHubServiceImpl>());
+                .ImplementedBy(GetGameHubServiceType()));
             gameHubService = container.Resolve<IGameHubService>();
 
             container.Register(Component.For<IChatHubService>()
@@ -63,8 +63,11 @@ namespace ChessGameWebApp.Client.Services
             myLocalStorage = container.Resolve<IMyLocalStorageService>();
 
             container.Register(Component.For<IAuthService>()
-                .ImplementedBy<AuthServiceImpl>());
+                .ImplementedBy(GetAuthServiceType()));
             authService = container.Resolve<IAuthService>();
         }
-    }
+        public virtual Type GetAuthServiceType() => typeof(AuthServiceImpl);
+
+        public virtual Type GetGameHubServiceType() => typeof(GameHubServiceImpl);
+    } 
 }

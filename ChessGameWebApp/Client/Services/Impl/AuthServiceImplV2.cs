@@ -7,7 +7,7 @@ namespace ChessGameWebApp.Client.Services.Impl
     public class AuthServiceImplV2 : AuthServiceImpl
     {
         private readonly NavigationManager _navigationManager;
-        public AuthServiceImplV2(ILogger<AuthServiceImpl> logger,
+        public AuthServiceImplV2(
                                  IAuthWebApi authWebApi,
                                  SiteUserInfo siteUserInfo,
                                  IMyLocalStorageService localStorageService,

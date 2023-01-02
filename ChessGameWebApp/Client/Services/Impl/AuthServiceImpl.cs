@@ -8,18 +8,16 @@ namespace ChessGameWebApp.Client.Services.Impl
 {
     public class AuthServiceImpl : IAuthService, IChessObserver, IDisposable
     {
-        protected readonly ILogger<AuthServiceImpl> _logger;
         protected readonly IAuthWebApi _authWebApi;
         protected readonly SiteUserInfo _siteUserInfo;
         protected readonly IMyLocalStorageService _localStorageService;
         protected readonly TimeUpdater _timeUpdater;
-        public AuthServiceImpl(ILogger<AuthServiceImpl> logger,
+        public AuthServiceImpl(
                            IAuthWebApi authWebApi,
                            SiteUserInfo siteUserInfo,
                            IMyLocalStorageService localStorageService,
                            TimeUpdater timeUpdater)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _authWebApi = authWebApi ?? throw new ArgumentNullException(nameof(authWebApi));
             _siteUserInfo = siteUserInfo ?? throw new ArgumentNullException(nameof(siteUserInfo));
             _localStorageService = localStorageService ?? throw new ArgumentNullException(nameof(localStorageService));

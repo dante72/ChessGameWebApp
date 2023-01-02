@@ -13,7 +13,7 @@ namespace ChessGameWebApp.Client.Services.Impl
                                  IMyLocalStorageService localStorageService,
                                  TimeUpdater timeUpdater,
                                  NavigationManager navigationManager)
-                        : base(logger,
+                        : base(
                                 authWebApi,
                                 siteUserInfo,
                                 localStorageService,

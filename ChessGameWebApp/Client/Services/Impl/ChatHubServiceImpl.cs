@@ -10,18 +10,17 @@ namespace ChessGameWebApp.Client.Services.Impl
 {
     public class ChatHubServiceImpl : IChatHubService
     {
-        private readonly ILogger<ChatHubServiceImpl> _logger;
+
         private readonly HubConnection _hubConnection;
         private readonly GameHttpClient _httpClient;
 
         public delegate Task Updater();
         private Updater _updater;
 
-        public ChatHubServiceImpl(ILogger<ChatHubServiceImpl> logger,
+        public ChatHubServiceImpl(
                               GameHttpClient httpClient,
                               List<ChatMessage> messages)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
             _hubConnection = new HubConnectionBuilder()

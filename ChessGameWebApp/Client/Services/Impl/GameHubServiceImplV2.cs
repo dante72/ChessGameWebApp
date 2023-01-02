@@ -12,13 +12,13 @@ namespace ChessGameWebApp.Client.Services.Impl
         private IModalReference modalReferense;
         private readonly IModalService _modal;
         private readonly NavigationManager _navigationManager;
-        public GameHubServiceImplV2(ILogger<GameHubServiceImpl> logger,
+        public GameHubServiceImplV2(
                                     ChessBoard board,
                                     NavigationManager navigationManager,
                                     GameHttpClient httpClient,
                                     SiteUserInfo siteUserInfo,
                                     IModalService modal)
-                            : base(logger,
+                            : base(
                                    board,
                                    httpClient,
                                    siteUserInfo)

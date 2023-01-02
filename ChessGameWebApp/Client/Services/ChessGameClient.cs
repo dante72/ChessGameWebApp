@@ -6,6 +6,7 @@ using ChessGameWebApp.Client.Models;
 using ChessGameWebApp.Client.Services.Impl;
 using ChessGameWebApp.Shared;
 
+
 namespace ChessGameWebApp.Client.Services
 {
     public class ChessGameClient
@@ -26,7 +27,16 @@ namespace ChessGameWebApp.Client.Services
         public readonly List<ChatMessage> messages;
 
         public ChessGameClient()
-        {
+        {   
+            container.Register(Component.For<List<ChatMessage>>());
+            messages = container.Resolve<List<ChatMessage>>();
+
+            container.Register(Component.For<TimeUpdater>());
+            timeUpdater = container.Resolve<TimeUpdater>();
+
+            container.Register(Component.For<SiteUserInfo>());
+            siteUserInfo = container.Resolve<SiteUserInfo>();
+
             container.Register(Component.For<GameHttpClient>());
             gameHttpClient = container.Resolve<GameHttpClient>();
 
@@ -41,29 +51,20 @@ namespace ChessGameWebApp.Client.Services
             chessBoard = container.Resolve<ChessBoard>();
 
             container.Register(Component.For<IGameHubService>()
-                .ImplementedBy<GameHubServiceImplV2>());
+                .ImplementedBy<GameHubServiceImpl>());
             gameHubService = container.Resolve<IGameHubService>();
 
             container.Register(Component.For<IChatHubService>()
                 .ImplementedBy<ChatHubServiceImpl>());
             chatHubService = container.Resolve<IChatHubService>();
 
-            container.Register(Component.For<SiteUserInfo>());
-            siteUserInfo = container.Resolve<SiteUserInfo>();
-
-            container.Register(Component.For<TimeUpdater>());
-            timeUpdater = container.Resolve<TimeUpdater>();
-
             container.Register(Component.For<IMyLocalStorageService>()
                 .ImplementedBy<MyLocalStorageServiceImpl>());
             myLocalStorage = container.Resolve<IMyLocalStorageService>();
 
             container.Register(Component.For<IAuthService>()
-                .ImplementedBy<AuthServiceImplV2>());
+                .ImplementedBy<AuthServiceImpl>());
             authService = container.Resolve<IAuthService>();
-
-            container.Register(Component.For<List<ChatMessage>>());
-            messages = container.Resolve<List<ChatMessage>>();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace ChessGameWebApp.Client.Services.Impl
     {
         private IModalReference modalReferense;
         private readonly IModalService _modal;
+        private readonly NavigationManager _navigationManager;
         public GameHubServiceImplV2(ILogger<GameHubServiceImpl> logger,
                                     ChessBoard board,
                                     NavigationManager navigationManager,
@@ -19,11 +20,11 @@ namespace ChessGameWebApp.Client.Services.Impl
                                     IModalService modal)
                             : base(logger,
                                    board,
-                                   navigationManager,
                                    httpClient,
                                    siteUserInfo)
         {
             _modal = modal ?? throw new ArgumentNullException(nameof(modal));
+            _navigationManager = navigationManager ?? throw new ArgumentNullException(nameof(navigationManager));
         }
 
         public override void GetInviteAction()
@@ -34,6 +35,11 @@ namespace ChessGameWebApp.Client.Services.Impl
         public override void CloseInviteAction()
         { 
             modalReferense?.Close(); 
+        }
+
+        public override void GameStartAction()
+        {
+            _navigationManager.NavigateTo("/Game/start");
         }
     }
 }

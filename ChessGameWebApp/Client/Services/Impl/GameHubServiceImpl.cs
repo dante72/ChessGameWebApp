@@ -12,25 +12,22 @@ namespace ChessGameWebApp.Client.Services.Impl
     {
         protected readonly ILogger<GameHubServiceImpl> _logger;
         protected readonly ChessBoard _board;
-        protected readonly NavigationManager _navigationManager;
         protected readonly HubConnection hubConnection;
         protected readonly SiteUserInfo _siteUserInfo;
 
         protected readonly GameHttpClient _httpClient;
         public GameHubServiceImpl(ILogger<GameHubServiceImpl> logger,
                               ChessBoard board,
-                              NavigationManager navigationManager,
                               GameHttpClient httpClient,
                               SiteUserInfo siteUserInfo)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _board = board ?? throw new ArgumentNullException(nameof(board));
-            _navigationManager = navigationManager ?? throw new ArgumentNullException(nameof(navigationManager));
             _siteUserInfo = siteUserInfo ?? throw new ArgumentNullException(nameof(siteUserInfo));
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
             hubConnection = new HubConnectionBuilder()
-                .WithUrl(_navigationManager.ToAbsoluteUri("/gamehub"), options =>
+                .WithUrl(@"https://localhost:7084/gamehub", options =>
                  {
                      options.AccessTokenProvider = () => Task.FromResult(_httpClient.DefaultRequestHeaders.Authorization?.Parameter);
                  })
@@ -58,7 +55,8 @@ namespace ChessGameWebApp.Client.Services.Impl
             hubConnection.On<bool>("StartGame", (start) =>
             {
                 if (start)
-                    navigationManager.NavigateTo("/Game/start");
+                    GameStartAction();
+                    //navigationManager.NavigateTo("/Game/start");
             });
 
             hubConnection.On<bool>("ReceiveMoveBack", (ok) =>
@@ -96,6 +94,7 @@ namespace ChessGameWebApp.Client.Services.Impl
             InitConnection();
         }
 
+        public virtual void GameStartAction() { }
         public virtual void GetInviteAction() { }
 
         public virtual void CloseInviteAction() { }

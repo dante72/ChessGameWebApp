@@ -18,7 +18,6 @@ namespace ChessGameWebApp.Client.Services.Impl
         private Updater _updater;
 
         public ChatHubServiceImpl(ILogger<ChatHubServiceImpl> logger,
-                              NavigationManager navigationManager,
                               GameHttpClient httpClient,
                               List<ChatMessage> messages)
         {
@@ -26,7 +25,7 @@ namespace ChessGameWebApp.Client.Services.Impl
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
             _hubConnection = new HubConnectionBuilder()
-                .WithUrl(navigationManager.ToAbsoluteUri("/chathub"), options =>
+                .WithUrl(@"https://localhost:7084/chathub", options =>
                 {
                     options.AccessTokenProvider = () => Task.FromResult(_httpClient.DefaultRequestHeaders.Authorization?.Parameter);
                 })

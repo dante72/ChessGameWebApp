@@ -27,16 +27,7 @@ namespace ChessGameWebApp.Client.Services
         public readonly List<ChatMessage> messages;
 
         public ChessGameClient()
-        {   
-            container.Register(Component.For<List<ChatMessage>>());
-            messages = container.Resolve<List<ChatMessage>>();
-
-            container.Register(Component.For<TimeUpdater>());
-            timeUpdater = container.Resolve<TimeUpdater>();
-
-            container.Register(Component.For<SiteUserInfo>());
-            siteUserInfo = container.Resolve<SiteUserInfo>();
-
+        {
             container.Register(Component.For<GameHttpClient>());
             gameHttpClient = container.Resolve<GameHttpClient>();
 
@@ -46,6 +37,15 @@ namespace ChessGameWebApp.Client.Services
             container.Register(Component.For<IAuthWebApi>()
                 .ImplementedBy<AuthWebApi>());
             authWebApi = container.Resolve<IAuthWebApi>();
+
+            container.Register(Component.For<List<ChatMessage>>());
+            messages = container.Resolve<List<ChatMessage>>();
+
+            container.Register(Component.For<TimeUpdater>());
+            timeUpdater = container.Resolve<TimeUpdater>();
+
+            container.Register(Component.For<SiteUserInfo>());
+            siteUserInfo = container.Resolve<SiteUserInfo>();
 
             container.Register(Component.For<ChessBoard>());
             chessBoard = container.Resolve<ChessBoard>();

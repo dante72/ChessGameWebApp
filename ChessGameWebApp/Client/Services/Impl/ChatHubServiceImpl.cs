@@ -46,7 +46,9 @@ namespace ChessGameWebApp.Client.Services.Impl
         public async Task Start()
         {
             if (!IsConnected)
+            {
                 await _hubConnection.StartAsync();
+            }
         }
 
         public async Task Send(string message)

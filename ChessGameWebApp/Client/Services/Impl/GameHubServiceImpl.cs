@@ -88,7 +88,6 @@ namespace ChessGameWebApp.Client.Services.Impl
                 CloseInviteAction();
             });
 
-
             InitConnection();
         }
 
@@ -98,7 +97,11 @@ namespace ChessGameWebApp.Client.Services.Impl
         public virtual void CloseInviteAction() { }
         public async void InitConnection()
         {
-            await StartGame();
+            try
+            {
+                await StartGame();
+            }
+            catch { }
         }
         public async Task MoveBack()
         {

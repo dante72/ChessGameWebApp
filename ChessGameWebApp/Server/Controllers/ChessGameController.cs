@@ -4,6 +4,7 @@ using Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using ChessGameWebApp.Server.Models;
+using ChessGameClient.Models;
 
 namespace ChessGameWebApp.Server.Controllers
 {

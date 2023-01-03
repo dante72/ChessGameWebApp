@@ -1,7 +1,7 @@
 ﻿using ChessGameClient.AuthWebAPI;
 using ChessGameClient.Models;
 using ChessGame;
-using JwtToken;
+using AuthWebAPI.Services.Impl;
 
 namespace ChessGameClient.Services.Impl
 {

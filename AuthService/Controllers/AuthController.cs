@@ -25,7 +25,14 @@ namespace AuthService.Controllers
         {
             try
             {
-                await _registrationService.AddAccount(account.Map());
+                var acc = new Account()
+                {
+                    Username = account.Username,
+                    Login = account.Login,
+                    Email = account.Email,
+                    Password = account.Password
+                };
+                await _registrationService.AddAccount(acc);
                 return Ok("Registration is successful!");
             }
             catch (Exception ex)

@@ -1,7 +1,6 @@
 ﻿using ChessGameClient.Models;
 using ChessGame;
 using ChessGameWebApp.Client.Services;
-using JwtToken;
 using Microsoft.AspNetCore.Components;
 
 namespace ChessGameWebApp.Client.Components

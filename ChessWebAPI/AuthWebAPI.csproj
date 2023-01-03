@@ -8,11 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.22.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ChessGame\ChessGame.csproj" />
-    <ProjectReference Include="..\JwtToken\JwtToken.csproj" />
   </ItemGroup>
 
 </Project>

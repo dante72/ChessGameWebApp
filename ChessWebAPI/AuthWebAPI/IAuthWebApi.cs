@@ -1,5 +1,4 @@
-﻿using JwtToken;
-using Models;
+﻿using ChessGameClient.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

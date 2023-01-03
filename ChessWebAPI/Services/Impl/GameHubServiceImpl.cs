@@ -1,10 +1,10 @@
-﻿using AuthWebAPI;
-using AuthWebAPI.AuthWebAPI;
-using AuthWebAPI.Models;
+﻿using ChessGameClient;
+using ChessGameClient.AuthWebAPI;
+using ChessGameClient.Models;
 using ChessGame;
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace AuthWebAPI.Services.Impl
+namespace ChessGameClient.Services.Impl
 {
     public class GameHubServiceImpl : IGameHubService, IAsyncDisposable
     {

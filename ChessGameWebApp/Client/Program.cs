@@ -1,16 +1,16 @@
 using ChessGame;
 using ChessGameWebApp.Client;
 using ChessGameWebApp.Client.Services;
-using AuthWebAPI;
+using ChessGameClient;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Blazored.Modal;
 using ChessGameWebApp.Shared;
 using ChessGameWebApp.Client.Services.Impl;
-using AuthWebAPI.AuthWebAPI;
-using AuthWebAPI.Services;
-using AuthWebAPI.Models;
-using AuthWebAPI.Services.Impl;
+using ChessGameClient.AuthWebAPI;
+using ChessGameClient.Services;
+using ChessGameClient.Models;
+using ChessGameClient.Services.Impl;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

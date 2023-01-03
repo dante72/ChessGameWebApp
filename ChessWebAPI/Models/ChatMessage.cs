@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuthWebAPI.Models
+namespace ChessGameClient.Models
 {
     public class ChatMessage
     {

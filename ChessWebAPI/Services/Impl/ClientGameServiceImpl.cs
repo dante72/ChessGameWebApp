@@ -1,6 +1,6 @@
 ﻿using ChessGame;
 
-namespace AuthWebAPI.Services.Impl
+namespace ChessGameClient.Services.Impl
 {
     public class ClientGameServiceImpl : IClientGameService
     {

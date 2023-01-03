@@ -1,8 +1,8 @@
-﻿using AuthWebAPI.AuthWebAPI;
-using AuthWebAPI.Models;
+﻿using ChessGameClient.AuthWebAPI;
+using ChessGameClient.Models;
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace AuthWebAPI.Services.Impl
+namespace ChessGameClient.Services.Impl
 {
     public class ChatHubServiceImpl : IChatHubService
     {

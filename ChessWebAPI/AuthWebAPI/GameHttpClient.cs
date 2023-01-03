@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuthWebAPI.AuthWebAPI
+namespace ChessGameClient.AuthWebAPI
 {
     public class GameHttpClient : HttpClient
     {

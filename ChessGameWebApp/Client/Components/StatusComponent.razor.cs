@@ -1,4 +1,4 @@
-﻿using AuthWebAPI.Services;
+﻿using ChessGameClient.Services;
 using ChessGame;
 using ChessGameWebApp.Client.Services;
 using Microsoft.AspNetCore.Components;

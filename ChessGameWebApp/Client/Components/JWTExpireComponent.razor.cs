@@ -1,4 +1,4 @@
-﻿using AuthWebAPI.Models;
+﻿using ChessGameClient.Models;
 using ChessGame;
 using ChessGameWebApp.Client.Services;
 using JwtToken;

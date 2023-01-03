@@ -1,6 +1,6 @@
 ﻿using AuthService.Services;
-using AuthWebAPI;
-using AuthWebAPI.AuthWebAPI;
+using ChessGameClient;
+using ChessGameClient.AuthWebAPI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;

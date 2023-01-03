@@ -1,6 +1,6 @@
 ﻿using ChessGame;
 
-namespace AuthWebAPI.Services
+namespace ChessGameClient.Services
 {
     public interface IClientGameService
     {

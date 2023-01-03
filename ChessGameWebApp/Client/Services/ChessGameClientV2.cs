@@ -1,4 +1,4 @@
-﻿using AuthWebAPI.Services.Impl;
+﻿using ChessGameClient.Services.Impl;
 using Blazored.Modal.Services;
 using Castle.MicroKernel.Registration;
 using ChessGameWebApp.Client.Services.Impl;

@@ -1,13 +1,13 @@
-﻿using AuthWebAPI;
-using AuthWebAPI.AuthWebAPI;
-using AuthWebAPI.Models;
+﻿using ChessGameClient;
+using ChessGameClient.AuthWebAPI;
+using ChessGameClient.Models;
 using Blazored.Modal;
 using Blazored.Modal.Services;
 using ChessGame;
 using ChessGameWebApp.Client.Components;
 using Microsoft.AspNetCore.Components;
 
-namespace AuthWebAPI.Services.Impl
+namespace ChessGameClient.Services.Impl
 {
     public class GameHubServiceImplV2 : GameHubServiceImpl
     {

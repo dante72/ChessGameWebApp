@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Xml.Linq;
 
-namespace AuthWebAPI.Services.Impl
+namespace ChessGameClient.Services.Impl
 {
     public class MyLocalStorageServiceImpl : IMyLocalStorageService
     {

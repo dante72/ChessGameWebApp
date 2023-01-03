@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChessGameWebApp\Shared\ChessGameWebApp.Shared.csproj" />
     <ProjectReference Include="..\ChessGame\ChessGame.csproj" />
     <ProjectReference Include="..\JwtToken\JwtToken.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />

@@ -1,5 +1,4 @@
-﻿using ChessGameWebApp.Shared;
-using JwtToken;
+﻿using JwtToken;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,6 @@ namespace AuthWebAPI.AuthWebAPI
         Task<bool> Registration(AccountRequestModel account);
         Task<JwtTokens?> Autorization(AccountRequestModel account);
         Task<JwtTokens?> Autorization(string refreshToken);
-        Task<WeatherForecast[]> Weather();
         Task<UserInfo?> GetUserInfo();
         Task SingOut();
         Task<bool> AddOrRemovePlayer(int rivalId = 0);

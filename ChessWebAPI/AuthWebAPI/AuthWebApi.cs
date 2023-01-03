@@ -1,5 +1,4 @@
-﻿using ChessGameWebApp.Shared;
-using JwtToken;
+﻿using JwtToken;
 using Models;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -79,13 +78,6 @@ namespace AuthWebAPI.AuthWebAPI
             _auth.DefaultRequestHeaders.Authorization = null;
             _gameServer.DefaultRequestHeaders.Authorization = null;
 
-        }
-
-        public async Task<WeatherForecast[]> Weather()
-        {
-            var result = await _gameServer.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
-
-            return result;
         }
 
         public async Task<UserInfo?> GetUserInfo()

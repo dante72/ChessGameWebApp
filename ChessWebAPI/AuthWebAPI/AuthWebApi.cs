@@ -4,7 +4,7 @@ using Models;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
-namespace AuthWebAPI
+namespace AuthWebAPI.AuthWebAPI
 {
     public class AuthWebApi : IAuthWebApi
     {

@@ -8,6 +8,7 @@ using ChessGameWebApp.Client.Models;
 using Blazored.Modal;
 using ChessGameWebApp.Shared;
 using ChessGameWebApp.Client.Services.Impl;
+using AuthWebAPI.AuthWebAPI;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

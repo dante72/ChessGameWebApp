@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AuthWebAPI
+namespace AuthWebAPI.AuthWebAPI
 {
     public interface IAuthWebApi
     {

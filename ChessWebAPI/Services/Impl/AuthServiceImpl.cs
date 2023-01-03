@@ -1,8 +1,7 @@
-﻿using AuthWebAPI;
+﻿using AuthWebAPI.AuthWebAPI;
 using ChessGame;
 using ChessGameWebApp.Client.Models;
 using JwtToken;
-using Microsoft.AspNetCore.Components;
 
 namespace ChessGameWebApp.Client.Services.Impl
 {

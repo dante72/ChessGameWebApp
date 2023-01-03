@@ -1,4 +1,5 @@
 ﻿using AuthWebAPI;
+using AuthWebAPI.AuthWebAPI;
 using Blazored.Modal;
 using Blazored.Modal.Services;
 using ChessGame;

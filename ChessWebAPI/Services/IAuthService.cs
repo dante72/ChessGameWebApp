@@ -1,4 +1,5 @@
 ﻿using AuthWebAPI;
+using AuthWebAPI.AuthWebAPI;
 
 namespace ChessGameWebApp.Client.Services
 {

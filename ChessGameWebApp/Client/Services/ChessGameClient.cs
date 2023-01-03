@@ -1,4 +1,5 @@
 ﻿using AuthWebAPI;
+using AuthWebAPI.AuthWebAPI;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using ChessGame;

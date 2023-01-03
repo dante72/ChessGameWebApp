@@ -1,10 +1,8 @@
 ﻿using AuthWebAPI;
+using AuthWebAPI.AuthWebAPI;
 using ChessGame;
 using ChessGameWebApp.Shared;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.Extensions.Logging;
-using System.Net.Http;
 
 namespace ChessGameWebApp.Client.Services.Impl
 {

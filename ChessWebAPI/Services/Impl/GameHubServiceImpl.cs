@@ -1,9 +1,6 @@
 ﻿using AuthWebAPI;
-using Blazored.Modal;
-using Blazored.Modal.Services;
+using AuthWebAPI.AuthWebAPI;
 using ChessGame;
-using ChessGameWebApp.Client.Components;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 
 namespace ChessGameWebApp.Client.Services.Impl

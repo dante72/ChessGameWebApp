@@ -1,7 +1,5 @@
-﻿using AuthWebAPI;
-using AuthWebAPI.AuthWebAPI;
-using ChessGame;
-using ChessGameWebApp.Shared;
+﻿using AuthWebAPI.AuthWebAPI;
+using AuthWebAPI.Models;
 using Microsoft.AspNetCore.SignalR.Client;
 
 namespace AuthWebAPI.Services.Impl

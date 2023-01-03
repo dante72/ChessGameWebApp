@@ -1,7 +1,7 @@
 ﻿using AuthWebAPI;
 using AuthWebAPI.AuthWebAPI;
 
-namespace ChessGameWebApp.Client.Services
+namespace AuthWebAPI.Services
 {
     public interface IAuthService
     {

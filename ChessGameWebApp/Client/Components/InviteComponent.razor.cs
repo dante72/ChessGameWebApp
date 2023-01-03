@@ -1,4 +1,6 @@
-﻿using ChessGame;
+﻿using AuthWebAPI.Models;
+using AuthWebAPI.Services;
+using ChessGame;
 using ChessGameWebApp.Client.Services;
 using Microsoft.AspNetCore.Components;
 

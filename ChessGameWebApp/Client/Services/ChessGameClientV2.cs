@@ -1,6 +1,6 @@
-﻿using Blazored.Modal.Services;
+﻿using AuthWebAPI.Services.Impl;
+using Blazored.Modal.Services;
 using Castle.MicroKernel.Registration;
-using Castle.Windsor;
 using ChessGameWebApp.Client.Services.Impl;
 using Microsoft.AspNetCore.Components;
 

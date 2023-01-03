@@ -1,4 +1,4 @@
-﻿namespace ChessGameWebApp.Client.Services
+﻿namespace AuthWebAPI.Services
 {
     public interface IMyLocalStorageService
     {

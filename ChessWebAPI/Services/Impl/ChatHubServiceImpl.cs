@@ -4,7 +4,7 @@ using ChessGame;
 using ChessGameWebApp.Shared;
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace ChessGameWebApp.Client.Services.Impl
+namespace AuthWebAPI.Services.Impl
 {
     public class ChatHubServiceImpl : IChatHubService
     {

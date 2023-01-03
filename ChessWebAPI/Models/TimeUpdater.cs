@@ -1,6 +1,6 @@
 ﻿using ChessGame;
 
-namespace ChessGameWebApp.Client.Models
+namespace AuthWebAPI.Models
 {
     public class TimeUpdater : IChessObservable, IDisposable
     {

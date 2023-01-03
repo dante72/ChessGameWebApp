@@ -3,10 +3,10 @@ using AuthWebAPI.AuthWebAPI;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using ChessGame;
-using ChessGameWebApp.Client.Models;
-using ChessGameWebApp.Client.Services.Impl;
+using AuthWebAPI.Models;
+using AuthWebAPI.Services.Impl;
 using ChessGameWebApp.Shared;
-
+using AuthWebAPI.Services;
 
 namespace ChessGameWebApp.Client.Services
 {

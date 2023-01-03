@@ -1,6 +1,6 @@
-﻿using static ChessGameWebApp.Client.Services.Impl.ChatHubServiceImpl;
+﻿using static AuthWebAPI.Services.Impl.ChatHubServiceImpl;
 
-namespace ChessGameWebApp.Client.Services
+namespace AuthWebAPI.Services
 {
     public interface IChatHubService
     {

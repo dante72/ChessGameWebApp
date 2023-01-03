@@ -1,7 +1,7 @@
 ﻿using ChessGame;
 using System.Security.Claims;
 
-namespace ChessGameWebApp.Client
+namespace AuthWebAPI.Models
 {
     public class SiteUserInfo : IChessObservable
     {

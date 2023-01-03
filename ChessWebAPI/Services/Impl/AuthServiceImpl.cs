@@ -1,9 +1,9 @@
 ﻿using AuthWebAPI.AuthWebAPI;
+using AuthWebAPI.Models;
 using ChessGame;
-using ChessGameWebApp.Client.Models;
 using JwtToken;
 
-namespace ChessGameWebApp.Client.Services.Impl
+namespace AuthWebAPI.Services.Impl
 {
     public class AuthServiceImpl : IAuthService, IChessObserver, IDisposable
     {

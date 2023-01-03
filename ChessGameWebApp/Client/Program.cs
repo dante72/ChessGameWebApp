@@ -14,17 +14,17 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddBlazoredModal();
 
-builder.Services.AddScoped(sp => new GameHttpClient());
-builder.Services.AddScoped(sp => new AuthHttpClient());
+builder.Services.AddScoped<GameHttpClient>();
+builder.Services.AddScoped<AuthHttpClient>();
 builder.Services.AddScoped<IAuthWebApi, AuthWebApi>();
-builder.Services.AddScoped(b => new ChessBoard());
+builder.Services.AddScoped<ChessBoard>();
 builder.Services.AddScoped<IClientGameService, ClientGameServiceImpl>();
 builder.Services.AddScoped<IGameHubService, GameHubServiceImplV2>();
 builder.Services.AddScoped<IChatHubService, ChatHubServiceImpl>();
-builder.Services.AddScoped(user => new SiteUserInfo());
-builder.Services.AddScoped(updater => new TimeUpdater());
+builder.Services.AddScoped<SiteUserInfo>();
+builder.Services.AddScoped<TimeUpdater>();
 builder.Services.AddScoped<IMyLocalStorageService, MyLocalStorageServiceImpl>();
 builder.Services.AddScoped<IAuthService, AuthServiceImplV2>();
-builder.Services.AddScoped(chat => new List<ChatMessage>());
+builder.Services.AddScoped<List<ChatMessage>>();
 
 await builder.Build().RunAsync();

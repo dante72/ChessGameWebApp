@@ -1,4 +1,5 @@
-﻿using ChessGameClient.Services.Impl;
+﻿using ChessGameClient;
+using ChessGameClient.Services.Impl;
 using Blazored.Modal.Services;
 using Castle.MicroKernel.Registration;
 using ChessGameWebApp.Client.Services.Impl;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace ChessGameWebApp.Client.Services
 {
-    public class ChessGameClientV2 : ChessGameClient
+    public class ChessGameClientV2 : GameClient
     {
         private readonly NavigationManager _navigationManager;
         private readonly IModalService _modalService;

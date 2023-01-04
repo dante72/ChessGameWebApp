@@ -1,16 +1,16 @@
-﻿using ChessGameClient;
-using ChessGameClient.AuthWebAPI;
+﻿using ChessGameClient.AuthWebAPI;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using ChessGame;
 using ChessGameClient.Models;
 using ChessGameClient.Services.Impl;
-using ChessGameWebApp.Shared;
 using ChessGameClient.Services;
+using System.Collections.Generic;
+using System;
 
-namespace ChessGameWebApp.Client.Services
+namespace ChessGameClient
 {
-    public class ChessGameClient
+    public class GameClient
     {
         protected readonly WindsorContainer container = new WindsorContainer();
 
@@ -27,7 +27,7 @@ namespace ChessGameWebApp.Client.Services
         public readonly IAuthService authService;
         public readonly List<ChatMessage> messages;
 
-        public ChessGameClient()
+        public GameClient()
         {
             container.Register(Component.For<GameHttpClient>());
             gameHttpClient = container.Resolve<GameHttpClient>();

@@ -1,6 +1,9 @@
 ﻿using ChessGameClient.AuthWebAPI;
 using ChessGameClient.Models;
 using Microsoft.AspNetCore.SignalR.Client;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ChessGameClient.Services.Impl
 {
@@ -60,7 +63,7 @@ namespace ChessGameClient.Services.Impl
 
         public async ValueTask DisposeAsync()
         {
-            if (_hubConnection is not null)
+            if (_hubConnection != null)
             {
                 await _hubConnection.StopAsync();
                 //await _hubConnection.DisposeAsync();

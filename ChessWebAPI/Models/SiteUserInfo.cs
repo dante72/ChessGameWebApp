@@ -1,4 +1,7 @@
 ﻿using ChessGame;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 
 namespace ChessGameClient.Models
@@ -26,7 +29,7 @@ namespace ChessGameClient.Models
         public int RivalId { get; set; }
         public string RivalName { get; set; }
         public DateTime AccessTokenExpire { get; set; } = DateTime.UtcNow + TimeSpan.FromMinutes(5);
-        public List<IChessObserver> Observers { get; set; } = new();
+        public List<IChessObserver> Observers { get; set; } = new List<IChessObserver>();
         public void Update(IEnumerable<Claim> claims)
         {
             Username = claims.First(c => c.Type.Equals("given_name")).Value;

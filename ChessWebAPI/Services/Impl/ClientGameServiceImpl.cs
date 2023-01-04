@@ -1,4 +1,5 @@
 ﻿using ChessGame;
+using System.Threading.Tasks;
 
 namespace ChessGameClient.Services.Impl
 {

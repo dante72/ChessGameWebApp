@@ -1,4 +1,6 @@
-﻿namespace ChessGameClient.Services
+﻿using System.Threading.Tasks;
+
+namespace ChessGameClient.Services
 {
     public interface IMyLocalStorageService
     {

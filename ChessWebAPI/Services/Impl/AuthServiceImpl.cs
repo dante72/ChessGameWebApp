@@ -2,6 +2,8 @@
 using ChessGameClient.Models;
 using ChessGame;
 using AuthWebAPI.Services.Impl;
+using System;
+using System.Threading.Tasks;
 
 namespace ChessGameClient.Services.Impl
 {

@@ -1,5 +1,6 @@
 ﻿using ChessGameClient;
 using ChessGameClient.AuthWebAPI;
+using System.Threading.Tasks;
 
 namespace ChessGameClient.Services
 {

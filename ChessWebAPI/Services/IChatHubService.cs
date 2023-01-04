@@ -1,4 +1,5 @@
-﻿using static ChessGameClient.Services.Impl.ChatHubServiceImpl;
+﻿using System.Threading.Tasks;
+using static ChessGameClient.Services.Impl.ChatHubServiceImpl;
 
 namespace ChessGameClient.Services
 {

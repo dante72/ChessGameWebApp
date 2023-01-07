@@ -12,6 +12,18 @@ namespace ChessGameClient
 {
     public class GameClient
     {
+        private static GameClient client;
+        public static GameClient Client
+        { get 
+            {
+                if (client == null)
+                {
+                    client = new GameClient();
+                }
+
+                return client;
+            } 
+        }
         protected readonly WindsorContainer container = new WindsorContainer();
 
         public readonly GameHttpClient gameHttpClient;
@@ -27,7 +39,7 @@ namespace ChessGameClient
         public readonly IAuthService authService;
         public readonly List<ChatMessage> messages;
 
-        public GameClient()
+        protected GameClient()
         {
             container.Register(Component.For<GameHttpClient>());
             gameHttpClient = container.Resolve<GameHttpClient>();

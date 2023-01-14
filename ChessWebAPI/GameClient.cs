@@ -14,7 +14,8 @@ namespace ChessGameClient
     {
         private static GameClient client;
         public static GameClient Client
-        { get 
+        {
+            get 
             {
                 if (client == null)
                 {

@@ -39,6 +39,8 @@ namespace ChessGameClient.Services.Impl
                 _board.SetCurrentPlayer(playerColor);
                 _board.Update(board);
                 _board.SetTimer(timer);
+
+                OnReceiveBoardAction();
             });
 
             hubConnection.On<ChessCellDto, ChessCellDto, ChessTimerDto>("ReceiveTryMove", (from, to, timer) =>
@@ -93,6 +95,7 @@ namespace ChessGameClient.Services.Impl
             InitConnection();
         }
 
+        public virtual void OnReceiveBoardAction() { }
         public virtual void GameStartAction() { }
         public virtual void GetInviteAction() { }
 

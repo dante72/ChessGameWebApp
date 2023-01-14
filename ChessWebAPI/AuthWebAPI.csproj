@@ -18,4 +18,8 @@
     <ProjectReference Include="..\ChessGame\ChessGame.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy &quot;D:\Users\turbo\Documents\Projects\ChessGameWebApp\ChessWebAPI\bin\Debug\netstandard2.1\*.dll&quot; &quot;D:\Users\turbo\Unity\ChessGameProjectArt\Assets\Plugins\ChessGameClient&quot;" />
+  </Target>
+
 </Project>

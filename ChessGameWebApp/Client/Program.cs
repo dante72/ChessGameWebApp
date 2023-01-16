@@ -21,7 +21,6 @@ builder.Services.AddScoped<GameHttpClient>();
 builder.Services.AddScoped<AuthHttpClient>();
 builder.Services.AddScoped<IAuthWebApi, AuthWebApi>();
 builder.Services.AddScoped<ChessBoard>();
-builder.Services.AddScoped<IClientGameService, ClientGameServiceImpl>();
 builder.Services.AddScoped<IGameHubService, GameHubServiceImplV2>();
 builder.Services.AddScoped<IChatHubService, ChatHubServiceImpl>();
 builder.Services.AddScoped<SiteUserInfo>();

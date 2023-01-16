@@ -31,7 +31,6 @@ namespace ChessGameClient
         public readonly AuthHttpClient authHttpClient;
         public readonly IAuthWebApi authWebApi;
         public readonly ChessBoard chessBoard;
-        public readonly IClientGameService clientGameService;
         public readonly IGameHubService gameHubService;
         public readonly IChatHubService chatHubService;
         public readonly SiteUserInfo siteUserInfo;

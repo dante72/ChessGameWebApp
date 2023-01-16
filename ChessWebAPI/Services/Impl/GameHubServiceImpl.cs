@@ -26,6 +26,8 @@ namespace ChessGameClient.Services.Impl
             _siteUserInfo = siteUserInfo ?? throw new ArgumentNullException(nameof(siteUserInfo));
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
+            _board.SetCheckMethod(TryMove);
+
             hubConnection = new HubConnectionBuilder()
                 .WithUrl(@"https://localhost:44327/gamehub", options =>
                  {
@@ -182,6 +184,12 @@ namespace ChessGameClient.Services.Impl
                 await hubConnection.StopAsync();
                 //await hubConnection.DisposeAsync();
             }
+        }
+
+        public async Task<bool> TryMove(Cell from, Cell to)
+        {
+            await SendTryMove(from.ToDto(), to.ToDto());
+            return false;
         }
     }
 }

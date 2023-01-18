@@ -15,6 +15,11 @@ namespace ChessGame
 
         public delegate Task<bool> CheckMove(Cell from, Cell to);
         private CheckMove CheckFigureMove { get; set; } = delegate { return Task.FromResult(true); };
+
+        public delegate Task TimeIsUp();
+
+        private TimeIsUp GameOver { get; set; } = delegate { return Task.CompletedTask; };
+
         private ChessCell target;
         internal ChessCell Target
         {
@@ -143,6 +148,21 @@ namespace ChessGame
         public void SetCheckMethod(CheckMove checkMove)
         {
             CheckFigureMove = checkMove;
+        }
+
+        public void SetTimeIsUpMethod(TimeIsUp gameOver)
+        {
+            GameOver = gameOver;
+        }
+
+        public override GameStatus GetGameStatus()
+        {
+            var status = base.GetGameStatus();
+
+            if (status == GameStatus.TimeIsUp)
+                GameOver();
+
+            return status;
         }
 
         public new IEnumerator<ChessCell> GetEnumerator() => Cells.Cast<ChessCell>().GetEnumerator();

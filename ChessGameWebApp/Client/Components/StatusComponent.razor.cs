@@ -41,7 +41,7 @@ namespace ChessGameWebApp.Client.Components
                     break;
                 case GameStatus.TimeIsUp:
                     Status = Board.GetCurrentPlayer() == Board.Player.Color ? "Ваше время вышло!" : "Время соперника вышло!";
-                    await _GameHubService.GameOver();
+                    //await _GameHubService.GameOver();
                     break;
             }
 

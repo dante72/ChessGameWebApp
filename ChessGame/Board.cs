@@ -199,7 +199,7 @@ namespace ChessGame
                 .Any(move => move == cell);
         }
 
-        public virtual GameStatus GetGameStatus()
+        public GameStatus GetGameStatus()
         {
             if (СhessСlock.IsGameOver())
                 return GameStatus.TimeIsUp;

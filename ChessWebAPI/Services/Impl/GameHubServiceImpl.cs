@@ -27,7 +27,6 @@ namespace ChessGameClient.Services.Impl
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
             _board.SetCheckMethod(TryMove);
-            _board.SetTimeIsUpMethod(GameOver);
 
             hubConnection = new HubConnectionBuilder()
                 .WithUrl(@"https://localhost:44327/gamehub", options =>

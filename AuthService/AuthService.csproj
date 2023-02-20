@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChessWebAPI\AuthWebAPI.csproj" />
+    <ProjectReference Include="..\ChessWebAPI\ChessGameClient.csproj" />
     <ProjectReference Include="..\CommonConfig\CommonConfig.csproj" />
     <ProjectReference Include="..\DbContextDao\DbContextDao.csproj" />
     <ProjectReference Include="..\JwtToken\JwtToken.csproj" />

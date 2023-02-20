@@ -15,5 +15,6 @@ namespace ChessGameClient.Services
         Task SendInvite(int rivalId, string rivalName);
         Task CloseInvite(int rivalId);
         Task Help();
+        Task<bool> InitConnection();
     }
 }

@@ -82,9 +82,9 @@ namespace ChessGameWebApp.Server.SignalRHub
             var connection1 = await _connectionService.GetConnections(new int[] { player1.Id });
             var connection2 = await _connectionService.GetConnections(new int[] { player2.Id });
 
+            await _serverGameService.CloseSession(accountId);
             await Clients.Clients(connection1).SendAsync("SendGameStatus", GameStatus.GiveUp);
             await Clients.Clients(connection2).SendAsync("SendGameStatus", GameStatus.OpponentGiveUp);
-            await _serverGameService.CloseSession(accountId);
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)

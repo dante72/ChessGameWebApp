@@ -110,13 +110,15 @@ namespace ChessGameClient.Services.Impl
         public virtual void GetInviteAction() { }
 
         public virtual void CloseInviteAction() { }
-        public async void InitConnection()
+        public async Task<bool> InitConnection()
         {
             try
             {
                 await StartGame();
             }
             catch { }
+
+            return IsConnected;
         }
         public async Task MoveBack()
         {

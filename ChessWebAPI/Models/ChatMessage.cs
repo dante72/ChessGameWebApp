@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessGameWebApp.Shared
+namespace ChessGameClient.Models
 {
     public class ChatMessage
     {

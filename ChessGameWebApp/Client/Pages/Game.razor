@@ -1,7 +1,9 @@
 ﻿@page "/game/{StartGame?}"
+@using ChessGameClient.AuthWebAPI;
+@using ChessGameClient.Models;
 @using ChessGameWebApp.Client.Components
 @using Microsoft.AspNetCore.SignalR.Client
-@using AuthWebAPI
+@using ChessGameClient
 @inject SiteUserInfo userInfo
 @inject IAuthWebApi Auth
 @inject NavigationManager NavigationManager

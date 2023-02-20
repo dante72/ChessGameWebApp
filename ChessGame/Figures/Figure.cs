@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ChessGame
@@ -11,15 +10,15 @@ namespace ChessGame
     {
         internal Stack<SavedMove> SavedMoves { set; get; } = new Stack<SavedMove>();
         internal int MovesCount { get; set; }
-        internal FigureColors Color { get; private set; }
-        internal Cell Position { get; set; }
-        internal abstract IEnumerable<Cell> GetAllPossibleMoves();
+        public FigureColor Color { get; private set; }
+        public Cell Position { get; set; }
+        internal abstract List<Cell> GetAllPossibleMoves();
         public IEnumerable<Cell> PossibleMoves
         {
             get => GetPossibleMoves();
         }
         public int IsFirstMove { get; set; }
-        internal Figure(FigureColors color, int firstMove = 0)
+        internal Figure(FigureColor color, int firstMove = 0)
         {
             Color = color;
             IsFirstMove = firstMove;
@@ -68,7 +67,7 @@ namespace ChessGame
         }
         public bool IsMove()
         {
-            return Color == FigureColors.White && Board.Index % 2 == 0 || Color == FigureColors.Black && Board.Index % 2 == 1;
+            return Color == FigureColor.White && Board.Index % 2 == 0 || Color == FigureColor.Black && Board.Index % 2 == 1;
         }
         protected virtual IEnumerable<Cell> GetPossibleMoves()
         {
@@ -111,5 +110,7 @@ namespace ChessGame
         {
             return GetType().Name;
         }
+
+        internal virtual Type Type() => GetType();
     }
 }

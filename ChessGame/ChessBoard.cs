@@ -21,23 +21,51 @@ namespace ChessGame
             get => target;
             set
             {
-                if (target is not null)
+                if (target != null)
                     target.IsPointer = false;
                 target = value;
                 target.IsPointer = true;
             }
         }
-        private GameStatus gameStatus;
         public override GameStatus GameStatus
         {
             get
             {
-                return gameStatus;
+                return base.GameStatus;
             }
             set
             {
-                gameStatus = value;
+                base.GameStatus = value;
                 ((IChessObservable)this).Notify();
+            }
+        }
+
+        public string GameStatusDescription
+        {
+            get
+            {
+                if (Player == null)
+                    return string.Empty;
+
+                switch (GameStatus)
+                {
+                    case GameStatus.Normal:
+                        return GetCurrentPlayer() == Player.Color ? "Ваш ход" : "Ход соперника";
+                    case GameStatus.Check:
+                        return GetCurrentPlayer() == Player.Color ? "Соперник объявил вам ШАХ!" : "Вы объявили ШАХ сопернику!";
+                    case GameStatus.Stalemate:
+                        return "Пат, Ничья!";
+                    case GameStatus.Checkmate:
+                        return GetCurrentPlayer() == Player.Color ? "Соперник объявил вам МАТ!" : "Вы объявили МАТ сопернику!";
+                    case GameStatus.TimeIsUp:
+                        return GetCurrentPlayer() == Player.Color ? "Ваше время вышло!" : "Время соперника вышло!";
+                    case GameStatus.GiveUp:
+                        return "Вы сдались!";
+                    case GameStatus.OpponentGiveUp:
+                        return "Ваш соперник сдался!";
+                    default:
+                        return "Unknown status";
+                }
             }
         }
 
@@ -46,7 +74,21 @@ namespace ChessGame
             GameStatus = GetGameStatus();
         }
 
-        public ChessBoard(bool setup = false)
+        public void GetHelp()
+        {
+            var res = this.GetMoveEvaluation().First();
+
+            GetCell(res.Key.Position.Row, res.Key.Position.Column).IsHelp = true;
+            GetCell(res.Value.Row, res.Value.Column).IsHelp = true;
+        }
+
+        private void ClearHelp()
+        {
+            foreach (ChessCell cell in Cells)
+                cell.IsHelp = false;
+        }
+
+        public ChessBoard(bool setup = false, bool onSameBoard = false)
         {
             Cells = new ChessCell[8, 8];
             for (int i = 0; i < 8; i++)
@@ -54,7 +96,9 @@ namespace ChessGame
                     Cells[i, j] = new ChessCell(i, j, this);
 
             Players = CreatePlayers();
-            Player = Players.First(p => p.Color == FigureColors.White);
+
+            if (!onSameBoard)
+                Player = Players.First(p => p.Color == FigureColor.White);
 
             if (setup)
                 Setup();
@@ -62,14 +106,16 @@ namespace ChessGame
 
         private List<Player> CreatePlayers()
         {
-            var players = new List<Player>();
-            players.Add(new Player() { Color = FigureColors.White });
-            players.Add(new Player() { Color = FigureColors.Black });
+            var players = new List<Player>
+            {
+                new Player() { Color = FigureColor.White },
+                new Player() { Color = FigureColor.Black }
+            };
 
             return players;
         }
 
-        public void SetCurrentPlayer(FigureColors playerColor)
+        public void SetCurrentPlayer(FigureColor playerColor)
         {
             Player = Players.First(p => p.Color == playerColor);
             ((IChessObservable)this).Notify();
@@ -113,6 +159,13 @@ namespace ChessGame
             }
 
             Target = currentCell;
+        }
+
+        public override void TryMove(Cell from, Cell to)
+        {
+            base.TryMove(from, to);
+            ClearHelp();
+            ClearPossibleMoves();
         }
 
         public void SetCheckMethod(CheckMove checkMove)

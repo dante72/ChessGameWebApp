@@ -1,4 +1,5 @@
-﻿using ChessGame;
+﻿using ChessGameClient.Services;
+using ChessGame;
 using ChessGameWebApp.Client.Services;
 using Microsoft.AspNetCore.Components;
 
@@ -6,9 +7,7 @@ namespace ChessGameWebApp.Client.Components
 {
     public class GameComponentModel : ComponentBase, IDisposable, IChessObserver
     {
-        public bool Inversion { get => Board.Player?.Color == FigureColors.Black; }
-        [Inject]
-        public IClientGameService _ClientGameService { get; set; }
+        public bool Inversion { get => Board.Player?.Color == FigureColor.Black; }
 
         [Inject]
         public IGameHubService _GameHubService { get; set; }

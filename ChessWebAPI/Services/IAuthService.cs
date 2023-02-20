@@ -1,6 +1,8 @@
-﻿using AuthWebAPI;
+﻿using ChessGameClient;
+using ChessGameClient.AuthWebAPI;
+using System.Threading.Tasks;
 
-namespace ChessGameWebApp.Client.Services
+namespace ChessGameClient.Services
 {
     public interface IAuthService
     {

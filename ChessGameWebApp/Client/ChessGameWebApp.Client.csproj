@@ -10,14 +10,15 @@
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
     <PackageReference Include="Blazored.Modal" Version="7.0.0" />
+    <PackageReference Include="Castle.Windsor" Version="5.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.3" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\ChessGame\ChessGame.csproj" />
-    <ProjectReference Include="..\..\ChessWebAPI\AuthWebAPI.csproj" />
+    <ProjectReference Include="..\..\ChessWebAPI\ChessGameClient.csproj" />
     <ProjectReference Include="..\Shared\ChessGameWebApp.Shared.csproj" />
   </ItemGroup>
 

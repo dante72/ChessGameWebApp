@@ -1,10 +1,9 @@
 ﻿@page "/adminPanel"
-@using AuthWebAPI
+@using ChessGameClient
+@using ChessGameClient.AuthWebAPI;
 @using Blazored.LocalStorage
+@using ChessGameClient.Models;
 @using ChessGameWebApp.Client.Services
-@using JwtToken
-@using Models
-@using global::Models
 @inject IJSRuntime JsRuntime
 @inject IAuthWebApi authWebApi
 @inject NavigationManager navigationManager

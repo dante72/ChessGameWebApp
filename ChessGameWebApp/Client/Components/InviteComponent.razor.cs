@@ -1,4 +1,6 @@
-﻿using ChessGame;
+﻿using ChessGameClient.Models;
+using ChessGameClient.Services;
+using ChessGame;
 using ChessGameWebApp.Client.Services;
 using Microsoft.AspNetCore.Components;
 

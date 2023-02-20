@@ -1,4 +1,6 @@
-﻿@using ChessGame
+﻿@using ChessGameClient.Models;
+@using ChessGameClient.Services;
+@using ChessGame
 @using ChessGameWebApp.Client.Services;
 @inherits GameComponentModel
 @inject IGameHubService gameHub
@@ -10,10 +12,22 @@
         await gameHub.MoveBack();
     }
 
+    private async void getHelp()
+    {
+        await gameHub.Help();
+    }
+
+    private async void giveUp()
+    {
+        await gameHub.GameOver();
+    }
 }
 @if (user.Roles.Contains("admin"))
 {
     <input class="btn btn-primary" type="button" value="MoveBack" @onclick="moveBack"/>
+    <input class="btn btn-primary" type="button" value="Help" @onclick="getHelp" />
 }
+<input class="btn btn-primary" type="button" value="GiveUp" @onclick="giveUp" />
+
 <StatusComponent Board="@Board"></StatusComponent>
 <GameComponent></GameComponent>

@@ -1,29 +1,32 @@
 using ChessGame;
 using ChessGameWebApp.Client;
 using ChessGameWebApp.Client.Services;
-using AuthWebAPI;
+using ChessGameClient;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using ChessGameWebApp.Client.Models;
-using Blazored.LocalStorage;
 using Blazored.Modal;
 using ChessGameWebApp.Shared;
+using ChessGameWebApp.Client.Services.Impl;
+using ChessGameClient.AuthWebAPI;
+using ChessGameClient.Services;
+using ChessGameClient.Models;
+using ChessGameClient.Services.Impl;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddBlazoredModal();
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddScoped(sp => new AuthHttpClient { BaseAddress = new Uri("https://localhost:7256/") });
+builder.Services.AddScoped<GameHttpClient>();
+builder.Services.AddScoped<AuthHttpClient>();
 builder.Services.AddScoped<IAuthWebApi, AuthWebApi>();
-builder.Services.AddScoped(b => new ChessBoard());
-builder.Services.AddScoped<IClientGameService, ClientGameService>();
-builder.Services.AddScoped<IGameHubService, GameHubService>();
-builder.Services.AddScoped(user => new SiteUserInfo());
-builder.Services.AddScoped(updater => new TimeUpdater());
-builder.Services.AddBlazoredLocalStorage();
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped(chat => new List<ChatMessage>());
+builder.Services.AddScoped<ChessBoard>();
+builder.Services.AddScoped<IGameHubService, GameHubServiceImplV2>();
+builder.Services.AddScoped<IChatHubService, ChatHubServiceImpl>();
+builder.Services.AddScoped<SiteUserInfo>();
+builder.Services.AddScoped<TimeUpdater>();
+builder.Services.AddScoped<IMyLocalStorageService, MyLocalStorageServiceImpl>();
+builder.Services.AddScoped<IAuthService, AuthServiceImplV2>();
+builder.Services.AddScoped<List<ChatMessage>>();
 
 await builder.Build().RunAsync();

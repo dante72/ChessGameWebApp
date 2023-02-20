@@ -1,6 +1,6 @@
 ﻿@page "/fetchdata"
 @using ChessGameWebApp.Shared
-@using AuthWebAPI
+@using ChessGameClient.AuthWebAPI
 @inject IAuthWebApi Auth
 @inject IJSRuntime JsRuntime
 
@@ -46,7 +46,7 @@ else
     {
         try
         {
-            forecasts = await Auth.Weather();
+            
         }
         catch(Exception ex)
         {

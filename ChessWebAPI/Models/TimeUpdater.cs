@@ -1,6 +1,9 @@
 ﻿using ChessGame;
+using System;
+using System.Collections.Generic;
+using System.Threading;
 
-namespace ChessGameWebApp.Client.Models
+namespace ChessGameClient.Models
 {
     public class TimeUpdater : IChessObservable, IDisposable
     {

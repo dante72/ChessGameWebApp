@@ -1,5 +1,6 @@
 ﻿using ChessGame;
 using ChessGameWebApp.Server.Models;
+using Models;
 using Player = ChessGameWebApp.Server.Models.Player;
 
 namespace ChessGameWebApp.Server.Services
@@ -11,6 +12,7 @@ namespace ChessGameWebApp.Server.Services
         private readonly IGameHubService _gameHub;
         private readonly ILogger<SessionBackgroundService> _logger;
         private Task _task;
+        private Task _gameOvertask;
         private TimeSpan _time;
         public SessionBackgroundService(List<GameSession> sessions, List<Player> players, IGameHubService gameHub, ILogger<SessionBackgroundService> logger)
         {
@@ -29,6 +31,12 @@ namespace ChessGameWebApp.Server.Services
                 _task.Start();
             }
 
+            if (_gameOvertask == null)
+            {
+                _gameOvertask = CheckGameOver();
+                _gameOvertask.Start();
+            }
+
             return Task.CompletedTask;
         }
 
@@ -44,6 +52,34 @@ namespace ChessGameWebApp.Server.Services
                     await Task.Delay(10_000);
                 }
             });
+        }
+
+        private Task CheckGameOver()
+        {
+            return new Task(async () =>
+            {
+                while (true)
+                {
+                    await CheckGameOverSession();
+
+                    _logger.LogInformation("service is working...");
+                    await Task.Delay(2_000);
+                }
+            });
+        }
+
+        private Task CheckGameOverSession()
+        {
+            lock (_sessions)
+            {
+                _sessions.Where(s => s.Board.GetGameStatus() == GameStatus.TimeIsUp).ToList()
+                    .ForEach(s => { _sessions.Remove(s);
+                        _logger.LogInformation($"session remove");
+                    });
+            }
+
+            return Task.CompletedTask;
+
         }
 
         private async Task TryCreateSession()

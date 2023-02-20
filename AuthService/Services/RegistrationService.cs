@@ -1,4 +1,5 @@
-﻿using JwtToken;
+﻿using AuthWebAPI.Services.Impl;
+using JwtToken;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Models;
@@ -144,7 +145,7 @@ namespace AuthService.Services
 
             var accessToken = _accessTokenService.GenerateToken(account);
 
-            if (TokenService.TokenIsExpired(refreshToken))
+            if (JwtToken.TokenService.TokenIsExpired(refreshToken))
             {
                 refreshToken = _refreshTokenService.GenerateToken(account);
                 await SaveToken(refreshToken, account);

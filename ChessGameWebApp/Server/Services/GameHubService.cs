@@ -19,6 +19,5 @@ namespace ChessGameWebApp.Server.Services
             var connectionIds = await _connectionService.GetConnections(players.Select(p => p.Id).ToArray()); 
             await _hubContext.Clients.Clients(connectionIds).SendAsync("StartGame", true);
         }
-
     }
 }

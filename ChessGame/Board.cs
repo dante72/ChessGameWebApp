@@ -20,8 +20,8 @@ namespace ChessGame
                 players = value;
 
                 if (value.Count() == 2 
-                    && value.FirstOrDefault(p => p.Color == FigureColors.White) != null
-                    && value.FirstOrDefault(p => p.Color == FigureColors.Black) != null
+                    && value.FirstOrDefault(p => p.Color == FigureColor.White) != null
+                    && value.FirstOrDefault(p => p.Color == FigureColor.Black) != null
                     )
                 {
                     players = value;
@@ -34,15 +34,26 @@ namespace ChessGame
             }
         }
         internal Stack<Figure> MovedFigures { set; get; } = new Stack<Figure>();
-        public FigureColors IsAllowedMove { get => Index % 2 == 0 ? FigureColors.White : FigureColors.Black; }
+        public FigureColor IsAllowedMove { get => Index % 2 == 0 ? FigureColor.White : FigureColor.Black; }
         internal int Index { get; set; } = 0;
         internal Cell[,] Cells;
-        internal Figure? this[int row, int column]
+        public Figure? this[int row, int column]
         {
             get => Cells[row, column].Figure;
             set => Cells[row, column].Figure = value;
         }
-        public virtual GameStatus GameStatus { get; set; }
+
+        private GameStatus gameStatus;
+        public virtual GameStatus GameStatus
+        { 
+            get => gameStatus;
+            set
+            {
+                gameStatus = value;
+            } 
+        }
+
+        public IEnumerable<Figure> Figures { get => this.Where(cell => cell.Figure != null).Select(cell => cell.Figure); }
 
         public Board(bool setup = false)
         {
@@ -78,27 +89,27 @@ namespace ChessGame
         }
         internal void Setup()
         {
-            this[0, 0] = new Rook(FigureColors.Black);
-            this[0, 1] = new Knight(FigureColors.Black);
-            this[0, 2] = new Bishop(FigureColors.Black);
-            this[0, 3] = new Queen(FigureColors.Black);
-            this[0, 4] = new King(FigureColors.Black);
-            this[0, 5] = new Bishop(FigureColors.Black);
-            this[0, 6] = new Knight(FigureColors.Black);
-            this[0, 7] = new Rook(FigureColors.Black);
+            this[0, 0] = new Rook(FigureColor.Black);
+            this[0, 1] = new Knight(FigureColor.Black);
+            this[0, 2] = new Bishop(FigureColor.Black);
+            this[0, 3] = new Queen(FigureColor.Black);
+            this[0, 4] = new King(FigureColor.Black);
+            this[0, 5] = new Bishop(FigureColor.Black);
+            this[0, 6] = new Knight(FigureColor.Black);
+            this[0, 7] = new Rook(FigureColor.Black);
             for (int i = 0; i < 8; i++)
             {
-                this[1, i] = new Pawn(FigureColors.Black);
-                this[6, i] = new Pawn(FigureColors.White);
+                this[1, i] = new Pawn(FigureColor.Black);
+                this[6, i] = new Pawn(FigureColor.White);
             }
-            this[7, 0] = new Rook(FigureColors.White);
-            this[7, 1] = new Knight(FigureColors.White);
-            this[7, 2] = new Bishop(FigureColors.White);
-            this[7, 3] = new Queen(FigureColors.White);
-            this[7, 4] = new King(FigureColors.White);
-            this[7, 5] = new Bishop(FigureColors.White);
-            this[7, 6] = new Knight(FigureColors.White);
-            this[7, 7] = new Rook(FigureColors.White);
+            this[7, 0] = new Rook(FigureColor.White);
+            this[7, 1] = new Knight(FigureColor.White);
+            this[7, 2] = new Bishop(FigureColor.White);
+            this[7, 3] = new Queen(FigureColor.White);
+            this[7, 4] = new King(FigureColor.White);
+            this[7, 5] = new Bishop(FigureColor.White);
+            this[7, 6] = new Knight(FigureColor.White);
+            this[7, 7] = new Rook(FigureColor.White);
         }
 
         public void TryMoveBack()
@@ -127,7 +138,7 @@ namespace ChessGame
             Index--;
         }
 
-        public void TryMove(Cell from, Cell to)
+        public virtual void TryMove(Cell from, Cell to)
         {
             if (from.Figure?.PossibleMoves.Contains(to) != true)
                 throw new InvalidOperationException("Error! Such step is impossible");
@@ -146,38 +157,38 @@ namespace ChessGame
 
         internal void Setup1()
         {
-            this[0, 0] = new Rook(FigureColors.Black);
-            this[0, 4] = new King(FigureColors.Black);
-            this[0, 7] = new Rook(FigureColors.Black);
+            this[0, 0] = new Rook(FigureColor.Black);
+            this[0, 4] = new King(FigureColor.Black);
+            this[0, 7] = new Rook(FigureColor.Black);
 
-            this[7, 0] = new Rook(FigureColors.White);
+            this[7, 0] = new Rook(FigureColor.White);
 
-            this[7, 4] = new King(FigureColors.White);
-            this[7, 7] = new Rook(FigureColors.White);
+            this[7, 4] = new King(FigureColor.White);
+            this[7, 7] = new Rook(FigureColor.White);
         }
 
         private void Setup2()
         {
             // мат в 2 хода
 
-            this[2, 0] = new Pawn(FigureColors.Black);
-            this[2, 2] = new King(FigureColors.Black);
-            this[6, 6] = new Queen(FigureColors.White);
-            this[7, 1] = new King(FigureColors.White);
-            this[3, 0] = new Pawn(FigureColors.White);
-            this[4, 3] = new Pawn(FigureColors.White);
-            this[6, 7] = new Bishop(FigureColors.White);
-            this[3, 3] = new Rook(FigureColors.White);
+            this[2, 0] = new Pawn(FigureColor.Black);
+            this[2, 2] = new King(FigureColor.Black);
+            this[6, 6] = new Queen(FigureColor.White);
+            this[7, 1] = new King(FigureColor.White);
+            this[3, 0] = new Pawn(FigureColor.White);
+            this[4, 3] = new Pawn(FigureColor.White);
+            this[6, 7] = new Bishop(FigureColor.White);
+            this[3, 3] = new Rook(FigureColor.White);
         }
 
-        internal bool IsCheckToKing(FigureColors color)
+        internal bool IsCheckToKing(FigureColor color)
         {
             var cell = this.First(cell => cell.Figure is King king && king.Color == color);
 
-            return IsUnderAttack(cell, color == FigureColors.White ? FigureColors.Black : FigureColors.White);
+            return IsUnderAttack(cell, color == FigureColor.White ? FigureColor.Black : FigureColor.White);
         }
 
-        internal bool IsLastMove(FigureColors color)
+        internal bool IsLastMove(FigureColor color)
         {
             return !this
                 .Where(cell => cell.Figure != null)
@@ -187,7 +198,7 @@ namespace ChessGame
                 .Any();
         }
 
-        internal bool IsUnderAttack(Cell cell, FigureColors color)
+        internal bool IsUnderAttack(Cell cell, FigureColor color)
         {
             return this
                 .Where(cell => cell.Figure != null)
@@ -202,7 +213,7 @@ namespace ChessGame
             if (СhessСlock.IsGameOver())
                 return GameStatus.TimeIsUp;
 
-            FigureColors player = GetCurrentPlayer();
+            FigureColor player = GetCurrentPlayer();
 
             bool lastMove = IsLastMove(player);
             bool check = IsCheckToKing(player);
@@ -219,7 +230,7 @@ namespace ChessGame
             return GameStatus.Normal;
         }
 
-        public FigureColors GetCurrentPlayer() => Index % 2 == 0 ? FigureColors.White : FigureColors.Black;
+        public FigureColor GetCurrentPlayer() => Index % 2 == 0 ? FigureColor.White : FigureColor.Black;
         public IEnumerator<Cell> GetEnumerator() => Cells.Cast<Cell>().GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => Cells.GetEnumerator();
     }

@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ChessGame.Figures
 {
-    internal class Queen : Figure
+    public class Queen : Figure
     {
-        public Queen(FigureColors color) : base(color)
+        public Queen(FigureColor color) : base(color)
         {
         }
         internal override List<Cell> GetAllPossibleMoves()
         {
             var list = new List<Cell>();
-            if (Position is not null)
+            if (Position != null)
             {
                 list.AddRange(Position.GetCellsInDirection(Directions.LeftUp));
                 list.AddRange(Position.GetCellsInDirection(Directions.RightDown));

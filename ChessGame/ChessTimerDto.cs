@@ -13,8 +13,8 @@ namespace ChessGame
         public ChessTimerDto()
         {
             Players = new PlayerDto[2];
-            Players[0] = new PlayerDto() { Color = FigureColors.White };
-            Players[1] = new PlayerDto() { Color = FigureColors.Black };
+            Players[0] = new PlayerDto() { Color = FigureColor.White };
+            Players[1] = new PlayerDto() { Color = FigureColor.Black };
         }
     }
 }

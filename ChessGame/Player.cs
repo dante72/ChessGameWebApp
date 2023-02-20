@@ -8,7 +8,7 @@ namespace ChessGame
 {
     public class Player : IPlayer
     {
-        public FigureColors Color { get; set; }
+        public FigureColor Color { get; set; }
         public ChessTimer Timer { get; set; } = new ChessTimer();
     }
 }

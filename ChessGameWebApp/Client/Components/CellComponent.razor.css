@@ -16,7 +16,7 @@
 }
 
 .free {
-    background-color: lawngreen;
+    background-color: lightseagreen;
     border-color: inherit;
 }
 
@@ -27,6 +27,11 @@
 
 .black {
     background-color: saddlebrown;
+    border-color: inherit;
+}
+
+.help {
+    background-color: orangered;
     border-color: inherit;
 }
 

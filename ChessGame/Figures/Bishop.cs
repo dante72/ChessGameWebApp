@@ -8,13 +8,13 @@ namespace ChessGame.Figures
 {
     public class Bishop : Figure
     {
-        public Bishop(FigureColors color) : base(color)
+        public Bishop(FigureColor color) : base(color)
         {
         }
         internal override List<Cell> GetAllPossibleMoves()
         {
             var list = new List<Cell>();
-            if (Position is not null)
+            if (Position != null)
             {
                 list.AddRange(Position.GetCellsInDirection(Directions.LeftUp));
                 list.AddRange(Position.GetCellsInDirection(Directions.RightDown));

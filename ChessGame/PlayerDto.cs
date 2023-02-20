@@ -8,7 +8,7 @@ namespace ChessGame
 {
     public class PlayerDto
     {
-        public FigureColors Color { get; set; }
+        public FigureColor Color { get; set; }
         public TimeSpan Delta { get; set; }
         public DateTime EndTime { get; set; }
         public bool TurnOn { get; set; }

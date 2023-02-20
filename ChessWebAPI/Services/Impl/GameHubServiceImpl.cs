@@ -1,50 +1,48 @@
-﻿using Blazored.Modal;
-using Blazored.Modal.Services;
+﻿using ChessGameClient;
+using ChessGameClient.AuthWebAPI;
+using ChessGameClient.Models;
 using ChessGame;
-using ChessGameWebApp.Client.Components;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
+using System.Threading.Tasks;
+using System;
+using System.Net;
+using System.Net.Http.Headers;
 
-namespace ChessGameWebApp.Client.Services
+namespace ChessGameClient.Services.Impl
 {
-    public class GameHubService : IGameHubService, IAsyncDisposable
+    public class GameHubServiceImpl : IGameHubService, IAsyncDisposable
     {
-        private readonly ILogger<GameHubService> _logger;
-        private readonly ChessBoard _board;
-        private readonly NavigationManager _navigationManager;
-        private readonly HubConnection hubConnection;
-        private readonly SiteUserInfo _siteUserInfo;
-        private readonly IModalService _modal;
+        protected readonly ChessBoard _board;
+        protected readonly HubConnection hubConnection;
+        protected readonly SiteUserInfo _siteUserInfo;
 
-        private IModalReference modalReferense;
-
-        public ChessCell[] CurrentMove { get; set; } = new ChessCell[0];
-        public GameHubService(ILogger<GameHubService> logger,
+        protected readonly GameHttpClient _httpClient;
+        public GameHubServiceImpl(
                               ChessBoard board,
-                              NavigationManager navigationManager,
-                              HttpClient httpClient,
-                              SiteUserInfo siteUserInfo,
-                              IModalService modal)
+                              GameHttpClient httpClient,
+                              SiteUserInfo siteUserInfo)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _board = board ?? throw new ArgumentNullException(nameof(board));
-            _navigationManager = navigationManager ?? throw new ArgumentNullException(nameof(navigationManager));
             _siteUserInfo = siteUserInfo ?? throw new ArgumentNullException(nameof(siteUserInfo));
-            _modal = modal ?? throw new ArgumentNullException(nameof(modal));
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+
+            _board.SetCheckMethod(TryMove);
 
             hubConnection = new HubConnectionBuilder()
-                .WithUrl(_navigationManager.ToAbsoluteUri("/gamehub"), options =>
+                .WithUrl(@"https://localhost:44327/gamehub", options =>
                  {
-                     options.AccessTokenProvider = () => Task.FromResult(httpClient.DefaultRequestHeaders.Authorization.Parameter);
+                     options.AccessTokenProvider = () => Task.FromResult(_httpClient.DefaultRequestHeaders.Authorization?.Parameter);
                  })
                 .WithAutomaticReconnect()
                 .Build();
 
-            hubConnection.On<ChessBoardDto, FigureColors, ChessTimerDto>("ReceiveBoard", (board, playerColor, timer) =>
+            hubConnection.On<ChessBoardDto, FigureColor, ChessTimerDto>("ReceiveBoard", (board, playerColor, timer) =>
             {
                 _board.SetCurrentPlayer(playerColor);
                 _board.Update(board);
                 _board.SetTimer(timer);
+
+                OnReceiveBoardAction();
             });
 
             hubConnection.On<ChessCellDto, ChessCellDto, ChessTimerDto>("ReceiveTryMove", (from, to, timer) =>
@@ -58,12 +56,13 @@ namespace ChessGameWebApp.Client.Services
                     _board.SetTimer(timer);
             });
 
-            hubConnection.On<bool>("StartGame", (start) => 
+            hubConnection.On<bool>("StartGame", (start) =>
             {
                 if (start)
-                    navigationManager.NavigateTo("/Game/start");
+                    GameStartAction();
+                    //navigationManager.NavigateTo("/Game/start");
             });
-            
+
             hubConnection.On<bool>("ReceiveMoveBack", (ok) =>
             {
                 if (ok)
@@ -72,7 +71,7 @@ namespace ChessGameWebApp.Client.Services
 
             hubConnection.On<int, bool>("ChangeStatus", (id, status) =>
             {
-                lock(_siteUserInfo)
+                lock (_siteUserInfo)
                 {
                     if (_siteUserInfo.Id == id)
                         _siteUserInfo.Status = status;
@@ -87,20 +86,39 @@ namespace ChessGameWebApp.Client.Services
             {
                 _siteUserInfo.RivalId = id;
                 _siteUserInfo.RivalName = rivalName;
-                modalReferense = _modal.Show<InviteComponent>("Invite");
+                GetInviteAction();
             });
 
-            hubConnection.On("CloseInvite",() =>
+            hubConnection.On("CloseInvite", () =>
             {
-                modalReferense?.Close();
+                CloseInviteAction();
+            });
+
+            hubConnection.On("SendGameStatus", (GameStatus status) =>
+            {
+                _board.GameStatus = status;
+
+                if (_board.GameStatus == GameStatus.GiveUp || _board.GameStatus == GameStatus.OpponentGiveUp)
+                    _board.СhessСlock.Stop();
             });
 
             InitConnection();
         }
 
-        public async void InitConnection()
+        public virtual void OnReceiveBoardAction() { }
+        public virtual void GameStartAction() { }
+        public virtual void GetInviteAction() { }
+
+        public virtual void CloseInviteAction() { }
+        public async Task<bool> InitConnection()
         {
-            await StartGame();
+            try
+            {
+                await StartGame();
+            }
+            catch { }
+
+            return IsConnected;
         }
         public async Task MoveBack()
         {
@@ -116,7 +134,7 @@ namespace ChessGameWebApp.Client.Services
             await hubConnection.SendAsync("SendBoard");
         }
 
-        public async Task SendTryMove(Cell from, Cell to)
+        public async Task SendTryMove(ChessCellDto from, ChessCellDto to)
         {
             if (!IsConnected)
                 await hubConnection.StartAsync();
@@ -161,13 +179,27 @@ namespace ChessGameWebApp.Client.Services
         public bool IsConnected
         { get => hubConnection.State == HubConnectionState.Connected; }
 
+
+        public Task Help()
+        {
+            _board.GetHelp();
+
+            return Task.CompletedTask;
+        }
+
         public async ValueTask DisposeAsync()
         {
-            if (hubConnection is not null)
+            if (hubConnection != null)
             {
                 await hubConnection.StopAsync();
-                await hubConnection.DisposeAsync();
+                //await hubConnection.DisposeAsync();
             }
+        }
+
+        public async Task<bool> TryMove(Cell from, Cell to)
+        {
+            await SendTryMove(from.ToDto(), to.ToDto());
+            return false;
         }
     }
 }

@@ -13,11 +13,12 @@ public class TokenService : IAccessTokenService, IRefreshTokenService, ITokenSer
     }
     public string GenerateToken(Account account)
     {
-        var claims = new List<Claim>();
-
-        claims.Add(new Claim(JwtRegisteredClaimNames.NameId, account.Id.ToString()));
-        claims.Add(new Claim(JwtRegisteredClaimNames.Email, account.Email));
-        claims.Add(new Claim(JwtRegisteredClaimNames.GivenName, account.Username));
+        var claims = new List<Claim>
+        {
+            new Claim(JwtRegisteredClaimNames.NameId, account.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Email, account.Email),
+            new Claim(JwtRegisteredClaimNames.GivenName, account.Username)
+        };
         // Add roles as multiple claims
         foreach (var role in account.Roles)
         {

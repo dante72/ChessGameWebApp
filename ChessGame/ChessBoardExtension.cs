@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,10 @@ namespace ChessGame
 {
     public static class ChessBoardExtension
     {
+        public static ChessCellDto ToDto(this Cell cell)
+        {
+            return new ChessCellDto() { Row = cell.Row, Column= cell.Column };
+        }
         public static ChessBoardDto ToDto(this ChessBoard chessBoard)
         {
             var chessBoardDto = new ChessBoardDto();
@@ -56,6 +61,7 @@ namespace ChessGame
                 chessBoard[cell.Row, cell.Column] = data.Cells[cell.Row * 8 + cell.Column].Figure?.FromDto();
             }
             chessBoard.Index = data.Index;
+            chessBoard.GameStatus = GameStatus.Normal;
         }
 
         public static ChessBoard FromDto(this ChessBoardDto data)

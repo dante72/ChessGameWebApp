@@ -1,34 +1,28 @@
-﻿using AuthWebAPI;
-using Blazored.LocalStorage;
+﻿using ChessGameClient.AuthWebAPI;
+using ChessGameClient.Models;
 using ChessGame;
-using ChessGameWebApp.Client.Models;
-using JwtToken;
-using Microsoft.AspNetCore.Components;
+using AuthWebAPI.Services.Impl;
+using System;
+using System.Threading.Tasks;
 
-namespace ChessGameWebApp.Client.Services
+namespace ChessGameClient.Services.Impl
 {
-    public class AuthService : IAuthService, IChessObserver, IDisposable
+    public class AuthServiceImpl : IAuthService, IChessObserver, IDisposable
     {
-        private readonly ILogger<AuthService> _logger;
-        private readonly IAuthWebApi _authWebApi;
-        private readonly SiteUserInfo _siteUserInfo;
-        private readonly ILocalStorageService _localStorageService;
-        private readonly TimeUpdater _timeUpdater;
-        private readonly NavigationManager _navigationManager;
-
-        public AuthService(ILogger<AuthService> logger,
+        protected readonly IAuthWebApi _authWebApi;
+        protected readonly SiteUserInfo _siteUserInfo;
+        protected readonly IMyLocalStorageService _localStorageService;
+        protected readonly TimeUpdater _timeUpdater;
+        public AuthServiceImpl(
                            IAuthWebApi authWebApi,
                            SiteUserInfo siteUserInfo,
-                           ILocalStorageService localStorageService,
-                           TimeUpdater timeUpdater,
-                           NavigationManager navigationManager)
+                           IMyLocalStorageService localStorageService,
+                           TimeUpdater timeUpdater)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _authWebApi = authWebApi ?? throw new ArgumentNullException(nameof(authWebApi));
             _siteUserInfo = siteUserInfo ?? throw new ArgumentNullException(nameof(siteUserInfo));
             _localStorageService = localStorageService ?? throw new ArgumentNullException(nameof(localStorageService));
             _timeUpdater = timeUpdater ?? throw new ArgumentNullException(nameof(timeUpdater));
-            _navigationManager = navigationManager ?? throw new ArgumentNullException(nameof(navigationManager));
 
             ((IChessObservable)timeUpdater).Subscribe(this);
         }
@@ -52,7 +46,7 @@ namespace ChessGameWebApp.Client.Services
 
         private async Task<string> GetTokenFromLocalStorage()
         {
-            return await _localStorageService.GetItemAsync<string>("refresh" + _siteUserInfo.Id);
+            return await _localStorageService.GetItemAsync("refresh" + _siteUserInfo.Id);
         }
 
         private async Task SetTokenToLocalStorage(string token)
@@ -67,10 +61,7 @@ namespace ChessGameWebApp.Client.Services
 
         private async Task<string?> GetFirstTokenFromLocalStorage()
         {
-            var keys = await _localStorageService.KeysAsync();
-            var key = keys.FirstOrDefault(i => i.StartsWith("refresh"));
-
-            return await _localStorageService.GetItemAsync<string>(key);
+            return await _localStorageService.GetItemAsync();
         }
 
         public async Task<bool> TokenAutorization()
@@ -102,21 +93,21 @@ namespace ChessGameWebApp.Client.Services
             if (_siteUserInfo.AccessTokenExpire - DateTime.UtcNow > TimeSpan.FromSeconds(10))
                 return;
 
-            lock(_lock)
+            lock (_lock)
             {
                 if (_siteUserInfo.AccessTokenExpire - DateTime.UtcNow > TimeSpan.FromSeconds(10))
                     return;
             }
-            
-            await GetTokens();               
+
+            await GetTokens();
         }
 
-        public async Task LogOut()
+        public virtual async Task LogOut()
         {
             await RemoveTokenFromLocalStorage();
             await _authWebApi.SingOut();
             _siteUserInfo.Default();
-            _navigationManager.NavigateTo("/", true);
+            //_navigationManager.NavigateTo("/", true);
         }
 
         private async Task GetTokens()

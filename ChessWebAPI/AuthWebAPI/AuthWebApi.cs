@@ -1,16 +1,17 @@
-﻿using ChessGameWebApp.Shared;
-using JwtToken;
-using Models;
+﻿using ChessGameClient.Models;
+using System;
+using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
 
-namespace AuthWebAPI
+namespace ChessGameClient.AuthWebAPI
 {
     public class AuthWebApi : IAuthWebApi
     {
         public readonly AuthHttpClient _auth;
-        public readonly HttpClient _gameServer;
-        public AuthWebApi(AuthHttpClient auth, HttpClient gameServer)
+        public readonly GameHttpClient _gameServer;
+        public AuthWebApi(AuthHttpClient auth, GameHttpClient gameServer)
         {
             _auth = auth ?? throw new NullReferenceException(nameof(auth));
             _gameServer = gameServer ?? throw new NullReferenceException(nameof(gameServer));
@@ -79,13 +80,6 @@ namespace AuthWebAPI
             _auth.DefaultRequestHeaders.Authorization = null;
             _gameServer.DefaultRequestHeaders.Authorization = null;
 
-        }
-
-        public async Task<WeatherForecast[]> Weather()
-        {
-            var result = await _gameServer.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
-
-            return result;
         }
 
         public async Task<UserInfo?> GetUserInfo()

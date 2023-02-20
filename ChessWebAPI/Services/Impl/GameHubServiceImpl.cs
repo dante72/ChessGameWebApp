@@ -94,6 +94,14 @@ namespace ChessGameClient.Services.Impl
                 CloseInviteAction();
             });
 
+            hubConnection.On("SendGameStatus", (GameStatus status) =>
+            {
+                _board.GameStatus = status;
+
+                if (_board.GameStatus == GameStatus.GiveUp || _board.GameStatus == GameStatus.OpponentGiveUp)
+                    _board.СhessСlock.Stop();
+            });
+
             InitConnection();
         }
 

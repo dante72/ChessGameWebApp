@@ -42,7 +42,16 @@ namespace ChessGame
             get => Cells[row, column].Figure;
             set => Cells[row, column].Figure = value;
         }
-        public virtual GameStatus GameStatus { get; set; }
+
+        private GameStatus gameStatus;
+        public virtual GameStatus GameStatus
+        { 
+            get => gameStatus;
+            set
+            {
+                gameStatus = value;
+            } 
+        }
 
         public IEnumerable<Figure> Figures { get => this.Where(cell => cell.Figure != null).Select(cell => cell.Figure); }
 

@@ -77,9 +77,14 @@ namespace ChessGameWebApp.Server.SignalRHub
         {
             int accountId = GetCurrentAccountId(Context);
             var session = await _serverGameService.GetSession(accountId);
+            var player1 = session.GetPlayer(accountId);
+            var player2 = session.Players.First(p => p != player1);
+            var connection1 = await _connectionService.GetConnections(new int[] { player1.Id });
+            var connection2 = await _connectionService.GetConnections(new int[] { player2.Id });
 
-            if (session.Board.СhessСlock.IsGameOver())
-                await _serverGameService.CloseSession(accountId);
+            await Clients.Clients(connection1).SendAsync("SendGameStatus", GameStatus.GiveUp);
+            await Clients.Clients(connection2).SendAsync("SendGameStatus", GameStatus.OpponentGiveUp);
+            await _serverGameService.CloseSession(accountId);
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)

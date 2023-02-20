@@ -12,6 +12,8 @@ namespace ChessGame
         Check,
         Checkmate,
         Stalemate,
-        TimeIsUp
+        TimeIsUp,
+        GiveUp,
+        OpponentGiveUp
     }
 }

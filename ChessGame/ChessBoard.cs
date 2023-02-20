@@ -27,17 +27,45 @@ namespace ChessGame
                 target.IsPointer = true;
             }
         }
-        private GameStatus gameStatus;
         public override GameStatus GameStatus
         {
             get
             {
-                return gameStatus;
+                return base.GameStatus;
             }
             set
             {
-                gameStatus = value;
+                base.GameStatus = value;
                 ((IChessObservable)this).Notify();
+            }
+        }
+
+        public string GameStatusDescription
+        {
+            get
+            {
+                if (Player == null)
+                    return string.Empty;
+
+                switch (GameStatus)
+                {
+                    case GameStatus.Normal:
+                        return GetCurrentPlayer() == Player.Color ? "Ваш ход" : "Ход соперника";
+                    case GameStatus.Check:
+                        return GetCurrentPlayer() == Player.Color ? "Соперник объявил вам ШАХ!" : "Вы объявили ШАХ сопернику!";
+                    case GameStatus.Stalemate:
+                        return "Пат, Ничья!";
+                    case GameStatus.Checkmate:
+                        return GetCurrentPlayer() == Player.Color ? "Соперник объявил вам МАТ!" : "Вы объявили МАТ сопернику!";
+                    case GameStatus.TimeIsUp:
+                        return GetCurrentPlayer() == Player.Color ? "Ваше время вышло!" : "Время соперника вышло!";
+                    case GameStatus.GiveUp:
+                        return "Вы сдались!";
+                    case GameStatus.OpponentGiveUp:
+                        return "Ваш соперник сдался!";
+                    default:
+                        return "Unknown status";
+                }
             }
         }
 

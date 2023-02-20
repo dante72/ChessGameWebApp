@@ -17,11 +17,17 @@
         await gameHub.Help();
     }
 
+    private async void giveUp()
+    {
+        await gameHub.GameOver();
+    }
 }
 @if (user.Roles.Contains("admin"))
 {
     <input class="btn btn-primary" type="button" value="MoveBack" @onclick="moveBack"/>
     <input class="btn btn-primary" type="button" value="Help" @onclick="getHelp" />
 }
+<input class="btn btn-primary" type="button" value="GiveUp" @onclick="giveUp" />
+
 <StatusComponent Board="@Board"></StatusComponent>
 <GameComponent></GameComponent>

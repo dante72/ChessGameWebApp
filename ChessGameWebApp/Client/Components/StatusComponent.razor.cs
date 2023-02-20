@@ -25,25 +25,7 @@ namespace ChessGameWebApp.Client.Components
         }
         public async Task UpdateAsync()
         {
-            switch(Board.GameStatus)
-            {
-                case GameStatus.Normal:
-                    Status = Board.GetCurrentPlayer() == Board.Player.Color ? "Ваш ход" : "Ход соперника";
-                    break;
-                case GameStatus.Check:
-                    Status = Board.GetCurrentPlayer() == Board.Player.Color ? "Соперник объявил вам ШАХ!" : "Вы объявили ШАХ сопернику!";
-                    break;
-                case GameStatus.Stalemate:
-                    Status = "Пат, Ничья!";
-                    break;
-                case GameStatus.Checkmate:
-                    Status = Board.GetCurrentPlayer() == Board.Player.Color ? "Соперник объявил вам МАТ!" : "Вы объявили МАТ сопернику!";
-                    break;
-                case GameStatus.TimeIsUp:
-                    Status = Board.GetCurrentPlayer() == Board.Player.Color ? "Ваше время вышло!" : "Время соперника вышло!";
-                    //await _GameHubService.GameOver();
-                    break;
-            }
+            Status = board.GameStatusDescription;
 
             StateHasChanged();
         }

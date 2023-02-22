@@ -6,11 +6,8 @@ using JwtToken;
 using Microsoft.OpenApi.Models;
 using ChessGameWebApp.Server.Models;
 using Player = ChessGameWebApp.Server.Models.Player;
-using CommonConfig;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Configuration.AddConfiguration(CommonConfiguration.Create());
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>

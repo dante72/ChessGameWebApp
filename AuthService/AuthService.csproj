@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChessWebAPI\ChessGameClient.csproj" />
-    <ProjectReference Include="..\CommonConfig\CommonConfig.csproj" />
     <ProjectReference Include="..\DbContextDao\DbContextDao.csproj" />
     <ProjectReference Include="..\JwtToken\JwtToken.csproj" />
     <ProjectReference Include="..\Repository\Repositories.csproj" />

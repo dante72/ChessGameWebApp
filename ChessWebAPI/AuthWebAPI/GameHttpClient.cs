@@ -11,7 +11,7 @@ namespace ChessGameClient.AuthWebAPI
     {
         public GameHttpClient()
         {
-            BaseAddress = new Uri("https://localhost:7084/");
+            //BaseAddress = new Uri("https://localhost:7084/");
         }
     }
 }

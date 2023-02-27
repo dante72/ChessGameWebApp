@@ -11,7 +11,7 @@ using ChessGameClient.AuthWebAPI;
 using ChessGameClient.Services;
 using ChessGameClient.Models;
 using ChessGameClient.Services.Impl;
-
+using Blazored.LocalStorage;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -26,7 +26,8 @@ builder.Services.AddScoped<IGameHubService, GameHubServiceImplV2>();
 builder.Services.AddScoped<IChatHubService, ChatHubServiceImpl>();
 builder.Services.AddScoped<SiteUserInfo>();
 builder.Services.AddScoped<TimeUpdater>();
-builder.Services.AddScoped<IMyLocalStorageService, MyLocalStorageServiceImpl>();
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<IMyLocalStorageService, MyLocalStorageServiceV2>();
 builder.Services.AddScoped<IAuthService, AuthServiceImplV2>();
 builder.Services.AddScoped<List<ChatMessage>>();
 

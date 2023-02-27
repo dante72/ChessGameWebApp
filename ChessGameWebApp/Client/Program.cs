@@ -18,8 +18,8 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddBlazoredModal();
 
-builder.Services.AddScoped(gameClient => new GameHttpClient() { BaseAddress = new Uri("https://localhost:7084/")});
-builder.Services.AddScoped(gameClient => new AuthHttpClient() { BaseAddress = new Uri("https://localhost:7256/") });
+builder.Services.AddScoped(gameClient => new GameHttpClient() { BaseAddress = new Uri(builder.Configuration["GameClient"])});
+builder.Services.AddScoped(authClient => new AuthHttpClient() { BaseAddress = new Uri(builder.Configuration["AuthClient"]) });
 builder.Services.AddScoped<IAuthWebApi, AuthWebApi>();
 builder.Services.AddScoped<ChessBoard>();
 builder.Services.AddScoped<IGameHubService, GameHubServiceImplV2>();

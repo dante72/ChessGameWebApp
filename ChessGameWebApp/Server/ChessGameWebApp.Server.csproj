@@ -18,7 +18,6 @@
     <ProjectReference Include="..\..\JwtToken\JwtToken.csproj" />
     <ProjectReference Include="..\..\Models\Models.csproj" />
     <ProjectReference Include="..\Client\ChessGameWebApp.Client.csproj" />
-    <ProjectReference Include="..\Shared\ChessGameWebApp.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

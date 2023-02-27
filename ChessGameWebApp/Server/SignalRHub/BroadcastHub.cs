@@ -1,6 +1,4 @@
 ﻿using ChessGameClient.Models;
-using ChessGameWebApp.Server.Services;
-using ChessGameWebApp.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;

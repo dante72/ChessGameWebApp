@@ -1,11 +1,8 @@
 using ChessGame;
 using ChessGameWebApp.Client;
-using ChessGameWebApp.Client.Services;
-using ChessGameClient;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Blazored.Modal;
-using ChessGameWebApp.Shared;
 using ChessGameWebApp.Client.Services.Impl;
 using ChessGameClient.AuthWebAPI;
 using ChessGameClient.Services;

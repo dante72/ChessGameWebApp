@@ -15,15 +15,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ChessGame\ChessGame.csproj" />
-    <ProjectReference Include="..\..\CommonConfig\CommonConfig.csproj" />
     <ProjectReference Include="..\..\JwtToken\JwtToken.csproj" />
     <ProjectReference Include="..\..\Models\Models.csproj" />
     <ProjectReference Include="..\Client\ChessGameWebApp.Client.csproj" />
-    <ProjectReference Include="..\Shared\ChessGameWebApp.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="start.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

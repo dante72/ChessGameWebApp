@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGameWebApp.Server", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGameWebApp.Client", "ChessGameWebApp\Client\ChessGameWebApp.Client.csproj", "{062FA73C-F069-4649-8A84-8E73032BC571}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGameWebApp.Shared", "ChessGameWebApp\Shared\ChessGameWebApp.Shared.csproj", "{E77E3224-016A-480B-A010-CF2167DE1C3F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGame", "ChessGame\ChessGame.csproj", "{99FD221C-4429-4808-889E-83BC8C91E932}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessGameClient", "ChessWebAPI\ChessGameClient.csproj", "{50FFF098-3AE5-4F6A-A708-BE78D803D12C}"
@@ -28,8 +26,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repository\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JwtToken", "JwtToken\JwtToken.csproj", "{3B3E010F-9EFD-4FF4-8F52-6AB38B163D55}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonConfig", "CommonConfig\CommonConfig.csproj", "{F0AAFA4A-DCFD-43E6-BCCA-D037B4F5F0B8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,10 +40,6 @@ Global
 		{062FA73C-F069-4649-8A84-8E73032BC571}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{062FA73C-F069-4649-8A84-8E73032BC571}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{062FA73C-F069-4649-8A84-8E73032BC571}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E77E3224-016A-480B-A010-CF2167DE1C3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E77E3224-016A-480B-A010-CF2167DE1C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E77E3224-016A-480B-A010-CF2167DE1C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E77E3224-016A-480B-A010-CF2167DE1C3F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{99FD221C-4429-4808-889E-83BC8C91E932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{99FD221C-4429-4808-889E-83BC8C91E932}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99FD221C-4429-4808-889E-83BC8C91E932}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -76,10 +68,6 @@ Global
 		{3B3E010F-9EFD-4FF4-8F52-6AB38B163D55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B3E010F-9EFD-4FF4-8F52-6AB38B163D55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B3E010F-9EFD-4FF4-8F52-6AB38B163D55}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F0AAFA4A-DCFD-43E6-BCCA-D037B4F5F0B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F0AAFA4A-DCFD-43E6-BCCA-D037B4F5F0B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F0AAFA4A-DCFD-43E6-BCCA-D037B4F5F0B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F0AAFA4A-DCFD-43E6-BCCA-D037B4F5F0B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

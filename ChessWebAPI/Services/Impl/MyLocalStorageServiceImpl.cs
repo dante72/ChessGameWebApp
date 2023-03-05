@@ -8,11 +8,16 @@ namespace ChessGameClient.Services.Impl
 {
     public class MyLocalStorageServiceImpl : IMyLocalStorageService
     {
+        private readonly JsonSerializerOptions options;
         private readonly string path;
 
         public MyLocalStorageServiceImpl(string path = "refresh.json")
         {
             this.path = path;
+            options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
         }
         public async Task<string> GetItemAsync(string key = "")
         {
@@ -45,7 +50,7 @@ namespace ChessGameClient.Services.Impl
                 dictionary[key] = value;
             else
                 dictionary.Add(key, value);
-
+            
             await SaveFile(dictionary);
         }
 
@@ -55,7 +60,7 @@ namespace ChessGameClient.Services.Impl
             {
                 await using (FileStream fstream = new FileStream(path, FileMode.Open))
                 {
-                    return await JsonSerializer.DeserializeAsync(fstream, typeof(Dictionary<string, string>)) as Dictionary<string, string>;
+                    return await JsonSerializer.DeserializeAsync<Dictionary<string, string>>(fstream, options);
                 }
             }
             else
@@ -66,9 +71,11 @@ namespace ChessGameClient.Services.Impl
 
         private async Task SaveFile(Dictionary<string, string> data)
         {
-            await using (FileStream fstream = new FileStream(path, FileMode.OpenOrCreate))
+            File.WriteAllText(path, string.Empty);
+
+            await using (FileStream fstream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
-                await JsonSerializer.SerializeAsync(fstream, data);
+                await JsonSerializer.SerializeAsync(fstream, data, options);
             }
         }
     }

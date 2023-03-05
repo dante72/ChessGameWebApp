@@ -7,11 +7,16 @@ using ChessGameClient.Services.Impl;
 using ChessGameClient.Services;
 using System.Collections.Generic;
 using System;
+using System.IO;
+using System.Text.Json;
+using System.Net.Http;
 
 namespace ChessGameClient
 {
     public class GameClient
     {
+        readonly protected string configFile = "settings.json";
+
         private static GameClient client;
         public static GameClient Client
         {
@@ -78,6 +83,20 @@ namespace ChessGameClient
             container.Register(Component.For<IAuthService>()
                 .ImplementedBy(GetAuthServiceType()));
             authService = container.Resolve<IAuthService>();
+
+            var settings = GetSettings();
+            if (settings != null)
+            {
+                authHttpClient.BaseAddress = new Uri(settings.AuthClient);
+                gameHttpClient.BaseAddress = new Uri(settings.GameClient);
+            }
+        }
+
+        protected ClientSettings? GetSettings()
+        {
+            var content = File.ReadAllText(configFile);
+
+            return JsonSerializer.Deserialize<ClientSettings>(content);
         }
         public virtual Type GetAuthServiceType() => typeof(AuthServiceImpl);
 

@@ -1,6 +1,8 @@
 ﻿using ChessGameClient.Models;
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -39,18 +41,30 @@ namespace ChessGameClient.AuthWebAPI
         {
             try
             {
-                var result = await _auth.GetFromJsonAsync<JwtTokens>($"Auth/Authentication?login={account.Login}&password={account.Password}");
+                var request = await _auth.GetAsync($"Auth/Authentication?login={account.Login}&password={account.Password}");
 
-                _auth.DefaultRequestHeaders.Authorization
-                    = new AuthenticationHeaderValue("Bearer", result?.AccessToken);
-                _gameServer.DefaultRequestHeaders.Authorization
-                    = new AuthenticationHeaderValue("Bearer", result?.AccessToken);
+                if (request.IsSuccessStatusCode)
+                {
+                    var result = await request.Content.ReadFromJsonAsync<JwtTokens>();
+                    _auth.DefaultRequestHeaders.Authorization
+                        = new AuthenticationHeaderValue("Bearer", result?.AccessToken);
+                    _gameServer.DefaultRequestHeaders.Authorization
+                        = new AuthenticationHeaderValue("Bearer", result?.AccessToken);
 
-                return result;
+                    return result;
+                }
+
+                switch(request.StatusCode)
+                {
+                    case HttpStatusCode.BadRequest:
+                        throw new ArgumentException("Invalid login or password!");
+                    default:
+                        throw new ArgumentException("Unknown error!");
+                }
             }
-            catch
+            catch (HttpRequestException)
             {
-                return null;
+                throw new HttpRequestException("No connection!");
             }
         }
 

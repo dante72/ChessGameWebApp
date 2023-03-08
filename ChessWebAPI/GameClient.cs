@@ -52,6 +52,13 @@ namespace ChessGameClient
             container.Register(Component.For<AuthHttpClient>());
             authHttpClient = container.Resolve<AuthHttpClient>();
 
+            var settings = GetSettings();
+            if (settings != null)
+            {
+                authHttpClient.BaseAddress = new Uri(settings.AuthClient);
+                gameHttpClient.BaseAddress = new Uri(settings.GameClient);
+            }
+
             container.Register(Component.For<IAuthWebApi>()
                 .ImplementedBy<AuthWebApi>());
             authWebApi = container.Resolve<IAuthWebApi>();
@@ -84,12 +91,6 @@ namespace ChessGameClient
                 .ImplementedBy(GetAuthServiceType()));
             authService = container.Resolve<IAuthService>();
 
-            var settings = GetSettings();
-            if (settings != null)
-            {
-                authHttpClient.BaseAddress = new Uri(settings.AuthClient);
-                gameHttpClient.BaseAddress = new Uri(settings.GameClient);
-            }
         }
 
         protected ClientSettings? GetSettings()

@@ -29,7 +29,7 @@ namespace ChessGameClient.Services.Impl
             _board.SetCheckMethod(TryMove);
 
             hubConnection = new HubConnectionBuilder()
-                .WithUrl(@$"{_httpClient.BaseAddress.OriginalString}/gamehub", options =>
+                .WithUrl(@$"{_httpClient.BaseAddress.OriginalString.Trim('/')}/gamehub", options =>
                  {
                      options.AccessTokenProvider = () => Task.FromResult(_httpClient.DefaultRequestHeaders.Authorization?.Parameter);
                  })

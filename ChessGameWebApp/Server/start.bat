@@ -1,2 +1,2 @@
-.\ChessGameWebApp.Server.exe --urls="http://localhost:7083/;https://localhost:7084/"
+.\ChessGameWebApp.Server.exe --urls="https://localhost:7084;http://localhost:5084"
 pause

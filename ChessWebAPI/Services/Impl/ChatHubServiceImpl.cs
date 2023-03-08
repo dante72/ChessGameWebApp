@@ -23,7 +23,7 @@ namespace ChessGameClient.Services.Impl
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
             _hubConnection = new HubConnectionBuilder()
-                .WithUrl(@"https://localhost:7084/chathub", options =>
+                .WithUrl(@$"{_httpClient.BaseAddress.OriginalString}/chathub", options =>
                 {
                     options.AccessTokenProvider = () => Task.FromResult(_httpClient.DefaultRequestHeaders.Authorization?.Parameter);
                 })

@@ -1,7 +1,22 @@
-﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+﻿html, body {
+    font-family: Apple Chancery, cursive;
+}
 
-html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+body {
+    margin: 0;
+    color: mintcream;
+}
+
+.background {
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width:100%;
+    height:100%;
+    background-image: url('../css/images/chess001.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 h1:focus {
@@ -9,23 +24,74 @@ h1:focus {
 }
 
 a, .btn-link {
-    color: #0071c1;
+    color: #fff;
+    text-decoration: none;
 }
+
+.btn {
+    transition: none;
+    font-size: 1.5rem
+}
+
+    .btn:hover {
+        color: #212529
+    }
+
+    .btn-check:focus + .btn, .btn:focus {
+        outline: 0;
+        box-shadow: 0 0 0 .25rem rgba(13,110,253,.25)
+    }
+
+    .btn.disabled, .btn:disabled, fieldset:disabled .btn {
+        pointer-events: none;
+        opacity: .65
+    }
+
 
 .btn-secondary {
     color: #000;
     background-color: #efefef;
     border-color: #767676;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.4rem
 }
+    .btn-secondary:hover {
+        color: #fff;
+        background-color: #0b5ed7;
+        border-color: #0a58ca
+    }
+
+    .btn-check:focus + .btn-secondary, .btn-secondary:focus {
+        color: #fff;
+        background-color: #0b5ed7;
+        border-color: #0a58ca;
+        box-shadow: 0 0 0 .25rem rgba(49,132,253,.5)
+    }
 
 .btn-primary {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: #0005;
+    border-color: #767676aa;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.4rem
 }
 
+    .btn-primary:hover {
+        color: #fff;
+        background-color: #0009;
+        border-color: #0a58ca
+    }
+
+    .btn-check:focus + .btn-primary, .btn-primary:focus {
+        color: #fff;
+        background-color: #0005;
+        border-color: #767676aa;
+        box-shadow: 0 0 0 .25rem #fffa;
+    }
+
+
 .content {
-    padding-top: 1.1rem;
+    padding-top: 0.3rem;
 }
 
 .valid.modified:not([type=checkbox]) {

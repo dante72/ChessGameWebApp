@@ -15,7 +15,7 @@
     <label>
         <input @bind="messageInput" size="50" />
     </label>
-    <button class="btn btn-primary" @onclick="Send" disabled="@(!IsConnected)">Send</button>
+    <button class="btn btn-primary" @onclick="Send">Send</button>
 </div>
 
 <hr>
@@ -46,8 +46,14 @@
 
     protected override async Task OnInitializedAsync()
     {
+        //await chatHub.Start();
+        await base.OnInitializedAsync();
+    }
+
+    protected override void OnInitialized()
+    {
         chatHub.SetUpdater(() => InvokeAsync(StateHasChanged));
-        await chatHub.Start();
+        base.OnInitialized();
     }
 
     private async Task Send()

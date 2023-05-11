@@ -23,6 +23,20 @@ h1:focus {
     outline: none;
 }
 
+.form-background {
+    background-color: #efefef55;
+    max-width: fit-content;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+input, button, [type=submit] {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
 a, .btn-link {
     color: #fff;
     text-decoration: none;
@@ -30,7 +44,8 @@ a, .btn-link {
 
 .btn {
     transition: none;
-    font-size: 1.5rem
+    font-size: 1.5rem;
+    margin: 0 0.2rem;
 }
 
     .btn:hover {
@@ -57,29 +72,29 @@ a, .btn-link {
 }
     .btn-secondary:hover {
         color: #fff;
-        background-color: #0b5ed7;
-        border-color: #0a58ca
+        background-color: #0009;
+        border-color: #0009;
     }
 
     .btn-check:focus + .btn-secondary, .btn-secondary:focus {
         color: #fff;
-        background-color: #0b5ed7;
-        border-color: #0a58ca;
-        box-shadow: 0 0 0 .25rem rgba(49,132,253,.5)
+        background-color: #0005;
+        border-color: #767676aa;
+        box-shadow: 0 0 0 .25rem #fffa;
     }
 
 .btn-primary {
     color: #fff;
     background-color: #0005;
-    border-color: #767676aa;
-    padding: 0.3rem 0.5rem;
-    border-radius: 0.4rem
+    border-color: #0005;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.4rem;
 }
 
     .btn-primary:hover {
         color: #fff;
         background-color: #0009;
-        border-color: #0a58ca
+        border-color: #0009;
     }
 
     .btn-check:focus + .btn-primary, .btn-primary:focus {

@@ -39,7 +39,7 @@
     }
 }
 
-<EditForm Model="@this" OnValidSubmit="@FormSubmitted">
+<EditForm class="form-background" Model="@this" OnValidSubmit="@FormSubmitted">
     <DataAnnotationsValidator />
     <table>
         <tr>
@@ -54,7 +54,7 @@
             </tr>
             <tr>
                 <td>
-                    <input class="btn btn-primary" type="submit" value="Login" />
+                    <input class="btn btn-primary btn-link" type="submit" value="Login" />
                     <NavLink class="btn btn-secondary" type="button" href="authorization/reg">Register</NavLink>
                 </td>
             </tr>

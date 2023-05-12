@@ -5,7 +5,6 @@
 
 <div class="page">
     <div class="sidebar">
-        <div class="sidebar-background" />
         <NavMenu />
     </div>
 
@@ -16,7 +15,7 @@
             @if (User.Id > 0)
             {
                 <NavLink class="btn btn-primary" href="logout">Sign Out</NavLink>
-                <JWTExpireComponent></JWTExpireComponent>
+                //<JWTExpireComponent></JWTExpireComponent>
             }
             else
             {

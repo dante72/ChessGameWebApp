@@ -6,6 +6,10 @@
     width: 20%;
 }
 
+.login-menu {
+    display: block-inline;
+}
+
 .top-row {
     height: 3.5rem;
     background-color: rgba(0,0,0,0.1);
@@ -24,8 +28,7 @@
 
 .nav-item {
     font-size: 1.4rem;
-    padding-bottom: 0.5rem;
-    margin: 0.5rem;
+    margin: 0.1rem;
     padding: 0.1rem 0;
 }
 
@@ -34,7 +37,7 @@
     }
 
     .nav-item:last-of-type {
-        padding-bottom: 1rem;
+        padding-bottom: 0rem;
     }
 
     .nav-item ::deep a {
@@ -65,8 +68,8 @@
     font-style: normal;
     font-variant: normal;
     padding: 0.2rem 2.5rem;
-    font-size:2.5rem;
-    display: none;    
+    font-size: 2.5rem;
+    display: none;
 }
 
 @media (min-width: 641px) {
@@ -81,5 +84,9 @@
 
     .menu-word {
         display: block;
+    }
+    
+    .login-menu {
+        display: none;
     }
 }

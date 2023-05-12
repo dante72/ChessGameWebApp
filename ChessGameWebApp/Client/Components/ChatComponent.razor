@@ -13,14 +13,14 @@
 
 <div class="form-group">
     <label>
-        <input @bind="messageInput" size="50" />
+        <input @bind="messageInput" />
     </label>
     <button class="btn btn-primary" @onclick="Send">Send</button>
 </div>
 
 <hr>
 
-<div class="messagesList">
+<div class="messagesList form-background">
     <ul>
     @foreach (var message in messages)
     {

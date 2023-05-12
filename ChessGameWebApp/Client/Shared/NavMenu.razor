@@ -5,16 +5,25 @@
 @implements IDisposable
 
 <div class="top-row">
-    <div>
-        <div class="menu-word">Pretty Chess</div>
+    <div class="menu-word">Pretty Chess</div>
+    <div class="login-menu">
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span>Menu</span>
         </button>
+        @if (user.Id > 0)
+        {
+            <NavLink class="btn btn-primary" href="logout">Sign Out</NavLink>
+        }
+        else
+        {
+            <NavLink class="btn btn-primary" href="authorization/auth">Sign In</NavLink>
+            <NavLink class="btn btn-primary" href="authorization/reg">Sign Up</NavLink>
+        }
     </div>
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
+    <nav>
         <div class="nav-item">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi"></span> Home

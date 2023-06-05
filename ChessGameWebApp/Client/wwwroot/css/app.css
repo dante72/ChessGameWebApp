@@ -8,12 +8,8 @@ body {
 }
 
 .background {
-    z-index: -1;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width:100%;
-    height:100%;
+    width: 100vw;
+    height: 100vh;
     background-image: url('../css/images/chess001.jpg');
     background-size: cover;
     background-repeat: no-repeat;
